@@ -1,0 +1,33 @@
+@startuml "PERT diagram"
+
+skinparam backgroundColor transparent
+left to right direction
+
+scale 0.8
+
+<style>
+stateDiagram {
+  arrow {
+    LineColor black
+  }
+}
+</style>
+
+skinparam State {
+  BackgroundColor #e8f5fd
+  BorderColor #5FB8EC
+}
+
+skinparam defaultTextAlignment center
+
+state "<color:darkred>Prva aktivnost</color>" as A1 #ffe6e6;line:darkred : <#ffe6e6,#ffe6e6>|  10 | 0 | 10 |\n|    0 | 0 | 10 |
+state "Druga aktivnost" as A2 : <#e8f5fd,#e8f5fd>|   5 | 10 | 15 |\n| 10 | 20 | 25 |
+state "<color:darkred>Tretja aktivnost</color>" as A3 #ffe6e6;line:darkred : <#ffe6e6,#ffe6e6>| 15 | 10 | 25 |\n|   0 | 10 | 25 |
+
+[*] -[#darkred,bold]-> A1
+A1 --> A2
+A1 -[#darkred,bold]-> A3
+A2 --> [*]
+A3 -[#darkred,bold]-> [*]
+
+@enduml

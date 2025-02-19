@@ -1,0 +1,10 @@
+# :page_with_curl: Dokumentacija projekta
+
+Dokumentacija projekta bo nastajala v naslednjih iteracijah:
+
+- :yellow_square: [**Predlog projekta**](01_Predlog_projekta.md),
+- :orange_square: [**Osnutek sistema** (1. poročilo o stanju)](02_Osnutek_sistema_1_porocilo_o_stanju.md),
+- :green_square: [**Izvedljiv sistem** (2. poročilo o stanju)](03_Izvedljiv_sistem_2_porocilo_o_stanju.md) in
+- :blue_square: [**Končna izdaja** (celovito končno poročilo)](04_Koncna_izdaja_celovito_koncno_porocilo.md).
+
+![Terminski načrt](https://teaching.lavbic.net/plantuml/svg/dPPHJ-904CVVzrDCz46F1AGBhUP2Z57FnDmbciizINmOw5ANbbtINV30-17yLdwmcosbKgZKNDW767R-_vdVpZQzC1PJ6w6o5Wx-Y7GYbOabA7n_I-q1OprZ5uauPzcEQubHYXDuOG1MJaGYbSX-0FoYhrSwqIaSZhZxPD4RhUmgIdaB2hswJ3HnddM9mpXAzKo5UQuu6_cZS5lHlxay-t6LfsEQwkTTrzAUYKo4iRgexdzyXeas8lnCeBB9H4PFjkZqbVLESdgCcAefEdQ3BIMReZBqbr2M7Jt9KC18QplGVrc2AffX9C0aR9fAPSqG4m7FGiJ9WYJHpj8G5mH4vCKoGxBb26zplzdkDha7qfI3j2g3V2EOHpjDxpIBkf89YbHm6BO5ZWQ5GNl_1hTgDl3WamtiFjLZCRIGpQg1LGAdcXZhzxA4xmNwymSQNM55378vnp6gCSAK12V28XppTektllLEigJpHtZ2wLGe0sXBgaSxgXL6ZSPlN8Pq2QoOmnnCF9lIA3KQSEo15Q5G6pvee7_jFKA2XXhmWKx9L4hUBWSoHQfzAUUuHukNj01LkAP3hJYh8mD2qG4sc-2rW6fCSIY9HRD9q1gDUqAIw8ZG4DhOEgkycgoGuuwpLNBRjhEszLOzx1XpPvm5MFyk336dJrPOU9MTlDDMP--HkE5Z_GUCz9pkouxQghA7BRWxXNKsYV0A8dT6pTpO66cic7mLY5y0wTRuhd7GQKnrgj_VP8AWtLurdfMzJblTlKJSRViWKYcOK-4rLFnDAfqAAhVBEV4UotdEPHjBjnfBK60vgp5UO-7rMFoMlnUBMnzO-1uidHeimIQMRWMMdrgzlobtJrtnNvmLZzVTdc2RIfpv23VkHIybAnxKGk711vGAlHn9jmQ9nmickyyjmY66bG_Se1NiBI-WnTW5wMPl6Fy0 "Terminski načrt")

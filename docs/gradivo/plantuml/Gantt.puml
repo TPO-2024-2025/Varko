@@ -1,0 +1,39 @@
+@startgantt "Ganttov diagram"
+
+<style>
+ganttDiagram {
+  timeline {
+    LineColor #f2f2f2
+    FontColor gray
+  }
+  task {
+    BackgroundColor #e8f5fd
+    LineColor #5FB8EC
+  }
+  arrow {
+    LineColor #5FB8EC
+  }
+  milestone {
+    BackgroundColor #e8f5fd
+    LineColor #5FB8EC
+  }
+  closed {
+    BackgroundColor #f2f2f2
+    FontColor lightgray
+  }
+}
+</style>
+
+skinparam backgroundColor transparent
+hide footbox
+language sl
+
+project starts the 19th of February 2024
+saturdays are closed
+sundays are closed
+
+[**Prva aktivnost** (10 dni)] as [A1] lasts 10 days
+[**Druga aktivnost** (5 dni)] as [A2] lasts 1 week and starts at [A1]'s end
+[**Tretja aktivnost** (15 dni)] as [A3] lasts 15 days and starts at [A1]'s end
+
+@endgantt

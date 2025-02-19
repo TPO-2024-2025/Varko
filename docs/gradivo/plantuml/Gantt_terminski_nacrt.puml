@@ -1,0 +1,93 @@
+@startgantt "Terminski načrt"
+
+<style>
+ganttDiagram {
+  timeline {
+    LineColor #f2f2f2
+    FontColor gray
+  }
+  task {
+    BackgroundColor #e8f5fd
+    LineColor #5FB8EC
+  }
+  arrow {
+    LineColor #5FB8EC
+  }
+  milestone {
+    BackgroundColor #e8f5fd
+    LineColor #5FB8EC
+  }
+  closed {
+    BackgroundColor #f2f2f2
+    FontColor lightgray
+  }
+}
+</style>
+
+skinparam backgroundColor transparent
+'hide footbox
+language sl
+printscale weekly
+
+saturday are closed
+sunday are closed
+2024-04-01 is closed
+2024-04-27 is closed
+2024-05-01 is closed
+2024-05-02 is closed
+
+2024-03-18 is colored in #d0eafb
+2024-04-08 is colored in #d0eafb
+2024-05-06 is colored in #d0eafb
+2024-05-27 is colored in #d0eafb
+
+Project starts 2024-02-19
+
+'[<color:lightgray>Začetek izvajanja predmeta (19.2.)</color>] happens at 2024-02-19
+[Začetek izvajanja predmeta <color:gray>(19.2.)</color>] happens at 2024-02-19
+
+'[<color:lightgray>**Izpolnjevanje vprašalnika** in **profiliranje** (1 teden)</color>] as [D1] lasts 5 days
+[**Izpolnjevanje vprašalnika** in **profiliranje** <color:gray>(1 teden)</color>] as [D1] lasts 5 days
+'[<color:lightgray>**Razdelitev v skupine** in **izbira izziva** (1 teden)</color>] as [D2] lasts 5 day and starts at [D1]'s end
+[**Razdelitev v skupine** in **izbira izziva** <color:gray>(1 teden)</color>] as [D2] lasts 5 day and starts at [D1]'s end
+
+-- 1. iteracija --
+
+'[<color:lightgray>**Predlog projekta** (3 tedni)</color>] as [D3] lasts 15 days and starts at [D2]'s start
+[**Predlog projekta** <color:gray>(3 tedni)</color>] as [D3] lasts 15 days and starts at [D2]'s start
+'[<color:lightgray>Oddaja predloga projekta (18.3.)</color>] happens at 2024-03-18
+[Oddaja predloga projekta <color:gray>(18.3.)</color>] happens at 2024-03-18
+'[<color:lightgray>Zagovor predloga projekta</color>] as [Z1] lasts 5 days and starts at [D3]'s end
+[Zagovor predloga projekta] as [Z1] lasts 5 days and starts at [D3]'s end
+
+-- 2. iteracija --
+
+'[<color:lightgray>**Osnutek sistema** (3 tedni)</color>] as [D5] lasts 14 days and starts at [D3]'s end
+[**Osnutek sistema** <color:gray>(3 tedni)</color>] as [D5] lasts 14 days and starts at [D3]'s end
+'[<color:lightgray>Oddaja 1. poročila o stanju (8.4.)</color>] happens at 2024-04-08
+[Oddaja 1. poročila o stanju <color:gray>(8.4.)</color>] happens at 2024-04-08
+'[<color:lightgray>Zagovor 1. poročila o stanju</color>] as [Z2] lasts 5 days and starts at [D5]'s end
+[Zagovor 1. poročila o stanju] as [Z2] lasts 5 days and starts at [D5]'s end
+
+-- 3. iteracija --
+
+'[<color:lightgray>**Izvedljiv sistem** (4 tedni)</color>] as [D6] lasts 18 days and starts at [D5]'s end
+[**Izvedljiv sistem** <color:gray>(4 tedni)</color>] as [D6] lasts 18 days and starts at [D5]'s end
+'[<color:lightgray>Oddaja 2. poročila o stanju (6.5.)</color>] happens at 2024-05-06
+[Oddaja 2. poročila o stanju <color:gray>(6.5.)</color>] happens at 2024-05-06
+'[<color:lightgray>Zagovor 2. poročila o stanju</color>] as [Z3] lasts 5 days and starts at [D6]'s end
+[Zagovor 2. poročila o stanju] as [Z3] lasts 5 days and starts at [D6]'s end
+
+-- 4. iteracija --
+
+'[<color:lightgray>**Končna izdaja** (3 tedni)</color>] as [D12] lasts 15 days and starts at [D6]'s end
+[**Končna izdaja** <color:gray>(3 tedni)</color>] as [D12] lasts 15 days and starts at [D6]'s end
+'[<color:lightgray>Oddaja končnega poročila (27.5.)</color>] happens at 2024-05-27
+[Oddaja končnega poročila <color:gray>(27.5.)</color>] happens at 2024-05-27
+'[<color:lightgray>Zagovor končnega poročila</color>] as [Z4] lasts 5 days and starts at [D12]'s end
+[Zagovor končnega poročila] as [Z4] lasts 5 days and starts at [D12]'s end
+
+'[<color:lightgray>Konec izvajanja predmeta (31.5.)</color>] happens at 2024-05-31
+[Konec izvajanja predmeta <color:gray>(31.5.)</color>] happens at 2024-05-31
+
+@endgantt
