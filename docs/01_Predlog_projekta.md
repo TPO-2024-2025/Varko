@@ -227,6 +227,7 @@ Sistem mora biti testiran v čimbolj realnih pogojih, da se zagotovi zanesljivo 
 # 6 Vodenje projekta
 
 Projektno vodenje bo potekalo z inspiracijo [Scrum-ov](https://www.scrum.org/resources/what-scrum-module). Sprinti se bodo v veliki meri ujemali z roki oddaje posamezne iteracije. Na ta način bomo poskrbeli, da bo delo ekipe znotraj sprinta čim bolj usklajeno sprotnimi zahtevami projekta.
+Za organizacijo bomo uporabljali (GitHub Issues)[https://github.com/features/issues], ki bodo služili tudi kot __backlog__.
 
 Seznam želja funkcionalnosti predlaganega sistema zajema:
 
