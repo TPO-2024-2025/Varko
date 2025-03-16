@@ -1,0 +1,209 @@
+@startuml
+left to right direction
+
+map "Projektna ideja" as ProjektnaIdeja {
+  ES => 0
+  EF => 2
+  LS => 0
+  LF => 2
+  Trajanje => 2
+  Drsni čas => 0
+}
+
+map "Zajem zahtev" as ZajemZahtev {
+  ES => 0
+  EF => 2
+  LS => 8
+  LF => 10
+  Trajanje => 2
+  Drsni čas => 8
+}
+
+map "Tehnični načrt projekta" as TehnicniNacrtProjekta {
+  ES => 2
+  EF => 6
+  LS => 10
+  LF => 14
+  Trajanje => 4
+  Drsni čas => 8
+}
+
+map "Razdelitev vlog članov skupine" as RazdelitevVlogClanovSkupine {
+  ES => 2
+  EF => 3
+  LS => 2
+  LF => 3
+  Trajanje => 1
+  Drsni čas => 0
+}
+
+map "Finančni in časovni načrt projekta" as FinancniInCasovniNacrt {
+  ES => 3
+  EF => 13
+  LS => 3
+  LF => 13
+  Trajanje => 10
+  Drsni čas => 0
+}
+
+map "Opredelitev tveganj" as OpredelitevTveganj {
+  ES => 2
+  EF => 7
+  LS => 11
+  LF => 14
+  Trajanje => 5
+  Drsni čas => 9
+}
+
+ProjektnaIdeja --> TehnicniNacrtProjekta
+ProjektnaIdeja --[#red]> RazdelitevVlogClanovSkupine
+ProjektnaIdeja --> FinancniInCasovniNacrt
+ProjektnaIdeja --> OpredelitevTveganj
+ZajemZahtev --> TehnicniNacrtProjekta
+RazdelitevVlogClanovSkupine --[#red]> FinancniInCasovniNacrt
+
+map "Vzpostavitev okolja" as VzpostavitevOkolja {
+  ES => 13
+  EF => 15
+  LS => 13
+  LF => 15
+  Trajanje => 2
+  Drsni čas => 0
+}
+
+map "1. Retrospektiva in načrt iteracije" as RetrospektivaInNacrtIteracije2 {
+  ES => 13
+  EF => 14
+  LS => 14
+  LF => 15
+  Trajanje => 1
+  Drsni čas => 1
+}
+map "Izdelava osnovnega delujočega sistema" as IzdelavaOsnovnegaDelujocegaSistema {
+  ES => 15
+  EF => 25
+  LS => 15
+  LF => 25
+  Trajanje => 10
+  Drsni čas => 0
+}
+map "Izdelava poročila o stanju" as IzdelavaPorocilaOStanju {
+  ES => 25
+  EF => 27
+  LS => 25
+  LF => 27
+  Trajanje => 2
+  Drsni čas => 0
+}
+
+TehnicniNacrtProjekta --> RetrospektivaInNacrtIteracije2
+OpredelitevTveganj --> RetrospektivaInNacrtIteracije2
+FinancniInCasovniNacrt --[#red]> VzpostavitevOkolja
+FinancniInCasovniNacrt --> RetrospektivaInNacrtIteracije2
+VzpostavitevOkolja --[#red]> IzdelavaOsnovnegaDelujocegaSistema
+RetrospektivaInNacrtIteracije2 --> IzdelavaOsnovnegaDelujocegaSistema
+IzdelavaOsnovnegaDelujocegaSistema --[#red]> IzdelavaPorocilaOStanju
+
+map "2. Retrospektiva in načrt iteracije" as RetrospektivaInNacrtIteracije3 {
+  ES => 27
+  EF => 28
+  LS => 27
+  LF => 28
+  Trajanje => 1
+  Drsni čas => 0
+}
+
+map "Izdelava arhitekturnega načrta" as IzdelavaArhitekturnegaNacrta {
+  ES => 28
+  EF => 31
+  LS => 28
+  LF => 31
+  Trajanje => 3
+  Drsni čas => 0
+}
+
+map "Izdelava poročila o stanju" as IzdelavaPorocilaOStanju3 {
+  ES => 43
+  EF => 44
+  LS => 43
+  LF => 44
+  Trajanje => 1
+  Drsni čas => 0
+}
+
+map "Zaledni sistem in njegovo testiranje" as ZaledniSistemInNjegovoTestiranje {
+  ES => 31
+  EF => 37
+  LS => 31
+  LF => 37
+  Trajanje => 6
+  Drsni čas => 0
+}
+
+map "Uporabniški vmesnik in njegovo testiranje" as UporabniskiVmesnikInNjegovoTestiranje {
+  ES => 37
+  EF => 43
+  LS => 37
+  LF => 43
+  Trajanje => 6
+  Drsni čas => 0
+}
+
+map "Integracija pametnih naprav in njihovo testiranje" as IntegracijaNapravInNjihovoTestiranje {
+  ES => 37
+  EF => 43
+  LS => 37
+  LF => 43
+  Trajanje => 6
+  Drsni čas => 0
+}
+
+IzdelavaPorocilaOStanju --[#red]> RetrospektivaInNacrtIteracije3
+RetrospektivaInNacrtIteracije3 --[#red]> IzdelavaArhitekturnegaNacrta
+IzdelavaArhitekturnegaNacrta --[#red]> ZaledniSistemInNjegovoTestiranje
+ZaledniSistemInNjegovoTestiranje --[#red]> UporabniskiVmesnikInNjegovoTestiranje
+ZaledniSistemInNjegovoTestiranje --> IntegracijaNapravInNjihovoTestiranje
+UporabniskiVmesnikInNjegovoTestiranje --[#red]> IzdelavaPorocilaOStanju3
+IntegracijaNapravInNjihovoTestiranje --> IzdelavaPorocilaOStanju3
+
+map "3. Retrospektiva in načrt iteracije" as RetrospektivaInNacrtIteracije4 {
+  ES => 44
+  EF => 45
+  LS => 44
+  LF => 45
+  Trajanje => 1
+  Drsni čas => 0
+}
+
+map "Izdelava končnega poročila" as IzdelavaKoncnegaPorocila {
+  ES => 50
+  EF => 53
+  LS => 52
+  LF => 55
+  Trajanje => 3
+  Drsni čas => 2
+}
+
+map "Izdelava končne dokumentacije" as IzdelavaKoncneDokumentacije {
+  ES => 50
+  EF => 55
+  LS => 50
+  LF => 55
+  Trajanje => 5
+  Drsni čas => 0
+}
+
+map "Uporabniško testiranje" as UporabniskoTestiranje {
+  ES => 45
+  EF => 50
+  LS => 45
+  LF => 50
+  Trajanje => 5
+  Drsni čas => 0
+}
+
+IzdelavaPorocilaOStanju3 --[#red]> RetrospektivaInNacrtIteracije4
+RetrospektivaInNacrtIteracije4 --[#red]> UporabniskoTestiranje
+UporabniskoTestiranje --> IzdelavaKoncnegaPorocila
+UporabniskoTestiranje --[#red]> IzdelavaKoncneDokumentacije
+@enduml
