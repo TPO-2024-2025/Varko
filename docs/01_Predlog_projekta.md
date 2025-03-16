@@ -295,29 +295,29 @@ Namestništva so definirana v poglavju 7.
 | OPRAVILA | sprint | začetek | konec | trajanje (delovni dnevi) | drsni čas (delovni dnevi) | odvisen od |
 | --- | --- | --- | --- | --- | --- | --- |
 | **1 Predlog projekta** | —————— | —————— | —————— | —————— | —————— | —————— |
-| ==1.1 Projektna ideja== | 1 | 24.2 | 25.2 | 2  | 2 | / |
+| <span style="background-color: yellow">1.1 Projektna ideja</span> | 1 | 24.2 | 25.2 | 2  | 2 | / |
 | 1.2 Zajem zahtev | 1 | 24.2 | 25.2 | 2 | 13 | / |
 | 1.3 Tehnični načrt projekta | 1 | 26.2 | 3.3 | 4 | 9 | 1.1, 1.2 |
-| ==1.4 Razdelitev vlog članov skupine== | 1 | 26.2 | 26.2 | 1 | 2 | 1.1 |
-| ==1.5 Finančni in časovni načrt projekta== | 1 | 27.2 | 12.3 | 10 | 2 | 1.1, 1.4 |
+| <span style="background-color: yellow">1.4 Razdelitev vlog članov skupine</span> | 1 | 26.2 | 26.2 | 1 | 2 | 1.1 |
+| <span style="background-color: yellow">1.5 Finančni in časovni načrt projekta</span> | 1 | 27.2 | 12.3 | 10 | 2 | 1.1, 1.4 |
 | 1.6 Opredelitev tveganj | 1 | 26.2 | 4.3 | 5 | 8 | 1.1 |
 | **2 Osnutek sistema** | —————— | —————— | —————— | —————— | —————— | —————— |
 | 2.1 Vzpostavitev okolja | 2 | 17.3 | 18.3 | 2 | 1 | 1.5 |
-| ==2.2 Retrospektiva in načrt iteracije== | 2 | 17.3 | 17.3 | 1 | 1 | 1.3, 1.5, 1.6 |
-| ==2.3 Izdelava osnovnega delujočega sistema (prototipa)== | 2 | 19.3 | 1.4 | 10 | 1 | 2.1, 2.2 |
-| ==2.4 Izdelava poročila o stanju== | 2 | 2.4 | 3.4 | 2 | 1 | 2.3 |
+| <span style="background-color: yellow">2.2 Retrospektiva in načrt iteracije</span> | 2 | 17.3 | 17.3 | 1 | 1 | 1.3, 1.5, 1.6 |
+| <span style="background-color: yellow">2.3 Izdelava osnovnega delujočega sistema (prototipa)</span> | 2 | 19.3 | 1.4 | 10 | 1 | 2.1, 2.2 |
+| <span style="background-color: yellow">2.4 Izdelava poročila o stanju</span> | 2 | 2.4 | 3.4 | 2 | 1 | 2.3 |
 | **3 Izvedljiv sistem** | —————— | —————— | —————— | —————— | —————— | —————— |
-| ==3.1 Retrospektiva in načrt iteracije== | 3 | 7.4 | 7.4 | 1 | 0 | 2.4 |
-| ==3.2 Izdelava arhitekturnega načrta== | 3 | 8.4 | 10.4 | 3 | 0 | 3.1 |
-| ==3.3 Izdelava poročila o stanju== | 4 | 30.4 | 30.4 | 1 | 0 | 3.5, 3.6 |
-| ==3.4 Zaledni sistem in njegovo testiranje== | 3 | 11.4 | 18.4 | 6 | 0 | 3.2 |
+| <span style="background-color: yellow">3.1 Retrospektiva in načrt iteracije</span> | 3 | 7.4 | 7.4 | 1 | 0 | 2.4 |
+| <span style="background-color: yellow">3.2 Izdelava arhitekturnega načrta</span> | 3 | 8.4 | 10.4 | 3 | 0 | 3.1 |
+| <span style="background-color: yellow">3.3 Izdelava poročila o stanju</span> | 4 | 30.4 | 30.4 | 1 | 0 | 3.5, 3.6 |
+| <span style="background-color: yellow">3.4 Zaledni sistem in njegovo testiranje</span> | 3 | 11.4 | 18.4 | 6 | 0 | 3.2 |
 | 3.5 Uporabniški vmesnik (frontend) in njegovo testiranje | 4 | 22.4 | 29.4 | 6 | 0 | 3.4 |
-| ==3.6 Integracija pametnih naprav in njihovo testiranje== | 4 | 22.4 | 29.4 | 6 | 0 | 3.4 |
+| <span style="background-color: yellow">3.6 Integracija pametnih naprav in njihovo testiranje</span> | 4 | 22.4 | 29.4 | 6 | 0 | 3.4 |
 | **4 Končna izdaja** | —————— | —————— | —————— | —————— | —————— | —————— |
-| ==4.1 Retrospektiva in načrt iteracije== | 5 | 5.5 | 5.5 | 1 | 4 | 3.3 |
+| <span style="background-color: yellow">4.1 Retrospektiva in načrt iteracije</span> | 5 | 5.5 | 5.5 | 1 | 4 | 3.3 |
 | 4.2 Izdelava končnega poročila | 5 | 13.5 | 15.5 | 3 | 6 | 4.4 |
-| ==4.3 Izdelava končne dokumentacije== | 5 | 13.5 | 19.5 | 5 | 4 | 4.4 |
-| ==4.4 Uporabniško testiranje== | 5 | 6.5 | 12.5 | 5 | 4 | 4.1 |
+| <span style="background-color: yellow">4.3 Izdelava končne dokumentacije</span> | 5 | 13.5 | 19.5 | 5 | 4 | 4.4 |
+| <span style="background-color: yellow">4.4 Uporabniško testiranje</span> | 5 | 6.5 | 12.5 | 5 | 4 | 4.1 |
 | **Vodenje projektne ekipe** | / | 24.2 | 19.5 | 59  | / | / |
 
 Sktivnosti na kritični poti so pobarvane z rumeno barvo.
