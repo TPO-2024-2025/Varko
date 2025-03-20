@@ -1,0 +1,21 @@
+services:
+  homeassistant_dev:
+    image: homeassistant/home-assistant:latest
+    container_name: homeassistant_dev
+    volumes:
+      - homeassistant_vol_dev:/config
+    environment:
+      - TZ=Europe/Ljubljana
+    ports:
+      - "8123:8123"
+    networks:
+      - varko_dev
+    profiles:
+      - dev
+    restart: unless-stopped
+
+volumes:
+  homeassistant_vol_dev:
+
+networks:
+  varko_dev:
