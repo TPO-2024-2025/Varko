@@ -1,0 +1,21 @@
+{
+  "domain": "varko",
+  "name": "Varko",
+  "version": "0.1.0",
+  "integration_type": "hub",
+  "documentation": "https://github.com/TPO-2024-2025/Projekt-20",
+  "issue_tracker": "https://github.com/TPO-2024-2025/Projekt-20/issues",
+  "dependencies": [
+    "mqtt"
+  ],
+  "codeowners": [
+    "@carloscotar",
+    "@jakepel03",
+    "@kremec",
+    "@MhcVintar",
+    "@Tmajki"
+  ],
+  "config_flow": true,
+  "requirements": [],
+  "iot_class": "local_push"
+}
