@@ -14,6 +14,23 @@ services:
       - dev
     restart: unless-stopped
 
+  frigate_dev:
+    image: ghcr.io/blakeblackshear/frigate:stable
+    container_name: frigate_dev
+    shm_size: "512m"
+    volumes:
+      - ./config/frigate:/config
+    environment:
+      - FRIGATE_RTSP_PASSWORD="1234"
+    ports:
+      - "5000:5000"  # Frigate web UI
+      - "8554:8554"  # RTSP stream
+    networks:
+      - varko_dev
+    profiles:
+      - dev
+    restart: unless-stopped
+
 volumes:
   homeassistant_vol_dev:
 
