@@ -1,5 +1,2 @@
+# Ignore macOS files
 .DS_Store
-
-# Frigate configuration
-config/frigate/**
-!config/frigate/config.yaml
