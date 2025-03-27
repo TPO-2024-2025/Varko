@@ -1,13 +1,15 @@
 services:
   homeassistant_dev:
-    image: homeassistant/home-assistant:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.HomeAssistant
     container_name: homeassistant_dev
     volumes:
       - homeassistant_vol_dev:/config
     environment:
       - TZ=Europe/Ljubljana
     ports:
-      - "8123:8123"
+      - "8123:8123"  # Home Assistant web UI
     networks:
       - varko_dev
     profiles:

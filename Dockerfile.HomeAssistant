@@ -1,0 +1,5 @@
+FROM homeassistant/home-assistant:latest
+
+COPY ./src/custom_components/varko /config/custom_components/varko
+
+EXPOSE 8123

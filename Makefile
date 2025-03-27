@@ -6,7 +6,7 @@ default:
 	$(MAKE) format
 .PHONY: default
 
-format: | $(__venv_marker)
+format: $(__venv_marker)
 	$(PYTHON) -m black .
 .PHONY: format
 

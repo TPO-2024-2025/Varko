@@ -1,0 +1,125 @@
+# Device management services
+add_device:
+  name: Add Device
+  description: Add a device to be controlled by the presence simulation system
+  fields:
+    device_id:
+      name: Device ID
+      description: Unique identifier for the device
+      required: true
+      example: "light.living_room"
+      selector:
+        entity:
+
+remove_device:
+  name: Remove Device
+  description: Remove a device from the presence simulation system
+  fields:
+    device_id:
+      name: Device ID
+      description: Unique identifier for the device to remove
+      required: true
+      example: "light.living_room"
+      selector:
+        entity:
+
+enable_device:
+  name: Enable Device
+  description: Enable a device for use in the presence simulation system
+  fields:
+    device_id:
+      name: Device ID
+      description: Unique identifier for the device to enable
+      required: true
+      example: "light.living_room"
+      selector:
+        entity:
+
+disable_device:
+  name: Disable Device
+  description: Disable a device from being used in the presence simulation system
+  fields:
+    device_id:
+      name: Device ID
+      description: Unique identifier for the device to disable
+      required: true
+      example: "light.living_room"
+      selector:
+        entity:
+
+# System activation services
+activate_intruder_detection:
+  name: Activate Intruder Detection
+  description: Activate the intruder detection system
+  fields: {}
+
+deactivate_intruder_detection:
+  name: Deactivate Intruder Detection
+  description: Deactivate the intruder detection system
+  fields: {}
+
+activate_presence_simulation:
+  name: Activate Presence Simulation
+  description: Activate the system that simulates human presence in the home
+  fields:
+    timeout:
+      name: Timeout
+      description: Time in minutes until simulation automatically deactivates (0 = never)
+      required: false
+      default: 0
+      selector:
+        number:
+          min: 0
+          unit_of_measurement: "minutes"
+
+deactivate_presence_simulation:
+  name: Deactivate Presence Simulation
+  description: Deactivate the presence simulation system
+  fields: {}
+
+# Location zone management
+add_activation_zone:
+  name: Add Activation Zone
+  description: Add a location zone where the system should activate when all users leave
+  fields:
+    zone_id:
+      name: Zone ID
+      description: Identifier for the zone to add
+      required: true
+      example: "zone.home"
+      selector:
+        entity:
+          domain: zone
+
+remove_activation_zone:
+  name: Remove Activation Zone
+  description: Remove a location zone from system activation
+  fields:
+    zone_id:
+      name: Zone ID
+      description: Identifier for the zone to remove
+      required: true
+      example: "zone.home"
+      selector:
+        entity:
+          domain: zone
+
+# Notification service
+send_notification:
+  name: Send Notification
+  description: Send a notification about system status or detected intruders
+  fields:
+    message:
+      name: Message
+      description: The notification message to send
+      required: true
+      example: "Intruder detected in living room"
+      selector:
+        text:
+    recipients:
+      name: Recipients
+      description: List of persons to notify (empty = all configured users)
+      required: false
+      example: ["person.john", "person.jane"]
+      selector:
+        text:
