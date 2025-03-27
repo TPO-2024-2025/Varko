@@ -1,7 +1,9 @@
 from homeassistant.core import ServiceCall
 
 import logging
+
 _LOGGER = logging.getLogger(__name__)
+
 
 async def handle_activate_intruder_detection(call: ServiceCall) -> None:
     """Handle activating the intruder detection system."""

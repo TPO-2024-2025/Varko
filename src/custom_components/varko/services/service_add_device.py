@@ -1,7 +1,9 @@
 from homeassistant.core import ServiceCall
 
 import logging
+
 _LOGGER = logging.getLogger(__name__)
+
 
 async def handle_add_device(call: ServiceCall) -> None:
     """Handle adding a device to the presence simulation system."""

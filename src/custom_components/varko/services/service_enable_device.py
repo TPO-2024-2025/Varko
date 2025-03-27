@@ -1,7 +1,9 @@
 from homeassistant.core import ServiceCall
 
 import logging
+
 _LOGGER = logging.getLogger(__name__)
+
 
 async def handle_enable_device(call: ServiceCall) -> None:
     """Handle enabling a device for use in simulation."""

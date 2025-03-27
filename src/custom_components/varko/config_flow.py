@@ -1,4 +1,5 @@
 """Config flow for Varko integration."""
+
 from __future__ import annotations
 
 from typing import Any
@@ -8,9 +9,8 @@ from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResult
 
-from .const import (
-    DOMAIN
-)
+from .const import DOMAIN
+
 
 class VarkoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Varko integration."""
@@ -22,12 +22,11 @@ class VarkoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is None:
             return self.async_show_form(
                 step_id="user",
-                data_schema=vol.Schema({
-                    vol.Required("test_var"): str,
-                })
+                data_schema=vol.Schema(
+                    {
+                        vol.Required("test_var"): str,
+                    }
+                ),
             )
-        
-        return self.async_create_entry(
-            title="Varko",
-            data=user_input
-        )
+
+        return self.async_create_entry(title="Varko", data=user_input)
