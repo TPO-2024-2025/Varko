@@ -1,2 +1,9 @@
-# Ignore macOS files
+# Frigate configuration
+config/frigate/**
+!config/frigate/config.yaml
+
+# Python virtual environment
+.venv
+
+# MacOS files
 .DS_Store
