@@ -1,16 +1,23 @@
 mqtt:
-  enabled: false
+  enabled: true
+  host: mqtt_broker_dev
+  port: 1883
+  # user: "user_dev"
+  # password: "password_dev"
+  topic_prefix: frigate_dev
 
 cameras:
   camera1:
     ffmpeg:
       inputs:
-        - path: rtsp://0.0.0.0:8553/stream # RTSP stream URL
+        - path: rtsp://192.168.1.2:8553/stream # RTSP stream URL
           roles:
             - detect
     objects:
       track:
         - person
+    snapshots:
+      enabled: false
     motion:
       mask: []
 version: 0.15-1
