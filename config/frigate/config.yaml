@@ -8,7 +8,7 @@ cameras:
   camera1:
     ffmpeg:
       inputs:
-        - path: rtsp://0.0.0.0:8533/stream # RTSP stream URL
+        - path: rtsp://0.0.0.0:8553/stream # RTSP stream URL
           roles:
             - detect
     objects:
