@@ -1,5 +1,8 @@
 mqtt:
-  enabled: false
+  enabled: true
+  host: mqtt_broker_dev
+  port: 1883
+  topic_prefix: frigate_dev
 
 cameras:
   camera1:
@@ -11,6 +14,8 @@ cameras:
     objects:
       track:
         - person
+    snapshots:
+      enabled: false
     motion:
       mask: []
 version: 0.15-1

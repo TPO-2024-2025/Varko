@@ -1,7 +1,3 @@
-# Frigate configuration
-config/frigate/**
-!config/frigate/config.yaml
-
 # Python virtual environment
 .venv
 

@@ -1,0 +1,6 @@
+FROM ghcr.io/blakeblackshear/frigate:stable
+
+COPY ./config/frigate/config.dev.yaml /config/config.yml
+
+EXPOSE 5000
+EXPOSE 8554
