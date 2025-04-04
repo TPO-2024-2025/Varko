@@ -2,6 +2,7 @@
 
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import Platform
 
 from .const import DOMAIN
 
@@ -52,11 +53,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     _LOGGER.setLevel(logging.DEBUG)  # TODO: Remove after development
     _LOGGER.debug("VARKO: Started setup")
-
+    hass.data.setdefault(DOMAIN, {})
+    hass.data[DOMAIN][entry.entry_id] = {
+        "config": entry.data,
+        "devices": [],
+    }
     # Register services
     for service_name, handler in SERVICES.items():
         hass.services.async_register(DOMAIN, service_name, handler)
 
+    await hass.async_create_task(
+        hass.config_entries.async_forward_entry_setups(entry, [Platform.LIGHT])
+    )
     return True
 
 
@@ -65,4 +73,12 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Remove services when integration is unloaded
     for service_name in SERVICES:
         hass.services.async_remove(DOMAIN, service_name)
-    return True
+
+    unload_ok = await hass.config_entries.async_forward_entry_unload(
+        entry, Platform.LIGHT
+    )
+
+    if unload_ok:
+        hass.data[DOMAIN].pop(entry.entry_id, None)
+
+    return unload_ok

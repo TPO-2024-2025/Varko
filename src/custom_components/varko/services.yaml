@@ -3,13 +3,28 @@ add_device:
   name: Add Device
   description: Add a device to be controlled by the presence simulation system
   fields:
-    device_id:
-      name: Device ID
-      description: Unique identifier for the device
+    device_type:
+      description: Device Type
       required: true
-      example: "light.living_room"
+      example: "light"
       selector:
-        entity:
+        select:
+          options:
+            - "light"
+    device_name:
+      name: Device Name
+      description: The name of the device to be added
+      required: true
+      example: "Living Room Light"
+      selector:
+        text:
+    device_id:
+      name: Device Id
+      description: Id of the device to be added
+      required: true
+      example: "fcbh5fgf7"
+      selector:
+        text:
 
 remove_device:
   name: Remove Device
