@@ -10,27 +10,25 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 import logging
 
+from .const import DEVICE_NAME, DEVICE_ID, DEVICE_TYPE
+
 _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
-):
+) -> None:
     _LOGGER.debug("Setting up Varko lights")
     devices = entry.data.get("devices", [])
-
-    if not devices:
-        _LOGGER.warning("No devices found in config entry, lights will not be added")
-    _LOGGER.debug(f"Devices in config entry: {devices}")
 
     light_entities = [
         VarkoLight(
             hass,
-            device["device_name"],
-            device["device_id"],
+            device[DEVICE_NAME],
+            device[DEVICE_ID],
         )
         for device in devices
-        if device.get("device_type") == "light"
+        if device.get(DEVICE_TYPE) == "light"
     ]
 
     if light_entities:
@@ -41,7 +39,7 @@ async def async_setup_entry(
 
 class VarkoLight(LightEntity, RestoreEntity):
 
-    def __init__(self, hass, name, device_id):
+    def __init__(self, hass: HomeAssistant, name: str, device_id: str):
         super().__init__()
         self._state = False
         self._attr_has_entity_name = True
@@ -57,7 +55,7 @@ class VarkoLight(LightEntity, RestoreEntity):
         self._state_topic = f"shellies/shellycolorbulb-{device_id.upper()}/color/0"
 
     @property
-    def is_on(self):
+    def is_on(self) -> bool:
         return self._state
 
     @property

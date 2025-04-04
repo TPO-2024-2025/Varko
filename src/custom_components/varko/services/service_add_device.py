@@ -2,7 +2,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import ServiceCall
 from homeassistant.helpers.entity_platform import async_get_platforms
 
-from ..const import DOMAIN
+from ..const import DOMAIN, DEVICE_ID, DEVICE_NAME, DEVICE_TYPE
 from ..light import VarkoLight
 import logging
 
@@ -11,14 +11,14 @@ _LOGGER = logging.getLogger(__name__)
 
 async def handle_add_device(call: ServiceCall) -> None:
     """Handle adding a device to the presence simulation system."""
-    device_type = call.data.get("device_type")
-    device_name = call.data.get("device_name")
-    device_id = call.data.get("device_id")
+    device_type = call.data.get(DEVICE_TYPE)
+    device_name = call.data.get(DEVICE_NAME)
+    device_id = call.data.get(DEVICE_ID)
 
     new_device = {
-        "device_type": device_type,
-        "device_name": device_name,
-        "device_id": device_id,
+        DEVICE_TYPE: device_type,
+        DEVICE_NAME: device_name,
+        DEVICE_ID: device_id,
     }
 
     hass = call.hass
