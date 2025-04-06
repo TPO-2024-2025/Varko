@@ -247,7 +247,7 @@ Spodnja tabela prikazuje lestvico pogostosti uporabe, ki je bila uporabljena za 
 | Pogosto | Funkcionalnost se uporablja skoraj vsakodnevno. |
 | Zelo pogosto | Funkcionalnost se uporablja vsakodnevno. |
 
-##### 1. Dodajanje pametne naprave
+#### 1. Dodajanje pametne naprave
   
 Akterji: administrator (vloga).
 
@@ -287,7 +287,7 @@ Prioriteta: **Must have**
 
 Pogostost uporabe: **Redko**
     
-##### 2. Aktivacija pametne naprave
+#### 2. Aktivacija pametne naprave
 
 Akterji: administrator (vloga).
 
@@ -331,7 +331,7 @@ Prioriteta: **Must have**
 
 Pogostost uporabe: **Redko**
     
-##### 3. Deaktivacija pametne naprave
+#### 3. Deaktivacija pametne naprave
 
 Akterji: administrator (vloga).
 
@@ -375,7 +375,7 @@ Prioriteta: **Must have**
 
 Pogostost uporabe: **Redko**
     
-##### 4. Odstranitev pametne naprave
+#### 4. Odstranitev pametne naprave
 
 Akterji: administrator (vloga).
 
@@ -415,7 +415,7 @@ Prioriteta: **Must have**
 
 Pogostost uporabe: **Redko**
     
-##### 5. Avtomatski prehod sistema iz stanja mirovanja v stanje pripravljenosti
+#### 5. Avtomatski prehod sistema iz stanja mirovanja v stanje pripravljenosti
 
 Akterji: Uporabniki znotraj SUS (vloga).
 
@@ -462,7 +462,7 @@ Prioriteta: **Must have**
 
 Pogostost uporabe: **Pogosto**
     
-##### 6. Obdelava video pretoka in detekcija oseb
+#### 6. Obdelava video pretoka in detekcija oseb
 
 Akterji: Kamera s podporo RTSP (zunanja naprava).
 
@@ -508,7 +508,7 @@ Prioriteta: **Must have**
 
 Pogostost uporabe: **Zelo** **pogosto** 
 
-##### 7. Avtomatski prehod sistema v aktivno stanje iz stanja pripravljenosti
+#### 7. Avtomatski prehod sistema v aktivno stanje iz stanja pripravljenosti
 
 Akterji: /
 
@@ -548,7 +548,7 @@ Prioriteta: **Must have**
 
 Pogostost uporabe: **Zmerno**
 
-##### 8. Izvajanje simulacije prisotnosti
+#### 8. Izvajanje simulacije prisotnosti
 
 Akterji: /
 
@@ -586,7 +586,7 @@ Prioriteta: **Must have**
 
 Pogostost uporabe: **Zmerno**
     
-##### 9. Avtomatski prehod sistema iz aktivnega stanja v stanje pripravljenosti
+#### 9. Avtomatski prehod sistema iz aktivnega stanja v stanje pripravljenosti
 
 Akterji: Sistemski števec (notranji sistem).
 
@@ -624,7 +624,7 @@ Prioriteta: **Must have**
 
 Pogostost uporabe: **Zmerno**
     
-##### 10. Avtomatski prehod sistema iz stanja pripravljenosti v stanje mirovanja
+#### 10. Avtomatski prehod sistema iz stanja pripravljenosti v stanje mirovanja
 
 Akterji: Uporabniki znotraj SUS (vloga).
 
@@ -661,7 +661,7 @@ Prioriteta: **Must have**
 
 Pogostost uporabe: **Pogosto**
     
-##### 11. Določitev cone
+#### 11. Določitev cone
 
 Akterji: administrator (vloga).
 
@@ -702,7 +702,7 @@ Prioriteta: **Should have**
 
 Pogostost uporabe: **Redko**
     
-##### 12. Upravljanje s skupino uporabnikov
+#### 12. Upravljanje s skupino uporabnikov
 
 Akterji: Administrator (vloga).
 
@@ -743,7 +743,7 @@ Prioriteta: **Should have**
 
 Pogostost uporabe: **Redko**
     
-##### 13. Pošiljanje obvestil
+#### 13. Pošiljanje obvestil
 
 Akterji: /
 
@@ -779,7 +779,7 @@ Prioriteta: **Should have**
 
 Pogostost uporabe: **Zmerno**
     
-##### 14. Ročni preklop sistema v aktivno stanje
+#### 14. Ročni preklop sistema v aktivno stanje
 
 Akterji: Administrator (vloga).
 
@@ -824,7 +824,7 @@ Prioriteta: **Should have**
 
 Pogostost uporabe: **Redko**
     
-##### 15. Ročni preklop sistema v stanje mirovanja
+#### 15. Ročni preklop sistema v stanje mirovanja
 
 Akterji: Administrator (vloga).
 
@@ -869,7 +869,7 @@ Prioriteta: **Should have**
 
 Pogostost uporabe: **Redko**
     
-##### 16. Aktivacija shranjevanja slik
+#### 16. Aktivacija shranjevanja slik
 
 Akterji: administrator (vloga).
 
@@ -907,7 +907,7 @@ Prioriteta: **Could have**
 
 Pogostost uporabe: **Redko**
     
-##### 17. Deaktivacija shranjevanja slik
+#### 17. Deaktivacija shranjevanja slik
 
 Akterji: administrator (vloga).
 
@@ -945,7 +945,7 @@ Prioriteta: **Could have**
 
 Pogostost uporabe: **Redko**
     
-##### 18. Upravljanje z nastavitvami shranjevanja videoposnetkov
+#### 18. Upravljanje z nastavitvami shranjevanja videoposnetkov
 
 Akterji: Administrator (vloga).
 
