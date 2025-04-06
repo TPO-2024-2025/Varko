@@ -1,5 +1,8 @@
 # Python virtual environment
 .venv
 
+# Runtime folder
+.run
+
 # MacOS files
 .DS_Store

@@ -10,6 +10,31 @@ format: $(__venv_marker)
 	$(PYTHON) -m black .
 .PHONY: format
 
+start-%:
+	# Home Assistant
+	$(MAKE) .run/$*/home-assistant/config/custom_components
+	rm -rf .run/$*/home-assistant/config/custom_components/varko
+	cp -r src/custom_components/varko .run/$*/home-assistant/config/custom_components/varko
+
+	# MQTT
+	$(MAKE) .run/$*/mqtt/mosquitto/config
+	rm -f .run/$*/mqtt/mosquitto/config/mosquitto.conf
+	cp config/mosquitto/mosquitto.$*.conf .run/$*/mqtt/mosquitto/config/mosquitto.conf
+
+	# Frigate
+	$(MAKE) .run/$*/frigate/config
+	rm -f .run/$*/frigate/config/config.yml
+	cp config/frigate/config.$*.yaml .run/$*/frigate/config/config.yml
+
+	docker compose --profile $* up -d
+
+.run/%:
+	mkdir -p $@
+	chmod 777 $@
+
+stop-%:
+	docker compose --profile $* down
+
 update-requirements: requirements.in | $(__venv_marker)
 	$(PYTHON) -m pip install -U pip-tools
 	$(PYTHON) -m piptools compile -U --resolver backtracking

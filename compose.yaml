@@ -1,15 +1,13 @@
 services:
   homeassistant_dev:
-    build:
-      context: .
-      dockerfile: Dockerfile.HomeAssistant
+    image: homeassistant/home-assistant:latest
     container_name: homeassistant_dev
     volumes:
-      - homeassistant_vol_dev:/config
+      - .run/dev/home-assistant/config:/config
     environment:
       - TZ=Europe/Ljubljana
     ports:
-      - "8123:8123"  # Home Assistant web UI
+      - "8123:8123" # Home Assistant web UI
     networks:
       - varko_dev
     profiles:
@@ -17,14 +15,14 @@ services:
     restart: unless-stopped
 
   frigate_dev:
-    build:
-      context: .
-      dockerfile: Dockerfile.Frigate
+    image: ghcr.io/blakeblackshear/frigate:stable
     container_name: frigate_dev
+    volumes:
+      - .run/dev/frigate/config:/config
     shm_size: "512m"
     ports:
-      - "5000:5000"  # Frigate web UI
-      - "8554:8554"  # RTSP stream
+      - "5000:5000" # Frigate web UI
+      - "8554:8554" # RTSP stream
     networks:
       - varko_dev
     profiles:
@@ -32,10 +30,10 @@ services:
     restart: unless-stopped
 
   mqtt_broker_dev:
-    build:
-      context: .
-      dockerfile: Dockerfile.MqttBroker
+    image: eclipse-mosquitto:latest
     container_name: mqtt_broker_dev
+    volumes:
+      - .run/dev/mqtt/mosquitto:/mosquitto
     ports:
       - "1883:1883"
     networks:
@@ -43,9 +41,6 @@ services:
     profiles:
       - dev
     restart: unless-stopped
-
-volumes:
-  homeassistant_vol_dev:
 
 networks:
   varko_dev:
