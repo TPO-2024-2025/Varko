@@ -1,0 +1,41 @@
+@startuml
+
+frame "Sistem" as SISTEM {
+    node "Vsebnik Docker - Home Assistant" as HA {
+      [Poslovna logika integracije] as LOGIKA
+      
+      database "Uporabniške nastavitve" as NASTAVITVE
+    }
+    
+    node "Vsebnik Docker - Frigate" as DOCKERFRIGATE {
+      [Prepoznava ljudi v video prenosu] as PREPOZNAVA
+    }
+    
+    node "Vsebnik Docker - MQTT" as DOCKERMQTT {
+      [MQTT posrednik] as MQTT
+    }
+    
+    node "Mobilna aplikacija Home Assistant" as APLIKACIJA
+}
+
+actor Uporabnik as UPORABNIK
+
+cloud "Kamera" as KAMERA
+cloud "Pametne luči / pametna televzija" as PORABNIKI
+
+LOGIKA -- NASTAVITVE : Upravljanje sistema
+
+APLIKACIJA --> HA : Lokacija uporabnikov
+
+KAMERA -r-> PREPOZNAVA : Video prenos (RTSP)
+PREPOZNAVA --> MQTT : Signali prepoznave ljudi (MQTT)
+MQTT --> PORABNIKI : Upravljanje pametnih naprav (MQTT)
+
+LOGIKA <-- MQTT : Signali prepoznave ljudi (MQTT)
+LOGIKA --> MQTT : Komunikacija z napravami (MQTT)
+
+UPORABNIK --> APLIKACIJA : Uporaba
+UPORABNIK --> NASTAVITVE
+UPORABNIK -l-> LOGIKA : Ročno upravljanje sistema
+
+@enduml

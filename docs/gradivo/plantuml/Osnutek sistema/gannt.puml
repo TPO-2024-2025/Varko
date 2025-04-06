@@ -1,0 +1,63 @@
+@startgantt
+printscale weekly
+Saturday are closed
+Sunday are closed
+2025-04-21 is closed
+2025-05-01 is closed
+2025-05-02 is closed
+
+Project starts 2025-02-24
+-- Sprint 1 --
+[Projektna ideja] starts 2025-02-24 and requires 2 days
+[Projektna ideja] is colored in CornflowerBlue/Black
+[Zajem zahtev] starts 2025-02-24 and requires 2 days
+[Tehnični načrt projekta] starts at [Projektna ideja]'s end and requires 4 days
+[Razdelitev vlog članov skupine] starts at [Projektna ideja]'s end and requires 1 day
+[Razdelitev vlog članov skupine] -> [Finančni in časovni načrt]
+[Razdelitev vlog članov skupine] is colored in CornflowerBlue/Black
+[Opredelitev tveganj] starts at [Projektna ideja]'s end and requires 5 days
+[Finančni in časovni načrt] starts at [Projektna ideja]'s end  and requires 10 days
+[Finančni in časovni načrt] is colored in CornflowerBlue/Black
+-- Sprint 2 --
+[Retrospektiva in načrt iteracije] as [RINI1] starts 2025-03-17 and requires 2 days
+[RINI1] is colored in CornflowerBlue/Black
+[Finančni in časovni načrt] -> [RINI1]
+[Tehnični načrt projekta] -> [RINI1]
+[Opredelitev tveganj] -> [RINI1]
+[Vzpostavitev okolja] starts 2025-03-17 and requires 5 day
+[Finančni in časovni načrt] -> [Vzpostavitev okolja]
+[Izdelava prototipa] starts at [Vzpostavitev okolja]'s end and requires 10 days
+[Izdelava prototipa] is colored in CornflowerBlue/Black
+[RINI1] -> [Izdelava prototipa]
+[Delujoč prototip] happens at [Izdelava prototipa]'s end
+[Izdelava poročila o stanju] as [IPOS1] starts 2025-04-01 and requires 4 days
+[IPOS1] is colored in CornflowerBlue/Black
+-- Sprint 3 --
+[Retrospektiva in načrt iteracije] as [RINI2] starts 2025-04-07 and requires 1 day
+[RINI2] is colored in CornflowerBlue/Black
+[IPOS1] -> [RINI2]
+[Izdelava arhitekturnega načrta] starts at [RINI2]'s end and requires 3 days
+[Izdelava arhitekturnega načrta] is colored in CornflowerBlue/Black
+[Zaledni sistem in testiranje] starts at [Izdelava arhitekturnega načrta]'s end and requires 6 days
+[Zaledni sistem in testiranje] is colored in CornflowerBlue/Black
+-- Sprint 4 --
+[Uporabniški vmesnik in testiranje] starts at [Zaledni sistem in testiranje]'s end and requires 6 days
+[Integracija pametnih naprav in testiranje] starts at [Zaledni sistem in testiranje]'s end and requires 6 days
+[Integracija pametnih naprav in testiranje] is colored in CornflowerBlue/Black
+[Delujoč izdelek] happens at [Uporabniški vmesnik in testiranje]'s end
+[Izdelava poročila o stanju] as [IPOS2] starts at [Uporabniški vmesnik in testiranje]'s end and requires 1 day
+[IPOS2] is colored in CornflowerBlue/Black
+[Integracija pametnih naprav in testiranje] -> [IPOS2]
+-- Sprint 5 --
+[Retrospektiva in načrt iteracije] as [RINI3] starts 2025-05-05 and requires 1 day
+[RINI3] is colored in CornflowerBlue/Black
+[IPOS2] -> [RINI3]
+[Uporabniško testiranje] starts at [RINI3]'s end and requires 5 days
+[Uporabniško testiranje] is colored in CornflowerBlue/Black
+[Izdelava končne dokumentacije] starts at [Uporabniško testiranje]'s end and requires 5 days
+[Izdelava končne dokumentacije] is colored in CornflowerBlue/Black
+[Končan projekt] happens at [Izdelava končne dokumentacije]'s end
+[Izdelava končnega poročila] starts at [Uporabniško testiranje]'s end and requires 3 days
+[Vodenje projektne ekipe] starts 2025-02-24 and ends 2025-05-19
+[Vodenje projektne ekipe] is colored in MediumSlateBlue/Black
+@endgantt
