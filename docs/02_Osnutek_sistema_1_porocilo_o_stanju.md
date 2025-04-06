@@ -1292,7 +1292,7 @@ Dnevnik sprememb smo vodili v sklopu funkcije [GitHub Issues](https://github.com
 - razdelitvi vlog dela
 - izdelavi poročila o stanju
 
-Natančenjši procentualni deleži so navedeni v [predlogu projekta](01_Predlog_projekta.md), natančenej v poglavju 6.2.
+Natančenjši procentualni deleži so navedeni v [predlogu projekta](01_Predlog_projekta.md), natančneje v poglavju 6.2.
 
 #### Miha Vintar
 
