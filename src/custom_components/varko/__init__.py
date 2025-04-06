@@ -2,6 +2,8 @@
 
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.components.panel_custom import async_register_panel
+from homeassistant.components.http import StaticPathConfig
 from homeassistant.const import Platform
 
 from .const import DOMAIN
@@ -45,6 +47,27 @@ SERVICES = {
 
 async def async_setup(hass, config):
     """Set up the Varko component"""
+
+    await hass.http.async_register_static_paths(
+        [
+            StaticPathConfig(
+                "/local/varko_panel.js",
+                "/config/custom_components/varko/www/varko_panel.js",
+                True,
+            )
+        ]
+    )
+
+    await async_register_panel(
+        hass,
+        frontend_url_path="varko-panel",
+        module_url="/local/varko_panel.js",
+        sidebar_title="Varko",
+        sidebar_icon="mdi:home-lock",
+        webcomponent_name="varko-panel",
+        require_admin=True,
+    )
+
     return True
 
 
