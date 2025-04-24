@@ -7,12 +7,8 @@ from custom_components.varko.services.base_manager import BaseManager
 
 
 def service(handler):
-    @functools.wraps(handler)
-    async def wrapper(self: BaseManager, call: ServiceCall):
-        return await handler(self, call)
-
-    setattr(wrapper, "_is_service", True)
-    return wrapper
+    setattr(handler, "_is_service", True)
+    return handler
 
 
 def admin(handler):
