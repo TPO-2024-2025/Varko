@@ -1,3 +1,28 @@
+# Group management
+add_person:
+  name: Add person
+  description: Add a person to the varko group
+  fields:
+    person:
+      description: Person entity
+      required: true
+      example: person.john
+      selector:
+        entity:
+          domain: person
+
+remove_person:
+  name: Remove person
+  description: Remove a person from the varko group
+  fields:
+    person:
+      description: Person entity
+      required: true
+      example: person.john
+      selector:
+        entity:
+          domain: person
+
 # Device management services
 add_device:
   name: Add Device

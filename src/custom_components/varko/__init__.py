@@ -6,6 +6,8 @@ from homeassistant.components.panel_custom import async_register_panel
 from homeassistant.components.http import StaticPathConfig
 from homeassistant.const import Platform
 
+from custom_components.varko.services.group_manager import GroupManager
+
 from .const import DOMAIN
 
 import logging
@@ -84,6 +86,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Register services
     for service_name, handler in SERVICES.items():
         hass.services.async_register(DOMAIN, service_name, handler)
+
+    await GroupManager.get_instance(hass)
 
     await hass.async_create_task(
         hass.config_entries.async_forward_entry_setups(entry, [Platform.LIGHT])
