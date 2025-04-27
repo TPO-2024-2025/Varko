@@ -15,6 +15,8 @@ start-%:
 	$(MAKE) .run/$*/home-assistant/config/custom_components
 	rm -rf .run/$*/home-assistant/config/custom_components/varko
 	cp -r src/custom_components/varko .run/$*/home-assistant/config/custom_components/varko
+	$(MAKE) .run/$*/home-assistant/config/custom_components/varko/__pycache__
+	$(MAKE) .run/$*/home-assistant/config/custom_components/varko/services/__pycache__
 
 	# MQTT
 	$(MAKE) .run/$*/mqtt/mosquitto/config
