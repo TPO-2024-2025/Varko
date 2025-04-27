@@ -12,13 +12,11 @@ from .const import DOMAIN
 
 import logging
 
+from .services.device_manager import DeviceManager
+
 _LOGGER = logging.getLogger(__name__)
 
 from .services import (
-    service_add_device,
-    service_remove_device,
-    service_enable_device,
-    service_disable_device,
     service_activate_intruder_detection,
     service_deactivate_intruder_detection,
     service_activate_presence_simulation,
@@ -29,11 +27,6 @@ from .services import (
 )
 
 SERVICES = {
-    # Device management services
-    "add_device": service_add_device.handle_add_device,
-    "remove_device": service_remove_device.handle_remove_device,
-    "enable_device": service_enable_device.handle_enable_device,
-    "disable_device": service_disable_device.handle_disable_device,
     # System activation services
     "activate_intruder_detection": service_activate_intruder_detection.handle_activate_intruder_detection,
     "deactivate_intruder_detection": service_deactivate_intruder_detection.handle_deactivate_intruder_detection,
@@ -88,6 +81,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.services.async_register(DOMAIN, service_name, handler)
 
     await GroupManager.get_instance(hass)
+    await DeviceManager(hass).initialize()
 
     await hass.async_create_task(
         hass.config_entries.async_forward_entry_setups(entry, [Platform.LIGHT])

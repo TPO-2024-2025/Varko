@@ -7,10 +7,11 @@ from homeassistant.components.mqtt import async_publish, async_subscribe
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.storage import Store
 
 import logging
 
-from .const import DEVICE_NAME, DEVICE_ID, DEVICE_TYPE
+from .const import DOMAIN, DEVICE_NAME, DEVICE_ID, DEVICE_TYPE, ENTITY_ID
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -21,14 +22,19 @@ async def async_setup_entry(
     _LOGGER.debug("Setting up Varko lights")
     devices = entry.data.get("devices", [])
 
+    if not devices and DOMAIN in hass.data:
+        devices = hass.data[DOMAIN].get("devices", [])
+
+    if not devices:
+        store = Store(hass, 1, f"{DOMAIN}.devices")
+        loaded = await store.async_load()
+        if loaded:
+            devices = loaded
+
     light_entities = [
-        VarkoLight(
-            hass,
-            device[DEVICE_NAME],
-            device[DEVICE_ID],
-        )
+        VarkoLight(hass, device[DEVICE_NAME], device[DEVICE_ID], entry.entry_id)
         for device in devices
-        if device.get(DEVICE_TYPE) == "light"
+        if device.get(DEVICE_TYPE) == "light" and ENTITY_ID not in device
     ]
 
     if light_entities:
@@ -39,7 +45,9 @@ async def async_setup_entry(
 
 class VarkoLight(LightEntity, RestoreEntity):
 
-    def __init__(self, hass: HomeAssistant, name: str, device_id: str):
+    def __init__(
+        self, hass: HomeAssistant, name: str, device_id: str, config_entry_id: str
+    ):
         super().__init__()
         self._state = False
         self._attr_has_entity_name = True
@@ -49,6 +57,7 @@ class VarkoLight(LightEntity, RestoreEntity):
 
         self._attr_name = name
         self._attr_unique_id = device_id
+        self._attr_config_entry_id = config_entry_id
         self._command_topic = (
             f"shellies/shellycolorbulb-{device_id.upper()}/color/0/command"
         )

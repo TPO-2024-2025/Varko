@@ -28,8 +28,17 @@ add_device:
   name: Add Device
   description: Add a device to be controlled by the presence simulation system
   fields:
+    entity:
+      name: Shelly Entity
+      description: Link an existing Shelly device instead of creating a new one
+      required: false
+      selector:
+        entity:
+          domain: light
+          integration: shelly
     device_type:
-      description: Device Type
+      name: Device Type
+      description: The type of the device to be added
       required: true
       example: "light"
       selector:
@@ -43,11 +52,18 @@ add_device:
       example: "Living Room Light"
       selector:
         text:
+    is_enabled:
+      name: Enabled
+      description: Immediately activate this device
+      required: false
+      default: true
+      selector:
+        boolean:
     device_id:
       name: Device Id
       description: Id of the device to be added
       required: true
-      example: "fcbh5fgf7"
+      example: "fcfbs2..."
       selector:
         text:
 
@@ -55,37 +71,46 @@ remove_device:
   name: Remove Device
   description: Remove a device from the presence simulation system
   fields:
-    device_id:
-      name: Device ID
-      description: Unique identifier for the device to remove
+    entity:
+      name: Device To Remove
+      description: Select the device to remove
       required: true
-      example: "light.living_room"
       selector:
         entity:
+          domain: light
+          filter:
+            - integration: varko
+            - integration: shelly
 
 enable_device:
   name: Enable Device
   description: Enable a device for use in the presence simulation system
   fields:
-    device_id:
-      name: Device ID
+    entity:
+      name: Device To Enable
       description: Unique identifier for the device to enable
       required: true
-      example: "light.living_room"
       selector:
         entity:
+          domain: light
+          filter:
+            - integration: varko
+            - integration: shelly
 
 disable_device:
   name: Disable Device
   description: Disable a device from being used in the presence simulation system
   fields:
-    device_id:
-      name: Device ID
+    entity:
+      name: Device To Disable
       description: Unique identifier for the device to disable
       required: true
-      example: "light.living_room"
       selector:
         entity:
+          domain: light
+          filter:
+            - integration: varko
+            - integration: shelly
 
 # System activation services
 activate_intruder_detection:
