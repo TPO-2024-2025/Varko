@@ -81,7 +81,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.services.async_register(DOMAIN, service_name, handler)
 
     await GroupManager.get_instance(hass)
-    await DeviceManager(hass).initialize()
+    await DeviceManager.get_instance(hass)
 
     await hass.async_create_task(
         hass.config_entries.async_forward_entry_setups(entry, [Platform.LIGHT])

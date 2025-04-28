@@ -22,6 +22,13 @@ class DeviceManager(BaseManager):
     def __init__(self, hass: HomeAssistant):
         super().__init__(__name__, hass, f"{DOMAIN}.devices", [])
 
+    @classmethod
+    async def get_instance(cls, hass: HomeAssistant):
+        if cls._instance is None:
+            cls._instance = cls(hass)
+            await cls._instance.initialize()
+        return cls._instance
+
     @service
     @admin
     async def add_device(self, call: ServiceCall):
