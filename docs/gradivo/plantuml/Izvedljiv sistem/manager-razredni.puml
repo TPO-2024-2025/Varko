@@ -1,0 +1,33 @@
+@startuml
+abstract class BaseManager {
+    # logger: Logger
+    # hass: HomeAssistant
+    # store: Store
+    # data: Any
+    + __init__(module_name: str, hass: HomeAssistant, store_key: str, data_default: Any): None
+    # initialize(): None
+    - register_services(): None
+}
+
+class GroupManager {
+    - instance: GroupManager
+    + __init__(hass: HomeAssistant)
+    + get_instance(hass: HomeAssistant): Coroutine[Any, Any, GroupManager]
+    + add_person(call: ServiceCall): Coroutine[Any, Any, None]
+    + remove_person(call: ServiceCall): Coroutine[Any, Any, None]
+}
+BaseManager <|-- GroupManager
+
+class DeviceManager {
+    - instance: DeviceManager
+    + __init__(hass: HomeAssistant)
+    + get_instance(hass: HomeAssistant): Coroutine[Any, Any, DeviceManager]
+    + add_device(call: ServiceCall): Coroutine[Any, Any, None]
+    + remove_device(call: ServiceCall): Coroutine[Any, Any, None]
+    + enable_device(call: ServiceCall): Coroutine[Any, Any, None]
+    + disable_device(call: ServiceCall): Coroutine[Any, Any, None]
+    + control_device(device_id: str, command: str): Coroutine[Any, Any, None]
+}
+BaseManager <|-- DeviceManager
+
+@enduml

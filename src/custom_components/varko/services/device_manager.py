@@ -17,17 +17,17 @@ from custom_components.varko.const import (
 
 
 class DeviceManager(BaseManager):
-    _instance = None
+    __instance = None
 
     def __init__(self, hass: HomeAssistant):
         super().__init__(__name__, hass, f"{DOMAIN}.devices", [])
 
     @classmethod
     async def get_instance(cls, hass: HomeAssistant):
-        if cls._instance is None:
-            cls._instance = cls(hass)
-            await cls._instance.initialize()
-        return cls._instance
+        if cls.__instance is None:
+            cls.__instance = cls(hass)
+            await cls.__instance._initialize()
+        return cls.__instance
 
     @service
     @admin
@@ -39,7 +39,7 @@ class DeviceManager(BaseManager):
         device_id = call.data.get(DEVICE_ID)
 
         if any(device[DEVICE_ID] == device_id for device in self.data):
-            self.logger.warning(f"Device with {device_id} already exists.")
+            self._logger.warning(f"Device with {device_id} already exists.")
             return
 
         if any(
@@ -47,7 +47,7 @@ class DeviceManager(BaseManager):
             for device in self.data
             if ENTITY_ID in device
         ):
-            self.logger.warning(f"Entity with {entity_id} already exists.")
+            self._logger.warning(f"Entity with {entity_id} already exists.")
             return
 
         new_device = {
@@ -61,37 +61,37 @@ class DeviceManager(BaseManager):
             new_device[ENTITY_ID] = entity_id
 
         self.data.append(new_device)
-        await self.store.async_save(self.data)
+        await self._store.async_save(self.data)
 
         entry = next(
-            (entry for entry in self.hass.config_entries.async_entries(DOMAIN)),
+            (entry for entry in self._hass.config_entries.async_entries(DOMAIN)),
             None,
         )
         if entry:
             devices = entry.data.get("devices", [])
             devices.append(new_device)
-            self.hass.config_entries.async_update_entry(
+            self._hass.config_entries.async_update_entry(
                 entry, data={"devices": devices}
             )
         else:
-            self.logger.error("No config entry found for Varko.")
+            self._logger.error("No config entry found for Varko.")
             return
 
-        self.hass.data[DOMAIN][entry.entry_id]["devices"].append(new_device)
+        self._hass.data[DOMAIN][entry.entry_id]["devices"].append(new_device)
 
         if not entity_id:
-            platforms = async_get_platforms(self.hass, DOMAIN)
+            platforms = async_get_platforms(self._hass, DOMAIN)
             light_platform = next((p for p in platforms if p.domain == "light"), None)
 
             if light_platform:
                 await light_platform.async_add_entities(
-                    [VarkoLight(self.hass, device_name, device_id, entry.entry_id)],
+                    [VarkoLight(self._hass, device_name, device_id, entry.entry_id)],
                 )
-                self.logger.debug(f"Added {device_name} as a light device.")
+                self._logger.debug(f"Added {device_name} as a light device.")
             else:
-                self.logger.warning("Light platform not found. Device was not added.")
+                self._logger.warning("Light platform not found. Device was not added.")
         else:
-            self.logger.debug(
+            self._logger.debug(
                 f"Added {device_name} linked to existing entity {entity_id}."
             )
 
@@ -100,11 +100,11 @@ class DeviceManager(BaseManager):
     async def remove_device(self, call: ServiceCall):
         entity_id = call.data.get(ENTITY)
 
-        entity_registry = async_get_entity_registry(self.hass)
+        entity_registry = async_get_entity_registry(self._hass)
         entity_entry = entity_registry.async_get(entity_id)
 
         if not entity_entry:
-            self.logger.error(f"Entity {entity_id} not found in registry")
+            self._logger.error(f"Entity {entity_id} not found in registry")
             return
 
         device_id = entity_entry.unique_id
@@ -120,7 +120,7 @@ class DeviceManager(BaseManager):
             )
 
         if not device_to_remove:
-            self.logger.warning(
+            self._logger.warning(
                 f"Device or entity {entity_id} not found in Varko data."
             )
             return
@@ -135,10 +135,10 @@ class DeviceManager(BaseManager):
         self.data = [
             device for device in self.data if device.get(filter_key) != filter_value
         ]
-        await self.store.async_save(self.data)
+        await self._store.async_save(self.data)
 
         entry = next(
-            (entry for entry in self.hass.config_entries.async_entries(DOMAIN)),
+            (entry for entry in self._hass.config_entries.async_entries(DOMAIN)),
             None,
         )
         if entry:
@@ -147,22 +147,22 @@ class DeviceManager(BaseManager):
                 for d in entry.data.get("devices", [])
                 if d.get(filter_key) != filter_value
             ]
-            self.hass.config_entries.async_update_entry(
+            self._hass.config_entries.async_update_entry(
                 entry, data={"devices": devices}
             )
 
             if (
-                DOMAIN in self.hass.data
-                and entry.entry_id in self.hass.data[DOMAIN]
-                and "devices" in self.hass.data[DOMAIN][entry.entry_id]
+                DOMAIN in self._hass.data
+                and entry.entry_id in self._hass.data[DOMAIN]
+                and "devices" in self._hass.data[DOMAIN][entry.entry_id]
             ):
-                self.hass.data[DOMAIN][entry.entry_id]["devices"] = [
+                self._hass.data[DOMAIN][entry.entry_id]["devices"] = [
                     d
-                    for d in self.hass.data[DOMAIN][entry.entry_id]["devices"]
+                    for d in self._hass.data[DOMAIN][entry.entry_id]["devices"]
                     if d.get(filter_key) != filter_value
                 ]
         else:
-            self.logger.error("No config entry found for Varko.")
+            self._logger.error("No config entry found for Varko.")
             return
 
         if ENTITY_ID not in device_to_remove:
@@ -172,13 +172,13 @@ class DeviceManager(BaseManager):
 
             if entity_entry_id:
                 entity_registry.async_remove(entity_entry_id)
-                self.logger.debug(
+                self._logger.debug(
                     f"Removed entity {entity_entry_id} (device ID: {device_id})."
                 )
             else:
-                self.logger.warning(f"No entity found for device ID {device_id}.")
+                self._logger.warning(f"No entity found for device ID {device_id}.")
         else:
-            self.logger.debug(
+            self._logger.debug(
                 f"Device {device_id} linked to existing entity {device_to_remove[ENTITY_ID]}, skipping entity removal."
             )
 
@@ -187,11 +187,11 @@ class DeviceManager(BaseManager):
     async def enable_device(self, call: ServiceCall):
         entity_id = call.data.get(ENTITY)
 
-        entity_registry = async_get_entity_registry(self.hass)
+        entity_registry = async_get_entity_registry(self._hass)
         entity_entry = entity_registry.async_get(entity_id)
 
         if not entity_entry:
-            self.logger.error(f"Entity {entity_id} not found in registry")
+            self._logger.error(f"Entity {entity_id} not found in registry")
             return
 
         device_id = entity_entry.unique_id
@@ -207,13 +207,13 @@ class DeviceManager(BaseManager):
             )
 
         if not device_to_enable:
-            self.logger.warning(
+            self._logger.warning(
                 f"Device or entity {entity_id} not found in Varko data."
             )
             return
 
         if device_to_enable.get(IS_ENABLED, True):
-            self.logger.warning(f"Device {device_id} already enabled")
+            self._logger.warning(f"Device {device_id} already enabled")
             return
 
         device_to_enable[IS_ENABLED] = True
@@ -226,7 +226,7 @@ class DeviceManager(BaseManager):
             filter_value = device_to_enable[DEVICE_ID]
 
         entry = next(
-            (entry for entry in self.hass.config_entries.async_entries(DOMAIN)),
+            (entry for entry in self._hass.config_entries.async_entries(DOMAIN)),
             None,
         )
         if entry:
@@ -234,31 +234,31 @@ class DeviceManager(BaseManager):
                 if device.get(filter_key) == filter_value:
                     device[IS_ENABLED] = True
                     break
-            self.hass.config_entries.async_update_entry(
+            self._hass.config_entries.async_update_entry(
                 entry, data={"devices": entry.data["devices"]}
             )
             if (
-                DOMAIN in self.hass.data
-                and entry.entry_id in self.hass.data[DOMAIN]
-                and "devices" in self.hass.data[DOMAIN][entry.entry_id]
+                DOMAIN in self._hass.data
+                and entry.entry_id in self._hass.data[DOMAIN]
+                and "devices" in self._hass.data[DOMAIN][entry.entry_id]
             ):
-                for device in self.hass.data[DOMAIN][entry.entry_id]["devices"]:
+                for device in self._hass.data[DOMAIN][entry.entry_id]["devices"]:
                     if device.get(filter_key) == filter_value:
                         device[IS_ENABLED] = True
                         break
 
-        await self.store.async_save(self.data)
-        self.logger.debug(f"Enabled device {device_id} (Entity {entity_id}).")
+        await self._store.async_save(self.data)
+        self._logger.debug(f"Enabled device {device_id} (Entity {entity_id}).")
 
     @service
     @admin
     async def disable_device(self, call: ServiceCall):
         entity_id = call.data.get(ENTITY)
 
-        entity_registry = async_get_entity_registry(self.hass)
+        entity_registry = async_get_entity_registry(self._hass)
         entity_entry = entity_registry.async_get(entity_id)
         if not entity_entry:
-            self.logger.error(f"Entity {entity_id} not found in registry")
+            self._logger.error(f"Entity {entity_id} not found in registry")
             return
 
         device_id = entity_entry.unique_id
@@ -274,13 +274,13 @@ class DeviceManager(BaseManager):
             )
 
         if not device_to_disable:
-            self.logger.warning(
+            self._logger.warning(
                 f"Device or entity {entity_id} not found in Varko data."
             )
             return
 
         if not device_to_disable.get(IS_ENABLED, True):
-            self.logger.warning(f"Device {device_id} already disabled.")
+            self._logger.warning(f"Device {device_id} already disabled.")
             return
 
         device_to_disable[IS_ENABLED] = False
@@ -292,28 +292,28 @@ class DeviceManager(BaseManager):
             filter_key = DEVICE_ID
             filter_value = device_to_disable[DEVICE_ID]
 
-        entry = next((e for e in self.hass.config_entries.async_entries(DOMAIN)), None)
+        entry = next((e for e in self._hass.config_entries.async_entries(DOMAIN)), None)
 
         if entry:
             for device in entry.data.get("devices", []):
                 if device.get(filter_key) == filter_value:
                     device[IS_ENABLED] = False
                     break
-            self.hass.config_entries.async_update_entry(
+            self._hass.config_entries.async_update_entry(
                 entry, data={"devices": entry.data["devices"]}
             )
             if (
-                DOMAIN in self.hass.data
-                and entry.entry_id in self.hass.data[DOMAIN]
-                and "devices" in self.hass.data[DOMAIN][entry.entry_id]
+                DOMAIN in self._hass.data
+                and entry.entry_id in self._hass.data[DOMAIN]
+                and "devices" in self._hass.data[DOMAIN][entry.entry_id]
             ):
-                for device in self.hass.data[DOMAIN][entry.entry_id]["devices"]:
+                for device in self._hass.data[DOMAIN][entry.entry_id]["devices"]:
                     if device.get(filter_key) == filter_value:
                         device[IS_ENABLED] = False
                         break
 
-        await self.store.async_save(self.data)
-        self.logger.debug(f"Disabled device {device_id} (Entity {entity_id}).")
+        await self._store.async_save(self.data)
+        self._logger.debug(f"Disabled device {device_id} (Entity {entity_id}).")
 
     async def control_device(self, device_id: str, command: str):
         normalized_command = command.upper()
@@ -322,34 +322,34 @@ class DeviceManager(BaseManager):
             (device for device in self.data if device[DEVICE_ID] == device_id), None
         )
         if not device:
-            self.logger.error(f"Device {device_id} not found in store data")
+            self._logger.error(f"Device {device_id} not found in store data")
             return
 
         entity_id = device.get(ENTITY_ID)
         if not entity_id:
-            entity_registry = async_get_entity_registry(self.hass)
+            entity_registry = async_get_entity_registry(self._hass)
             entity_id = entity_registry.async_get_entity_id("light", DOMAIN, device_id)
             if not entity_id:
-                self.logger.error(f"No entity found for device {device_id}")
+                self._logger.error(f"No entity found for device {device_id}")
                 return
 
-        state = self.hass.states.get(entity_id)
+        state = self._hass.states.get(entity_id)
         if not state:
-            self.logger.error(f"Entity {entity_id} not available in states")
+            self._logger.error(f"Entity {entity_id} not available in states")
             return
 
         try:
             if normalized_command == "ON":
-                self.logger.debug(f"async_turn_on should be called")
-                await self.hass.services.async_call(
+                self._logger.debug(f"async_turn_on should be called")
+                await self._hass.services.async_call(
                     "light", "turn_on", {"entity_id": entity_id}, blocking=True
                 )
             elif normalized_command == "OFF":
-                self.logger.debug(f"async_turn_off should be called")
-                await self.hass.services.async_call(
+                self._logger.debug(f"async_turn_off should be called")
+                await self._hass.services.async_call(
                     "light", "turn_off", {"entity_id": entity_id}, blocking=True
                 )
             else:
                 raise ValueError(f"Invalid command: {command}")
         except Exception as e:
-            self.logger.error(f"Error controlling {device_id}: {str(e)}")
+            self._logger.error(f"Error controlling {device_id}: {str(e)}")
