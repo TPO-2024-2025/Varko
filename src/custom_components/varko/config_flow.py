@@ -24,9 +24,14 @@ class VarkoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 step_id="user",
                 data_schema=vol.Schema(
                     {
-                        vol.Required("test_var"): str,
+                        vol.Required(
+                            "presence_simulation_duration_minutes", default=30
+                        ): int,
                     }
                 ),
+                description_placeholders={
+                    "presence_simulation_duration_minutes": "Duration in minutes presence simulation should be on for before automatically turning itself off"
+                },
             )
 
         return self.async_create_entry(title="Varko", data=user_input)

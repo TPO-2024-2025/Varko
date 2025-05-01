@@ -7,6 +7,7 @@ from homeassistant.components.http import StaticPathConfig
 from homeassistant.const import Platform
 
 from custom_components.varko.services.group_manager import GroupManager
+from custom_components.varko.services.state_manager import StateManager
 
 from .const import DOMAIN
 
@@ -17,21 +18,12 @@ from .services.device_manager import DeviceManager
 _LOGGER = logging.getLogger(__name__)
 
 from .services import (
-    service_activate_intruder_detection,
-    service_deactivate_intruder_detection,
-    service_activate_presence_simulation,
-    service_deactivate_presence_simulation,
     service_add_activation_zone,
     service_remove_activation_zone,
     service_send_notification,
 )
 
 SERVICES = {
-    # System activation services
-    "activate_intruder_detection": service_activate_intruder_detection.handle_activate_intruder_detection,
-    "deactivate_intruder_detection": service_deactivate_intruder_detection.handle_deactivate_intruder_detection,
-    "activate_presence_simulation": service_activate_presence_simulation.handle_activate_presence_simulation,
-    "deactivate_presence_simulation": service_deactivate_presence_simulation.handle_deactivate_presence_simulation,
     # Location zone management services
     "add_activation_zone": service_add_activation_zone.handle_add_activation_zone,
     "remove_activation_zone": service_remove_activation_zone.handle_remove_activation_zone,
@@ -80,8 +72,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     for service_name, handler in SERVICES.items():
         hass.services.async_register(DOMAIN, service_name, handler)
 
-    await GroupManager.get_instance(hass)
     await DeviceManager.get_instance(hass)
+    await StateManager.get_instance(hass)
+    await GroupManager.get_instance(hass)
 
     await hass.async_create_task(
         hass.config_entries.async_forward_entry_setups(entry, [Platform.LIGHT])

@@ -38,13 +38,13 @@ class DeviceManager(BaseManager):
         is_enabled = call.data.get(IS_ENABLED, True)
         device_id = call.data.get(DEVICE_ID)
 
-        if any(device[DEVICE_ID] == device_id for device in self.data):
+        if any(device[DEVICE_ID] == device_id for device in self._data):
             self._logger.warning(f"Device with {device_id} already exists.")
             return
 
         if any(
             device.get(ENTITY_ID) == entity_id
-            for device in self.data
+            for device in self._data
             if ENTITY_ID in device
         ):
             self._logger.warning(f"Entity with {entity_id} already exists.")
@@ -60,8 +60,8 @@ class DeviceManager(BaseManager):
         if entity_id:
             new_device[ENTITY_ID] = entity_id
 
-        self.data.append(new_device)
-        await self._store.async_save(self.data)
+        self._data.append(new_device)
+        await self._store.async_save(self._data)
 
         entry = next(
             (entry for entry in self._hass.config_entries.async_entries(DOMAIN)),
@@ -110,12 +110,12 @@ class DeviceManager(BaseManager):
         device_id = entity_entry.unique_id
 
         device_to_remove = next(
-            (device for device in self.data if device[DEVICE_ID] == device_id), None
+            (device for device in self._data if device[DEVICE_ID] == device_id), None
         )
 
         if not device_to_remove:
             device_to_remove = next(
-                (device for device in self.data if device.get(ENTITY_ID) == entity_id),
+                (device for device in self._data if device.get(ENTITY_ID) == entity_id),
                 None,
             )
 
@@ -132,10 +132,10 @@ class DeviceManager(BaseManager):
             filter_key = DEVICE_ID
             filter_value = device_to_remove[DEVICE_ID]
 
-        self.data = [
-            device for device in self.data if device.get(filter_key) != filter_value
+        self._data = [
+            device for device in self._data if device.get(filter_key) != filter_value
         ]
-        await self._store.async_save(self.data)
+        await self._store.async_save(self._data)
 
         entry = next(
             (entry for entry in self._hass.config_entries.async_entries(DOMAIN)),
@@ -197,12 +197,12 @@ class DeviceManager(BaseManager):
         device_id = entity_entry.unique_id
 
         device_to_enable = next(
-            (device for device in self.data if device[DEVICE_ID] == device_id), None
+            (device for device in self._data if device[DEVICE_ID] == device_id), None
         )
 
         if not device_to_enable:
             device_to_enable = next(
-                (device for device in self.data if device.get(ENTITY_ID) == entity_id),
+                (device for device in self._data if device.get(ENTITY_ID) == entity_id),
                 None,
             )
 
@@ -247,7 +247,7 @@ class DeviceManager(BaseManager):
                         device[IS_ENABLED] = True
                         break
 
-        await self._store.async_save(self.data)
+        await self._store.async_save(self._data)
         self._logger.debug(f"Enabled device {device_id} (Entity {entity_id}).")
 
     @service
@@ -264,12 +264,12 @@ class DeviceManager(BaseManager):
         device_id = entity_entry.unique_id
 
         device_to_disable = next(
-            (device for device in self.data if device[DEVICE_ID] == device_id), None
+            (device for device in self._data if device[DEVICE_ID] == device_id), None
         )
 
         if not device_to_disable:
             device_to_disable = next(
-                (device for device in self.data if device.get(ENTITY_ID) == entity_id),
+                (device for device in self._data if device.get(ENTITY_ID) == entity_id),
                 None,
             )
 
@@ -312,14 +312,14 @@ class DeviceManager(BaseManager):
                         device[IS_ENABLED] = False
                         break
 
-        await self._store.async_save(self.data)
+        await self._store.async_save(self._data)
         self._logger.debug(f"Disabled device {device_id} (Entity {entity_id}).")
 
     async def control_device(self, device_id: str, command: str):
         normalized_command = command.upper()
 
         device = next(
-            (device for device in self.data if device[DEVICE_ID] == device_id), None
+            (device for device in self._data if device[DEVICE_ID] == device_id), None
         )
         if not device:
             self._logger.error(f"Device {device_id} not found in store data")

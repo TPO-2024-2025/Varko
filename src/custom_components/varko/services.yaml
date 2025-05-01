@@ -112,34 +112,20 @@ disable_device:
             - integration: varko
             - integration: shelly
 
-# System activation services
-activate_intruder_detection:
-  name: Activate Intruder Detection
-  description: Activate the intruder detection system
+# System state services
+set_state_idle:
+  name: Set state to idle
+  description: Set system to idle state
   fields: {}
 
-deactivate_intruder_detection:
-  name: Deactivate Intruder Detection
-  description: Deactivate the intruder detection system
+set_state_ready:
+  name: Set state to ready
+  description: Set system to ready state
   fields: {}
 
-activate_presence_simulation:
-  name: Activate Presence Simulation
-  description: Activate the system that simulates human presence in the home
-  fields:
-    timeout:
-      name: Timeout
-      description: Time in minutes until simulation automatically deactivates (0 = never)
-      required: false
-      default: 0
-      selector:
-        number:
-          min: 0
-          unit_of_measurement: "minutes"
-
-deactivate_presence_simulation:
-  name: Deactivate Presence Simulation
-  description: Deactivate the presence simulation system
+set_state_active:
+  name: Set state to active
+  description: Set system to active state
   fields: {}
 
 # Location zone management
