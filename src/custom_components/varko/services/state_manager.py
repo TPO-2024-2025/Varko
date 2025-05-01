@@ -1,5 +1,6 @@
 import asyncio
 import random
+
 from homeassistant.core import HomeAssistant, ServiceCall
 
 from custom_components.varko.const import (
@@ -125,6 +126,12 @@ class StateManager(BaseManager):
             cls.__instance = cls(hass)
             await cls.__instance._initialize()
         return cls.__instance
+
+    @classmethod
+    def destroy(cls):
+        if cls.__instance is not None:
+            cls.__instance.__del__()
+            cls.__instance = None
 
     @service
     @admin

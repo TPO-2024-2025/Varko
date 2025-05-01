@@ -14,8 +14,12 @@ class BaseManager:
         self._hass = hass
         self._store = Store(hass, 1, store_key)
         self._data = data_default
+        self.__services = []
 
         self.__register_services()
+
+    def __del__(self):
+        self.__unregister_services()
 
     async def _initialize(self):
         data = await self._store.async_load()
@@ -30,8 +34,15 @@ class BaseManager:
             attr = getattr(self, attr_name)
             if hasattr(attr, "_is_service") and attr._is_service:
                 self._logger.debug(f"Registering service: {attr.__name__}")
+                self.__services.append(attr.__name__)
                 self._hass.services.async_register(
                     DOMAIN,
                     attr.__name__,
                     attr,
                 )
+
+    def __unregister_services(self):
+        for service in self.__services:
+            self._logger.debug(f"Unregistering service: {service}")
+            self._hass.services.async_remove(DOMAIN, service)
+        self.__services = []

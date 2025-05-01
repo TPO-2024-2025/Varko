@@ -2,18 +2,18 @@ from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.helpers.entity_platform import async_get_platforms
 from homeassistant.helpers.entity_registry import async_get as async_get_entity_registry
 
-from custom_components.varko.decorators import service, admin
-from custom_components.varko.light import VarkoLight
-from custom_components.varko.services.base_manager import BaseManager
 from custom_components.varko.const import (
-    DOMAIN,
-    DEVICE_TYPE,
     DEVICE_ID,
     DEVICE_NAME,
-    IS_ENABLED,
+    DEVICE_TYPE,
+    DOMAIN,
     ENTITY,
     ENTITY_ID,
+    IS_ENABLED,
 )
+from custom_components.varko.decorators import admin, service
+from custom_components.varko.light import VarkoLight
+from custom_components.varko.services.base_manager import BaseManager
 
 
 class DeviceManager(BaseManager):
@@ -28,6 +28,12 @@ class DeviceManager(BaseManager):
             cls.__instance = cls(hass)
             await cls.__instance._initialize()
         return cls.__instance
+
+    @classmethod
+    def destroy(cls):
+        if cls.__instance is not None:
+            cls.__instance.__del__()
+            cls.__instance = None
 
     @service
     @admin

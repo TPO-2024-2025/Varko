@@ -1,18 +1,17 @@
 """Component to integrate with Varko."""
 
-from homeassistant.core import HomeAssistant
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.components.panel_custom import async_register_panel
+import logging
+
 from homeassistant.components.http import StaticPathConfig
+from homeassistant.components.panel_custom import async_register_panel
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
+from homeassistant.core import HomeAssistant
 
 from custom_components.varko.services.group_manager import GroupManager
 from custom_components.varko.services.state_manager import StateManager
 
 from .const import DOMAIN
-
-import logging
-
 from .services.device_manager import DeviceManager
 
 _LOGGER = logging.getLogger(__name__)
@@ -91,6 +90,10 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unload_ok = await hass.config_entries.async_forward_entry_unload(
         entry, Platform.LIGHT
     )
+
+    StateManager.destroy()
+    DeviceManager.destroy()
+    GroupManager.destroy()
 
     if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id, None)

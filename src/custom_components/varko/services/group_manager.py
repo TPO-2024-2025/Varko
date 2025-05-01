@@ -18,6 +18,12 @@ class GroupManager(BaseManager):
             await cls.__instance._initialize()
         return cls.__instance
 
+    @classmethod
+    def destroy(cls):
+        if cls.__instance is not None:
+            cls.__instance.__del__()
+            cls.__instance = None
+
     @service
     @admin
     async def add_person(self, call: ServiceCall):
@@ -29,6 +35,7 @@ class GroupManager(BaseManager):
             return
 
         members.add(person)
+        self._hass.states.async_set(f"{DOMAIN}.group", str(members._hash()))
 
         self._data = list(members)
         await self._store.async_save(self._data)
@@ -41,10 +48,11 @@ class GroupManager(BaseManager):
 
         members = set(self._data)
         if person not in members:
-            self.logger.warning(f"Person {person} does not exist in the group.")
+            self._logger.warning(f"Person {person} does not exist in the group.")
             return
 
         members.remove(person)
+        self._hass.states.async_set(f"{DOMAIN}.group", str(members._hash()))
 
         self._data = list(members)
         await self._store.async_save(self._data)
