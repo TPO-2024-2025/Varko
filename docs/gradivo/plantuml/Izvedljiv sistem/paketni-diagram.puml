@@ -1,0 +1,38 @@
+@startuml
+title Package Diagram
+
+package "Home Assistant" <<application>> {
+
+    package "UI"
+    package "Store" <<storage>>
+    package "Entitete"
+
+    package "Varko" <<subsystem>> {
+        package "VarkoPanel"
+        package "UpravljanjeNaprav"
+        package "UpravljanjeCon"
+        package "UpravljanjeSUS"
+        package "UpravljanjeStanj"
+    }
+
+}
+
+package "Zunanji sistemi" {
+     package "Frigate"
+     package "MQTT"
+}
+
+UI .-> VarkoPanel
+Varko .-> "Zunanji sistemi"
+UpravljanjeStanj --> UpravljanjeNaprav
+UpravljanjeCon --> UpravljanjeStanj
+UpravljanjeCon --> UpravljanjeSUS
+VarkoPanel --> UpravljanjeNaprav
+VarkoPanel --> UpravljanjeCon
+VarkoPanel --> UpravljanjeSUS
+VarkoPanel --> UpravljanjeStanj
+UpravljanjeNaprav .-> Entitete
+UpravljanjeSUS .-> Entitete
+UpravljanjeCon .-> Entitete
+Varko .-> Store
+@enduml
