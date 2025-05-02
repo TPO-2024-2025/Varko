@@ -35,4 +35,60 @@ class DeviceManager {
 }
 BaseManager <|-- DeviceManager
 
+class StateManager {
+    - __instance: StateManager
+    - _state: State
+    - _presence_detection_enabled: bool
+    - _presence_simulation_duration_minutes: int
+    - _presence_simulation_timer: Task
+    - _presence_simulation_stop_event: Event
+    + __init__(hass: HomeAssistant): None
+    + get_instance(hass: HomeAssistant): Coroutine[Any, Any, StateManager]
+    + destroy(): None
+    + set_state_idle(call: ServiceCall): Coroutine[Any, Any, None]
+    + set_state_ready(call: ServiceCall): Coroutine[Any, Any, None]
+    + set_state_active(call: ServiceCall): Coroutine[Any, Any, None]
+    - internal_set_state_active(): Coroutine[Any, Any, None]
+    - set_state_active_execute(): Coroutine[Any, Any, None]
+    - start_presence_detection(): None
+    - stop_presence_detection(): None
+    - start_presence_simulation(): None
+    - stop_presence_simulation(): None
+    - _turn_off_all_devices(): Coroutine[Any, Any, None]
+    - presence_simulation_task(): Coroutine[Any, Any, None]
+    - presence_simulation(): Coroutine[Any, Any, None]
+    - _wait_or_stop(delay: float): Coroutine[Any, Any, bool]
+}
+BaseManager <|-- StateManager
+StateManager "1" *-- "1" State : has >
+
+abstract class State {
+    # _manager: StateManager
+    + __init__(manager: StateManager): None
+    + {abstract} set_state_idle(): Coroutine[Any, Any, None]
+    + {abstract} set_state_ready(): Coroutine[Any, Any, None]
+    + {abstract} set_state_active(): Coroutine[Any, Any, None]
+}
+
+class IdleState {
+    + set_state_idle(): Coroutine[Any, Any, None]
+    + set_state_ready(): Coroutine[Any, Any, None]
+    + set_state_active(): Coroutine[Any, Any, None]
+}
+State <|-- IdleState
+
+class ReadyState {
+    + set_state_idle(): Coroutine[Any, Any, None]
+    + set_state_ready(): Coroutine[Any, Any, None]
+    + set_state_active(): Coroutine[Any, Any, None]
+}
+State <|-- ReadyState
+
+class ActiveState {
+    + set_state_idle(): Coroutine[Any, Any, None]
+    + set_state_ready(): Coroutine[Any, Any, None]
+    + set_state_active(): Coroutine[Any, Any, None]
+}
+State <|-- ActiveState
+
 @enduml
