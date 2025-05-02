@@ -22,17 +22,18 @@ package "Zunanji sistemi" {
      package "MQTT"
 }
 
-UporabniškiVmesnik .-> VarkoPlošča
-Varko .-> "Zunanji sistemi"
-UpravljanjeStanj --> UpravljanjeNaprav
-UpravljanjeCon --> UpravljanjeStanj
-UpravljanjeCon --> UpravljanjeSUS
-VarkoPlošča --> UpravljanjeNaprav
-VarkoPlošča --> UpravljanjeCon
-VarkoPlošča --> UpravljanjeSUS
-VarkoPlošča --> UpravljanjeStanj
-UpravljanjeNaprav .-> Entitete
-UpravljanjeSUS .-> Entitete
-UpravljanjeCon .-> Entitete
-Varko .-> Store
+UporabniškiVmesnik .-> VarkoPlošča : "dostopa"
+Varko .-> MQTT : "dostopa"
+Frigate .-> MQTT : "dostopa"
+UpravljanjeStanj --> UpravljanjeNaprav : "proži"
+UpravljanjeCon --> UpravljanjeStanj : "proži"
+UpravljanjeCon --> UpravljanjeSUS : "proži"
+VarkoPlošča --> UpravljanjeNaprav : "proži"
+VarkoPlošča --> UpravljanjeCon : "proži"
+VarkoPlošča --> UpravljanjeSUS : "proži"
+VarkoPlošča --> UpravljanjeStanj : "proži"
+UpravljanjeNaprav .-> Entitete : "dostopa"
+UpravljanjeSUS .-> Entitete : "dostopa"
+UpravljanjeCon .-> Entitete : "dostopa"
+Varko .-> Store : "dostopa"
 @enduml
