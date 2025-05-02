@@ -1,14 +1,14 @@
 @startuml
-title Package Diagram
+title Paketni Diagram
 
-package "Home Assistant" <<application>> {
+package "Home Assistant" <<aplikacija>> {
 
-    package "UI"
-    package "Store" <<storage>>
+    package "UporabniškiVmesnik"
+    package "Store" <<shramba>>
     package "Entitete"
 
-    package "Varko" <<subsystem>> {
-        package "VarkoPanel"
+    package "Varko" <<podsistem>> {
+        package "VarkoPlošča"
         package "UpravljanjeNaprav"
         package "UpravljanjeCon"
         package "UpravljanjeSUS"
@@ -22,15 +22,15 @@ package "Zunanji sistemi" {
      package "MQTT"
 }
 
-UI .-> VarkoPanel
+UporabniškiVmesnik .-> VarkoPlošča
 Varko .-> "Zunanji sistemi"
 UpravljanjeStanj --> UpravljanjeNaprav
 UpravljanjeCon --> UpravljanjeStanj
 UpravljanjeCon --> UpravljanjeSUS
-VarkoPanel --> UpravljanjeNaprav
-VarkoPanel --> UpravljanjeCon
-VarkoPanel --> UpravljanjeSUS
-VarkoPanel --> UpravljanjeStanj
+VarkoPlošča --> UpravljanjeNaprav
+VarkoPlošča --> UpravljanjeCon
+VarkoPlošča --> UpravljanjeSUS
+VarkoPlošča --> UpravljanjeStanj
 UpravljanjeNaprav .-> Entitete
 UpravljanjeSUS .-> Entitete
 UpravljanjeCon .-> Entitete
