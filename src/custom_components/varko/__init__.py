@@ -13,19 +13,15 @@ from custom_components.varko.services.state_manager import StateManager
 
 from .const import DOMAIN
 from .services.device_manager import DeviceManager
+from .services.zone_manager import ZoneManager
 
 _LOGGER = logging.getLogger(__name__)
 
 from .services import (
-    service_add_activation_zone,
-    service_remove_activation_zone,
     service_send_notification,
 )
 
 SERVICES = {
-    # Location zone management services
-    "add_activation_zone": service_add_activation_zone.handle_add_activation_zone,
-    "remove_activation_zone": service_remove_activation_zone.handle_remove_activation_zone,
     # Notification service
     "send_notification": service_send_notification.handle_send_notification,
 }
@@ -74,6 +70,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await DeviceManager.get_instance(hass)
     await StateManager.get_instance(hass)
     await GroupManager.get_instance(hass)
+    await ZoneManager.get_instance(hass)
 
     await hass.async_create_task(
         hass.config_entries.async_forward_entry_setups(entry, [Platform.LIGHT])
@@ -94,6 +91,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     StateManager.destroy()
     DeviceManager.destroy()
     GroupManager.destroy()
+    ZoneManager.destroy()
 
     if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id, None)

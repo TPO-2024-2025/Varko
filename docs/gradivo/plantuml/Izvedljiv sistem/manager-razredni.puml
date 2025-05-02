@@ -19,6 +19,7 @@ class GroupManager {
     + destroy(): None
     + add_person(call: ServiceCall): Coroutine[Any, Any, None]
     + remove_person(call: ServiceCall): Coroutine[Any, Any, None]
+    - publish_state_changed(members: set): None
 }
 BaseManager <|-- GroupManager
 
@@ -36,28 +37,27 @@ class DeviceManager {
 BaseManager <|-- DeviceManager
 
 class StateManager {
-    - __instance: StateManager
-    - _state: State
-    - _presence_detection_enabled: bool
-    - _presence_simulation_duration_minutes: int
-    - _presence_simulation_timer: Task
-    - _presence_simulation_stop_event: Event
+    - instance: StateManager
+    - state: State
+    - presence_simulation_duration_minutes: int
+    - presence_simulation_timer: Task
+    - presence_simulation_stop_event: Event
+    - mqtt_frigate_subscription: Callable[[], None] | None
     + __init__(hass: HomeAssistant): None
     + get_instance(hass: HomeAssistant): Coroutine[Any, Any, StateManager]
     + destroy(): None
     + set_state_idle(call: ServiceCall): Coroutine[Any, Any, None]
     + set_state_ready(call: ServiceCall): Coroutine[Any, Any, None]
     + set_state_active(call: ServiceCall): Coroutine[Any, Any, None]
-    - internal_set_state_active(): Coroutine[Any, Any, None]
-    - set_state_active_execute(): Coroutine[Any, Any, None]
-    - start_presence_detection(): None
-    - stop_presence_detection(): None
     - start_presence_simulation(): None
     - stop_presence_simulation(): None
-    - _turn_off_all_devices(): Coroutine[Any, Any, None]
+    - turn_off_all_devices(): Coroutine[Any, Any, None]
     - presence_simulation_task(): Coroutine[Any, Any, None]
     - presence_simulation(): Coroutine[Any, Any, None]
-    - _wait_or_stop(delay: float): Coroutine[Any, Any, bool]
+    - wait_or_stop(delay: float): Coroutine[Any, Any, bool]
+    - setup_mqtt(): Coroutine[Any, Any, None]
+    - handle_person_detection(msg: ReceiveMessage): Coroutine[Any, Any, None]
+    - clear_mqtt(): None
 }
 BaseManager <|-- StateManager
 StateManager "1" *-- "1" State : has >
@@ -90,5 +90,24 @@ class ActiveState {
     + set_state_active(): Coroutine[Any, Any, None]
 }
 State <|-- ActiveState
+
+class ZoneManager {
+    - instance: ZoneManager
+    - group_tracker: Callable[[], None] | None
+    - device_trackers: list[Callable]
+    - device_entities: list[str]
+    + __init__(hass: HomeAssistant)
+    + get_instance(hass: HomeAssistant): Coroutine[Any, Any, ZoneManager]
+    + destroy(): None
+    + select_activation_zone(call: ServiceCall): Coroutine[Any, Any, None]
+    - setup_group_tracker(): Coroutine[Any, Any, None]
+    - setup_device_trackers(): Coroutine[Any, Any, None]
+    - clear_device_trackers(): None
+    - clear_group_tracker(): None
+    - handle_group_state_change(event: Event): Coroutine[Any, Any, None]
+    - handle_zone_device_state_change(event: Event): Coroutine[Any, Any, None]
+    - check_presence_in_zone(zone_entity_id: str, tracking_entities: list[str]): Coroutine[Any, Any, None]
+}
+BaseManager <|-- ZoneManager
 
 @enduml
