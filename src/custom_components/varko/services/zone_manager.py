@@ -6,6 +6,7 @@ from homeassistant.helpers.event import async_track_state_change_event
 from homeassistant.components.zone import in_zone
 from custom_components.varko.const import DOMAIN
 
+
 class ZoneManager(BaseManager):
     __instance = None
 
