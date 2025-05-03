@@ -1,0 +1,64 @@
+@startuml
+title Diagram prehodov stanj sistema Varko
+
+[*] -right-> IDLE
+IDLE: Sistem je pasiven in ne izvaja simulacije \nprisotnosti ter ignorira dogodke zaznave oseb.
+READY: Sistem spremlja dogodke zaznave oseb.
+ACTIVE: Sistem je aktiven, izvaja simulacijo prisotnosti.
+
+IDLE --> READY
+note on link
+Vse registrirane naprave uporabnikov SUS zapustijo 
+izbrano varnostno cono ali administrator ročno 
+preklopi sistem v stanje READY.
+end note
+
+IDLE --> ACTIVE
+note on link
+Administrator ročno preklopi sistem v stanje ACTIVE.
+end note
+
+IDLE --> IDLE
+note on link
+Prejeto MQTT sporočilo o zaznavi osebe s strani Frigate-a
+ali administrator ročno preklopi sistem v stanje IDLE.
+end note
+
+READY --> IDLE
+note on link
+V izbrano varnostno cono vstopi vsaj ena registrirana 
+naprava uporabnika, ki je del SUS ali administrator ročno 
+preklopi sistem v stanje IDLE.
+end note
+
+READY --> ACTIVE
+note on link
+Prejeto MQTT sporočilo o zaznavi osebe s strani Frigate-a 
+ali administrator ročno preklopi sistem v stanje ACTIVE.
+end note
+
+READY -left-> READY
+note on link
+Administrator ročno preklopi sistem v stanje READY.
+end note
+
+ACTIVE --> IDLE
+note on link
+V izbrano varnostno cono vstopi vsaj ena registrirana 
+naprava uporabnika, ki je del SUS ali administrator ročno 
+preklopi sistem v stanje IDLE.
+end note
+
+ACTIVE --> READY
+note on link
+Preteče časovnik, ki se je nastavil ob zadnji zaznavi osebe 
+ali administrator ročno preklopi sistem v stanje READY.
+end note
+
+ACTIVE --> ACTIVE 
+note on link
+Prejeto MQTT sporočilo o zaznavi osebe s strani Frigate-a (ponastavi se časovnik)
+ali administrator ročno preklopi sistem v stanje ACTIVE.
+end note
+
+@enduml
