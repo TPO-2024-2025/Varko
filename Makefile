@@ -4,11 +4,16 @@ PYTHON = $(__venv_dir)/bin/python
 
 default:
 	$(MAKE) format
+	$(MAKE) test
 .PHONY: default
 
 format: $(__venv_marker)
 	$(PYTHON) -m black .
 .PHONY: format
+
+test: $(__venv_marker)
+	$(PYTHON) -m unittest discover -s test -p "*_test.py" --verbose
+.PHONY: test
 
 start-%:
 	# Home Assistant
