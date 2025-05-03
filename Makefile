@@ -13,6 +13,7 @@ format: $(__venv_marker)
 
 test: $(__venv_marker)
 	$(PYTHON) -m unittest discover -s test -p "*_test.py" --verbose
+	$(PYTHON) -m unittest discover -s test/services -p "*_test.py" --verbose
 .PHONY: test
 
 start-%:

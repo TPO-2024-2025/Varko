@@ -33,13 +33,9 @@ class BaseManager:
         for attr_name in dir(self):
             attr = getattr(self, attr_name)
             if hasattr(attr, "_is_service") and attr._is_service:
-                self._logger.debug(f"Registering service: {attr.__name__}")
-                self.__services.append(attr.__name__)
-                self._hass.services.async_register(
-                    DOMAIN,
-                    attr.__name__,
-                    attr,
-                )
+                self._logger.debug(f"Registering service: {attr_name}")
+                self.__services.append(attr_name)
+                self._hass.services.async_register(DOMAIN, attr_name, attr)
 
     def __unregister_services(self):
         for service in self.__services:
