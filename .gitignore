@@ -1,6 +1,9 @@
 # Python virtual environment
 .venv
 
+# Python cache
+__pycache__
+
 # Runtime folder
 .run
 

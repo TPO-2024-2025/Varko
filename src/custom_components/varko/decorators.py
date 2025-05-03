@@ -15,8 +15,8 @@ def admin(handler):
     @functools.wraps(handler)
     async def wrapper(self: BaseManager, call: ServiceCall):
         if not call.context.user_id:
-            self._logger.error(f"Unknown access attempt to service {call.service}")
-            raise Unauthorized()
+            self._logger.info("Internal call, skipping admin check.")
+            return await handler(self, call)
 
         caller = await self._hass.auth.async_get_user(call.context.user_id)
         if caller is None:

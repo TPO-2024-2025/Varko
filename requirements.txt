@@ -84,17 +84,17 @@ bluetooth-adapters==0.21.4
     #   habluetooth
 bluetooth-auto-recovery==1.4.5
     # via habluetooth
-bluetooth-data-tools==1.27.0
+bluetooth-data-tools==1.28.1
     # via habluetooth
-boto3==1.37.28
+boto3==1.38.7
     # via pycognito
-botocore==1.37.28
+botocore==1.38.7
     # via
     #   boto3
     #   s3transfer
 btsocket==0.3.0
     # via bluetooth-auto-recovery
-certifi==2025.1.31
+certifi==2025.4.26
     # via
     #   homeassistant
     #   httpcore
@@ -104,7 +104,7 @@ cffi==1.17.1
     # via
     #   cryptography
     #   pycares
-charset-normalizer==3.4.1
+charset-normalizer==3.4.2
     # via requests
 ciso8601==2.3.2
     # via
@@ -130,23 +130,24 @@ dbus-fast==2.44.1
     #   bleak
     #   bleak-retry-connector
     #   bluetooth-adapters
+    #   habluetooth
 envs==1.4
     # via pycognito
 fnv-hash-fast==1.4.0
     # via homeassistant
 fnvhash==0.1.0
     # via fnv-hash-fast
-frozenlist==1.5.0
+frozenlist==1.6.0
     # via
     #   aiohttp
     #   aiosignal
-greenlet==3.1.1
+greenlet==3.2.1
     # via sqlalchemy
-h11==0.14.0
+h11==0.16.0
     # via httpcore
 ha-ffmpeg==3.2.2
     # via homeassistant
-habluetooth==3.38.0
+habluetooth==3.45.0
     # via home-assistant-bluetooth
 hass-nabucasa==0.94.0
     # via homeassistant
@@ -156,9 +157,9 @@ home-assistant-bluetooth==1.13.1
     # via homeassistant
 home-assistant-intents==2025.3.28
     # via homeassistant
-homeassistant==2025.4.1
+homeassistant==2025.4.4
     # via -r requirements.in
-httpcore==1.0.7
+httpcore==1.0.9
     # via httpx
 httpx==0.28.1
     # via homeassistant
@@ -172,6 +173,8 @@ ifaddr==0.2.0
     # via
     #   homeassistant
     #   zeroconf
+iniconfig==2.1.0
+    # via pytest
 jinja2==3.1.6
     # via homeassistant
 jmespath==1.0.1
@@ -188,13 +191,13 @@ mashumaro==3.15
     # via
     #   aiohasupervisor
     #   webrtc-models
-multidict==6.3.2
+multidict==6.4.3
     # via
     #   aiohttp
     #   yarl
 mutagen==1.47.0
     # via homeassistant
-mypy-extensions==1.0.0
+mypy-extensions==1.1.0
     # via black
 numpy==2.2.2
     # via
@@ -205,16 +208,19 @@ orjson==3.10.16
     #   aiohasupervisor
     #   homeassistant
     #   webrtc-models
-packaging==24.2
+packaging==25.0
     # via
     #   black
     #   homeassistant
+    #   pytest
 pathspec==0.12.1
     # via black
 pillow==11.1.0
     # via homeassistant
 platformdirs==4.3.7
     # via black
+pluggy==1.5.0
+    # via pytest
 propcache==0.3.0
     # via
     #   aiohttp
@@ -225,7 +231,7 @@ psutil==7.0.0
     # via psutil-home-assistant
 psutil-home-assistant==0.0.1
     # via homeassistant
-pycares==4.6.0
+pycares==4.7.0
     # via aiodns
 pycognito==2024.5.1
     # via hass-nabucasa
@@ -249,6 +255,8 @@ pyric==0.1.6.3
     # via bluetooth-auto-recovery
 pyspeex-noise==1.0.2
     # via homeassistant
+pytest==8.3.5
+    # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via botocore
 python-slugify==8.0.4
@@ -269,7 +277,7 @@ requests==2.32.3
     #   acme
     #   homeassistant
     #   pycognito
-s3transfer==0.11.4
+s3transfer==0.12.0
     # via boto3
 securetar==2025.2.1
     # via homeassistant
@@ -289,7 +297,7 @@ standard-telnetlib==3.13.0
     # via homeassistant
 text-unidecode==1.3
     # via python-slugify
-typing-extensions==4.13.1
+typing-extensions==4.13.2
     # via
     #   homeassistant
     #   mashumaro

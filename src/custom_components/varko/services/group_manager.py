@@ -35,11 +35,12 @@ class GroupManager(BaseManager):
             return
 
         members.add(person)
-        self._hass.states.async_set(f"{DOMAIN}.group", str(members._hash()))
 
         self._data = list(members)
         await self._store.async_save(self._data)
         self._logger.info(f"Added {person} to the group.")
+
+        self.__publish_state_changed(members)
 
     @service
     @admin
@@ -52,8 +53,15 @@ class GroupManager(BaseManager):
             return
 
         members.remove(person)
-        self._hass.states.async_set(f"{DOMAIN}.group", str(members._hash()))
 
         self._data = list(members)
         await self._store.async_save(self._data)
         self._logger.info(f"Removed {person} from the group.")
+
+        self.__publish_state_changed(members)
+
+    def __publish_state_changed(self, members: set):
+        self._hass.states.async_set(
+            f"{DOMAIN}.group",
+            str(len(members)),
+        )

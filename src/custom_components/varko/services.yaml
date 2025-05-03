@@ -129,26 +129,13 @@ set_state_active:
   fields: {}
 
 # Location zone management
-add_activation_zone:
-  name: Add Activation Zone
-  description: Add a location zone where the system should activate when all users leave
+select_activation_zone:
+  name: Select Activation Zone
+  description: Select a location zone for system activation
   fields:
-    zone_id:
+    zone_entity_id:
       name: Zone ID
-      description: Identifier for the zone to add
-      required: true
-      example: "zone.home"
-      selector:
-        entity:
-          domain: zone
-
-remove_activation_zone:
-  name: Remove Activation Zone
-  description: Remove a location zone from system activation
-  fields:
-    zone_id:
-      name: Zone ID
-      description: Identifier for the zone to remove
+      description: Identifier for the zone to select
       required: true
       example: "zone.home"
       selector:

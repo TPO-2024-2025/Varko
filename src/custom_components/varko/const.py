@@ -11,3 +11,6 @@ STATE_ENTITY_ID = f"{DOMAIN}.system_state"
 STATE_IDLE = "idle"
 STATE_READY = "ready"
 STATE_ACTIVE = "active"
+
+FRIGATE_MQTT_PREFIX = "frigate_dev"
+FRIGATE_MQTT_PERSON_TOPIC = f"{FRIGATE_MQTT_PREFIX}/+/person"
