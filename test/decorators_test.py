@@ -18,7 +18,7 @@ class ServiceTest(unittest.TestCase):
 
         # act & assert
         self.assertTrue(hasattr(mock_handler, "_is_service"))
-        self.assertTrue(mock_handler._is_service, "_is_service")
+        self.assertTrue(getattr(mock_handler, "_is_service"))
 
 
 class AdminTest(unittest.IsolatedAsyncioTestCase):
