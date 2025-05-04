@@ -4,114 +4,289 @@
 | :------------------------------------------------------------------------------ | :-----------------------------------------------------------: | ---------------------------------------------------------------------------------: |
 | :orange_square: **Osnutek sistema**<br>(1. poročilo o stanju)                   | :green_square: **Izvedljiv sistem**<br>(2. poročilo o stanju) |                      :blue_square: **Končna izdaja**<br>(celovito končno poročilo) |
 
-![Terminski načrt](https://teaching.lavbic.net/plantuml/svg/dPRFRk8m4CRlVehHza0NAPGOabOhL5LjjrArAxLQxQceXu6Or2JOA3PqOTL7w5lrmNOSGigVb5GhV831ytqpFu-ZN1YBcOrHMGjVVeji8fL992XyUyti5yPwnYvISSxo7TSIummdy9S1M3aHgLGY_m7maxvUwLHdS3JYxfD7RxIogoZbBIZquZBH94NM9GwJEDCp5HMvucmKZA9TnU3cykpxLP6EMQQVzrstzanaAepLPNN_upDCjH7HHmALJQOoVh9bfo-iTrBGOyHKJT6n6-mesGoLeR-4igpn92C18wtjGFzXAQfuXh40ax9f9fKrGqm5F0kHf0kIH3lB8bmG454Komp9RaTucmTUk-jn7wJP3jAg3FAD86kimXtFFyt3hcQY8XKSHMs1ey5wHzThVxIZL0uEImGU3p_OmUupFHP32_cu6bWbSAgAiNulJ_XMqZz_eEaLLYGWbtCSeneZJ4bm8Yp2CM-tUEjhxoHFEd-49vnEXJA0TakriQTQOTHi_i9bHFV0YZdCmIIpAKrJimd7FbWH2RNXWmRwr_uZf6YeWG3ee4obvEro83EasfToZWUq-9OMe8hMTAWLPzKm81ITeUU1tmAgCSEX91QUHz2QpNj2akgOq13Qn3ghefgyaEEEirLorxQpjlLNFUmPSsUS1rZ_Begme4zMM7fjE_cdhSx18t7Zn_eF6EivNPazjLLb3pjmzmhhR1BX5KJkZ9gviJ7IM37vB92W1DAjyLtZeDEOwao_lSeKGRkzQZpRzZfjTGyISTVjdKYbO465rr09DgbqAgZSBkV4Uopd1PTTBDrgB669vQp6U8s5rsC9Mi51B6wzO-47i7Hgi8IRMBeLM7vezVQgt3rrnNzoLdnUTtl2NIf9xYFSk9UzR5dni1OA3z-XLEWLIBerI7nUCjb_RX4ECQnyu8Qjy61v8It6BaWtVydu1m00 "Terminski načrt")
+## Pametna integracija Varko
 
-Do 11. tedna naj bi bila implementirana osnovna funkcionalnost sistema v obliki demo prototipa. 2. poročilo o stanju je osredotočeno na razdelka [**4 Opis sistema**](#4-opis-sistema) in [**5 Trenutno stanje**](#5-trenutno-stanje). Pri opisu sistema se je treba osredotočiti predvsem na opis arhitekture sistema.
+Skupina 20:
+- Jaka Čelik
+- Tara Majkič
+- Jaka Pelko
+- Klemen Remec
+- Miha Vintar
 
-Izogibajte se nepotrebnemu podvajanju pri opisovanju sistema. Vključite ostale informacije na najbolj ustrezna mesta, med [uvodom](#1-uvod) in [opisom sistema](#4-opis-sistema).
+# 1 Uvod
 
-Za izdelavo diagramov uporabite orodje [**PlantUML**](https://plantuml.com/) in v poročilo vključite izvorno kodo diagrama v jeziku PlantUML (v mapi [`gradivo`](gradivo)), sliko diagrama pa vključite s povezavo (in ne preko neposredne vključitve binarne datoteke) preko storitve <https://teaching.lavbic.net/plantuml>, kot prikazujejo primeri vključenih diagram v tej predlogi poročila.
+## 1.1 Poudarki
 
-## :page_with_curl: Naslov projekta
+### Načrtovanje iteracije
 
-## :information_desk_person: Ime ekipe: Člani ekipe
+Ob začetku iteracije smo določili okvirni načrt dela, ki ga moramo opraviti.
 
-## 1 Uvod
+Glavni cilj te iteracije je predstavljala izdelava delujočega izdelka, ki vsebuje večinoma dokončane implementacije tako zalednega sistema kot uporabniškega vmesnika in integracije s pametnimi napravami. Prav tako je bil eden od ciljev pisanje testov enot končne implementacije.
 
-### 1.2 Poudarki
+Poleg tega je cilj te iteracije tudi, da se vzpostavi CI cevovod, ki bo skrbel za kvaliteto kode in stabilnost glavne razvojne veje na GitHub-u z avtomatskim testiranjem.
 
-- Kakšen je bil načrt za to iteracijo?
-  - Kaj je ekipa dosegla?
+Za zaključek iteracije smo načrtovali izdelavo poročila o izvedljivem sistemu, v katerem obrazložimo narejeno delo te iteracije.
 
-### 1.3 Spremembe
+### Doseženi cilji iteracije
 
-- Povzemite vse večje spremembe predloga projekta.
-- Vključite datum, motivacijo, opis in posledice vsake spremembe.
-- Če sprememb ni bilo, samo navedite, da jih ni bilo.
+Ekipa je dosegla zastavljeni cilj, torej končni produkt te iteracije vsebuje povečini delujoč izdelek, ki je testiran in tako z manjšimi dodelavami ter pripravo končne dokumentacije pripravljen na izdajo.
 
-## 2 Potrebe naročnika
+## 1.2 Spremembe
 
-- Na kratko opišite želeno splošno izkušnjo naročnika.
+Plan smo med iteracijo zaradi težav dobave zvočnika popravili, tako da integracijo zvočnika, za katerega predvidevamo podoben postopek integracije kot za luč, prestavljamo med delovne naloge naslednje integracije. Pri tem ne predvidevamo nobenih zamud ali blokad ostalih delovnih nalog prihodnje iteracije.
 
-## 3 Cilji projekta
+# 2 Potrebe naročnika
 
-- Povzamite naročnikove težave, ki jih projekt naslavlja.
-- Kakšne koristi bo prinesel projekt?
+### Opis problemske domene
 
-## 4 Opis sistema
+Uporabniki imajo na svojem pametnem telefonu naloženo aplikacijo Home Assistant, ki v sistem sporoča njihovo lokacijo.
 
-### 4.1 Pregled sistema
+Administrator sistema določi, kateri uporabniki objekta bodo tretirani kot uporabniki sistema tako, da jih v nastavitvah integracije, ki morajo biti pregledne in enostavne za uporabo, doda v skupino uporabnikov.
 
-- Predstavite sistem in glavne izzive.
-  - Povzemite utemeljitve izbranih načrtovalskih odločitev.
-  - Narišite kontekstni diagram, ki prikazuje, kako sistem sodeluje z zunanjimi storitvami, podatkovnimi bazami ipd. Jasno označite meje sistema.
-- Na kratko pojasnite zunanje interakcije sistema.
+Lokacija uporabnikov se bo pridobivala s pomočjo v Home Assistant že vgrajene podpore za sledenje lokacije uporabnikov preko lokacijskih con, ki bodo služile kot meje za določanje prisotnosti uprabnikov. Administrator sistema v nastavitvah integracije določi, katero že določeno lokacijsko cono bo sistem uporabljal.
 
-### 4.2 Osrednji arhitekturni pogledi
+Sistem bo na podlagi lokacije uporabnikov čakal na pogoje za njegovo aktivacijo. Sistem se aktivira, ko se vsi uporabniki, dodani v skupino uporabnikov, nahajajo izven določene lokacijske cone.
 
-- Za vsak pogled zagotovite osrednji diagram (npr. postavitveni ([deployment](https://plantuml.com/deployment-diagram)), paketni ([class](https://plantuml.com/class-diagram)) diagram oz. komponentni ([component](https://plantuml.com/component-diagram)) diagram).
+Kamere pošiljajo video prenos v omrežje preko protokola RTSP, ki ga sprejema vsebnik Docker z naloženim sistemom Frigate za prepoznavo ljudi. Sistem Frigate je namenjen prepoznavi subjektov, v tem primeru ljudi, v video prenosu, ki ga dobi iz nastavljenih kamer okoli varovanega objekta.
 
-  - Pri predlogu upoštevajte arhitekturne in načrtovalske vzorce.
-  - Priporoča se uporaba naslednjih diagramskih tehnik (ne nujno vseh):
+Ko na video prenosu prepozna osebo, pošlje sporočilo MQTT do drugega vsebnika Docker, ki poganja posrednika komunkacije MQTT. Ta ima nalogo posredništva sporočil MQTT med sistemom Frigate, sistemom Home Assistant (v katerem deluje integracija), in napravami v objektu, katere integracija upravlja.
 
-    - **Razredni diagram** ([Class Diagram](https://plantuml.com/class-diagram), izvorna koda :bar_chart: [PlantUML](./gradivo/plantuml/RD.puml))
+MQTT posrednik prepošlje obvestilo o prepoznavi osebe sistemu, ki ob prejetju tega signala na podlagi nastavitev varnostnega sistema zažene primerne ukrepe, kar se mora zgoditi v čim krajšem zamiku od zaznave osebe v sistemu Frigate. Administrator v času nastavitve sistema dodaja in odstranjuje naprave, za katere želi, da jih sistem v primeru ukrepanja uporabi za simulacijo prisotnosti uporabnikov. Prav tako lahko naprave (začasno) aktivira in deaktivira, če jih želi vključiti ali izključiti iz uporabe. Tako ima administrator kar največji nadzor nad uporabo naprav, povezanih v sistem.
 
-      ![RD](https://teaching.lavbic.net/plantuml/svg/TPDDRi8m48NtFiN8tK2heEOFQ1O8bRO7oBeR4xlWujYLROf4sxjtY0KaG3RHwFbblZVnPEuyitvRAoXVYDj8_SKigw5Ip3du8G1BLcrMrcmrNnXbBEpMqek3RYmNDcXt-Tlpz7M1AhFMx8AuLFWc-MirFRUg6eUtJ3iy4jgJjUG2Acah9GXPD7HQihqL768Ap44PDt4YvgrSRdrSm8Sop2FWmfu4UzAn9mKuhFIgfQLjBSB7GosyuImUD76H8BKV5ZYfKOBfQr8QI6c7b1N0cHTUrgAbvZsi9B1EyOR7iKwET33i7JKB0R9EWF6vnL6QzD2pmJKl3udIynZz_3pmymv_Uir_wk6FR_0dDxHfo9JTk17y-ZG62YQAi1YDxh4kqKZ12LpjR_KfzBkMUvXHWZj17uEbSH-iES75YgBV6TxZmN0ioLneZh_5Fm00)
+Sistem uporabnikom tudi pošlje obvestilo o prožitvi sistema za informiranost uporabnikov o stanju delovanja sistema.
 
-    - **Diagram zaporedja** ([Sequence Diagram](https://plantuml.com/sequence-diagram), izvorna koda :bar_chart: [PlantUML](./gradivo/plantuml/DZ.puml))
+Simulacijo prisotnosti lahko administrator sistema aktivira oziroma deaktivira tudi ročno iz uporabniškega vmesnika. To omogoča ne le testiranje sistema ob začetni namestitvi, temveč tudi predstavlja varnostni mehanizem v primeru neželenega delovanja sistema.
 
-      ![DZ](https://teaching.lavbic.net/plantuml/svg/bPDFRvj04CNlyob6xiKvL14OgYfAhVnhJvLQkN4EKIu3Z9EjOOSk2qvTzRjt5YU69kwX1v1sv_VUl9s5iyQJysrLujKjm8Cf65SYFfD7W6PjR4sEAimeNzyxQMsHIoaElIFRQ8cj7r45hwWj_JK_-lFItDjAovZhYzs8ejoBkn1NiBlipR9ItLy1-uuxQFDWF8yXvsGpqYEEYWt_QDdc_DcizB4yxlOc_NJn_kFb0Vgh3iBafYRh_rzmC2xqHy79iXP7cJLhZ2Pu_WsN4PwUzhNv7A0UR72oeAtZ0jC9KeEBLBaik9BxgUWXCjwHiPAvME-a_0UOxC14GRqIuuDX26WwygoHG5EzdMlF4wmZFFc05NifwDtqQA0MAMYcGCLAnGCLJQFPc8i1If4QjuHTGsl1JYDOQJnWo1eS4dMO3Gw9za4S79909dio6SXqQcKpFJgCFsSBwuB_hhzSFmLH_FWOhzJvE_wgPq7y-yxgLgStlRLK0Ti28D1Fyz7QJSFxCvcUbgpWaYp3k4tSpqjbowYNVSawLW6spry40PoflVw0Vm00)
+# 3 Cilji projekta
 
-    - **Diagram aktivnosti** ([Activity Diagram](https://plantuml.com/activity-diagram-beta), izvorna koda :bar_chart: [PlantUML](./gradivo/plantuml/DA.puml))
+Čas, ko v objektu ni nobenega prebivalca, predstavlja najbolj verjetni časovni okvir za vlome, saj je pogosto že na daleč vidno, da je hiša prazna. Pogosti rešitvi sta stalno puščanje prižganih naprav, kar je energijsko potratno, in/ali prošnja znancu za občasen pregled okolice, kar ni popolnoma zanesljivo.
 
-      ![DA](https://teaching.lavbic.net/plantuml/svg/VL5DJyCm3BtxLqJY0gTfV4Y8JcDbWpCI_06lyRhGrAaIbpAX_NVSRaWH1mwnvFTU_9wJLHACqhVUR4g0r3ZkC69hBEsmz_9ENr9wLtDBBARIGZ5JRR5gwXXwjbNm8Hg9o4afrMMgj4SR1iUrsQ5Fb35LOEl41NwJWoTZ7RQA02pIs2y1At6VJWuRX_Me_mQJUQudps7lX1JtZkc4NDozFDq_hnN36CCmtShvhTSHYXtrd2t_qHnXCJl7WUcn029rX68UoaRZSKXYveLgi_xwJtzJm9Xxm6WpzBRu7QLBwFwNhw4E7sR-U3LQXGvWHMprStu0)
+Integracija poskuša doseči boljši način zmanjšanja verjetnosti vloma v objekt. Če v času odsotnosti vseh uporabnikov objekta sistem med nadzorom okolice zazna pristnost potencialnih vlomilcev, aktivira različne preventivne ukrepe, kot so prižiganje luči, vklop televizorja, premikanje senčil ali drugih pametnih naprav. S tem odvrne potencialne vlomilce in poveča varnost objekta brez neposrednega posredovanja uporabnika.
 
-    - **Diagram stanj** ([State Diagram](https://plantuml.com/state-diagram), izvorna koda :bar_chart: [PlantUML](./gradivo/plantuml/DS.puml))
+Vse funkcionalne in nefunkcionalne zahteve so opisane in ovrednotene [v istem poglavju prejšnjega poročila](https://github.com/TPO-2024-2025/Projekt-20/blob/main/docs/02_Osnutek_sistema_1_porocilo_o_stanju.md#3-cilji-projekta).
 
-      ![DS](https://teaching.lavbic.net/plantuml/svg/NP91Ri8m44NtFiK8TfMG6Zkqm09HABs0kwkw66ANXYHsvJYYKjMxTuABIRoneZVFyx-bR5gFpdTD3S-IiROgpHSwRE20HNLqjZEgiBLru1sQbaRQ-86bz0TsjN_Lt_wfBe-ceJ4KT6WtiD0vUzvTrXngsZiOKRhNyCC0jZ4mcEVFqkkUMwUq2smwVzakzZkYic-TmltrxXNzqeik0HFopKb3DW5iGMPCPYjGTWLO5UK98Kj57aJE91-98XL540MJOYJEKp4FOivaFewcxBUxTvYj-rvK36Rz9uy2Zqn4Hbj4wZrGrzHxZDwDBIBB8rjIgz3WrkkU_KDgnzX66qL_oHy0)
+# 4 Opis sistema
 
-    - **Psevdokoda**
+## 4.1 Pregled sistema
 
-      > **assume** vrednost1 &subseteq; C, vrednost2 &subseteq; C  
-      > **let** maxVrednost1 = max {r | (s,r) &in; vrednost1}  
-      > **for** (s, r) **in** vrednost2:  
-      > &nbsp;&nbsp;&nbsp;&nbsp;**if** r &le; maxVrednost1 **return false**  
-      > **return true**
+### Predstavitev sistema
 
-- Za arhitekturne elemente v diagramu dodajte katalog elementov z imenom in namenom vsakega elementa.
-- Za vsak element določite enega člana ekipe (tudi, če je več članov ekipe prispevalo k elementu), ki bo njen skrbnik.
+Integracija Varko povezuje mnoge komponente v enovit varnostni sistem. Spodaj je prikazan splošen blokovni diagram sistema.
 
-## 5 Trenutno stanje
+<p align="center">
+  <img src="gradivo/img/Osnutek%20sistema/opis_sistema.png" alt="Opis sistema" width="1000">
+</p>
 
-- Kakšni dodatni cilji te iteracije, poleg tega, kar je že navedeno v [uvodu](#1-uvod)?
-  - Kaj deluje? Vključite posnetke zaslona.
-  - Kakšni izzivi?
-  - Uporabite blokovni diagram za razlago trenutnega sistema.
-- Katere teste ste izvedli?
-- Koliko vrstic kode ste napisali (skupno do tega trenutka)?
+Sistem Frigate je namenjen prepoznavi ljudi v video prenosu, ki ga zagotavljajo nameščene kamere preko RTSP protokola. V primeru zaznave ljudi to preko MQTT protokola javi sistemu Mosquitto.
 
-## 6 Vodenje projekta
+Sistem Mosquitto je posrednik sporočil protokola MQTT, po katerem poteka večina komunnikacije med sistemi znotraj naše rešitve. V primeru prejetja sporočila o zaznavi ljudi s strani sistema Frigate to sporoči sistemu Home Assistant.
 
-_Nadaljujte z vzdrževanjem **dnevnika sprememb**. Dodaje vse nove spremembe v projektu, kjer vključite datum, opis, motivacijo in posledico vsake spremembe._
+Poslovna logika razvite integracije se ob prejetju sporočila o zaznavi ljudi odloči o ukrepanju, kar naredi na podlagi uporabniških nastavitev integracije ter lokacij uporabnikov, ki jih priskrbi sistem Home Assistant preko mobilne aplikacije. V primeru pravih pogojev integracija zažene varnostni odziv - simulacijo prisotnosti uporabnikov objekta preko aktivacije integriranih pametnih naprav, za kar se uporabi protokol MQTT (sporočila se posredujejo preko sistema Mosquitto).
 
-- Prikažite dnevnik sprememb do tega trenutka.
-  - Kakšni so cilji za naslednjo iteracijo?
-  - Kakšen je načrt za preostanek semestra?
+Stanje sistema lahko administrator sistema kadarkoli nastavi tudi ročno iz uporabniškega vmesnika.
 
-### 6.2 Projektni načrt
+### Načrtovalski vzorci
 
-- Posodobljen Ganttov diagram in graf PERT.
+Pri trenutni implementaciji smo se poslužili nekaterih načrtovalski vzorcev, saj so omogočili ne le ponovno uporabo določenih delov kode, temveč tudi večjo preglednost implementacije. Izbrani vzorci so:
 
-## 7 Ekipa
+**Decorator**
 
-- Kakšne so bile vloge v ekipi za to iteracijo?
-  - Kaj je prispeval vsak član ekipe?
-  - Navedite grobo oceno prispevka posameznega člana ekipe v odstotkih.
+Vzorec `decorator` smo uporabili za lažje [upravljanje z dodajanjem in odstranjevanjem Home Assistant storitev](https://github.com/TPO-2024-2025/Projekt-20/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/decorators.py#L9-L11) ter za [preverjanje avtorizacije](https://github.com/TPO-2024-2025/Projekt-20/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/decorators.py#L14-L34). Implementacije Home Assistant storitev smo ovili z dekoratorjem, ki je poskrbel, da se servis avtomatsko doda in odstrani z Home Assistant instance. Prav tako smo določene storitve ovili z dekoratorjem, ki je poskrbel, da to storitev lahko kličejo samo administratorji.
 
-## 9 Refleksija
+**Singleton**
 
-- Kaj je šlo po pričakovanjih?
-  - Kaj ni šlo po pričakovanjih?
-  - Kakšne težave so se pojavile pri ciljih, ki jih niste dosegli?
-  - Kako nameravate premagati te težave?
-  - Kaj boste naredili drugače v naslednji iteraciji?
+Vzorec `singleton` smo uporabili pri [implementaciji posameznih managerjev](https://github.com/TPO-2024-2025/Projekt-20/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/services/device_manager.py#L19-L30). Te so odgovorni za svoje področje (recimo za upravljanje z skupinami, napravami, …). Z vzorcem singleton smo poskrbeli, da je vedno ustvarjena največ ena instanca posameznega managerja. S tem smo omogočili avtomatsko dodajanje in odstranjevanje storitev s pomočjo zgoraj omenjenega `decorator` vzorca.
+
+**State**
+
+Vzorec `state` smo uporabili za [prehajanje med stanji](https://github.com/TPO-2024-2025/Projekt-20/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/services/state_manager.py#L20-L93) znotraj naše integracije. Z njim smo zagotovili pravilno prehajanje med stanji sistema in ob enem ohranili kodo pregledno in enostavno.
+
+### Izzivi implementacije
+
+Izzivi, ki so se med razvojem razvojem sistema pojavili, so bili redki.
+
+Eden izmed izzivov, s katerimi smo se soočili pri implementaciji logike za upravljanje s conami, je bila zahteva, da mora biti sledena naprava uporabnika sistema SUS priključena na isto omrežje kot strežnik, na katerem deluje Home Assistant. Ta pogoj je razvoj in testiranje nekoliko otežil. Rešitev omenjene težave v tej razvojni fazi še ni bila izvedena, je pa načrtovana za eno izmed prihodnjih različic sistema.
+
+Nekaj težav se je pojavilo tudi zaradi neintuitivnega življenjskega cikla integracije sistema Home Assistant, natančneje njenih metapodatkov.
+
+## 4.2 Osrednji arhiterkturni pogledi
+
+### Namestitveni diagram
+
+Slika predstavlja namestitveni diagram Varko Home Assistant integracije. `Brskalnik` in `Telefon` nista ovita v posebno okolje saj delujeta na večini operacijskih sistemov. `Telefon` se uporablja za zaznavanje lokacije uporabnika.
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/diagram_namestitveni.png" alt="Namestitveni diagram">
+</p>
+
+### Paketni diagram
+
+Na spodnji sliki je predstavljen paketni diagram, ki prikazuje poenostavljen logični pregled nad sistemom.
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/diagram_paketni.png" alt="Paketni diagram">
+</p>
+
+### Komponentni diagram
+
+Spodnji diagram prikazuje komponentni diagram.
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/diagram_komponentni.png" alt="Komponentni diagram">
+</p>
+
+### Diagram prehodov stanj
+
+Spodnji diagram prikazuje diagram prehodov stanj, kjer so označena tri glavna stanja sistema Varko (`ACTIVE`, `READY`, `IDLE`) in ustrezni prehodi med njimi. Za uporabo tovrstnega diagrama smo se odločili zaradi narave našega sistema. Celotno delovanje in interakcije z zunanjimi napravami so namreč odvisne od trenutnega stanja, poleg tega pa smo v implementaciji uporabili načrtovalski vzorec State.
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/diagram_stanj.png" alt="Diagram prehodov stanj">
+</p>
+
+### Razredni diagram
+
+Spodnji diagram prikazuje razredno strukturo implementiranega sistema.
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/diagram_razredni.png" alt="Razredni diagram">
+</p>
+
+# 5 Trenutno stanje
+
+### Delovanje sistema
+
+Cilji iteracije so večinoma ostali isti kot v procesu načrtovanja iteracije. Kot že opisano v uvodu, se je skozi razvojni proces zaradi težav dobave zvočnika cilj testiranja integracije zvočnika zamaknil v naslednjo itreracijo.
+
+Na spodnih slikah je prikazano trenutno stanje Home Assistant kontrolne plošče naše integracije:
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/ui_general.png" alt="Kontrolna plošča">
+</p>
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/ui_detail.png" alt="Odprt meni kontrolne plošče">
+</p>
+
+<video align="center" width="1080" height="1920" controls>
+  <source src="gradivo/img/Izvedljiv sistem/video_naprave.mov" type="video/mp4">
+</video>
+
+Diagrami sestave razvitega sistema in izzivi pri razvoju so vidni v 4. poglavju (opis sistema).
+
+### Testiranje
+
+V času razvojnega procesa smo testirali posamezne gradnike prototipa sistema.
+
+En od ciljev iteracije je bila priprava zbirke testov enot, s katerimi bi lažje zagotavljali kakovost produkta in sebi olajšali proces razvoja.
+
+Skupno je bilo napisanih 78 testov enot, ki testirajo funkcionalnosti sistema.
+
+Testiranje se izvaja avtomatično preko Github Actions, ki se pošenejo na vsakem Pull Requestu. Tako se še pred združitvijo kode na glavno vejo preverja novo-napisano kodo.
+
+### Statistika končne implementacije prototipa sistema
+
+Do končne implementacije prototipa sistema smo napisali 4025 vrstic kode, od tega 82% v Pythonu, 6% v JavaScriptu, 2% v HTML, 4% v CSS, ostalo pa so konfiguracijske datoteke, potrebne za delovanje sistemov. Razlika med številoma vrstic kode prototipa in razvite implementacije tako znaša 3245 vrstic kode.
+
+# 6 Vodenje projekta
+
+Glavni cilj za naslednjo iteracijo je preiti iz implementiranega prototipa z omejenimi funkcionalnostmi do implementirane in testirane Home Assistant integracije, ki je skladna z zastavljenimi zahtevami, navedenimi v 3. poglavju.
+
+Dnevnik sprememb smo vodili v sklopu funkcije [GitHub Issues](https://github.com/TPO-2024-2025/Projekt-20/issues), kjer smo zapisovali potrebne informacije o delovnih nalogah, kot so opis, dodeljeni razvijalec, čas dodelitve in dokončanja naloge, itd., in delno v sklopu [GitHub Pull Requests](https://github.com/TPO-2024-2025/Projekt-20/pulls), kjer se vidijo spremembe, ki so bile skozi razvoj posameznih delov sistema potrebne za končno omišljeno delovanje.
+
+## 6.1 Projektni načrt
+
+### Ganttov diagram
+
+Časovni načrt po dnevih natančno:
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/gannt_dnevi.png" alt="Ganntov diagram po dnevih">
+</p>
+
+Časovni načrt po tednih natančno:
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/gannt_tedni.png" alt="Ganntov diagram po dnevih">
+</p>
+
+### Pertov diagram
+
+<p align="center">
+  <img src="gradivo/img/Osnutek sistema/pert.png" alt="Pertov diagram">
+</p>
+
+# 7 Ekipa
+**Vsi člani so sodelovali pri**:
+
+- retrospektivi in načrtu iteracije
+- razdelitvi vlog dela
+- izdelavi poročila o stanju
+
+### Miha Vintar
+
+**Projektni vodja, scrum master in vodja zalednega sistema**:
+
+- vodenje projekta
+- vzpostavitev okolja Home Assistant
+- definicija funkcionalnih zahtev
+- implementacija poslovne logike, povezane s skupinami uporabnikov
+- definicija uporabljenih načrtovalskih vzorcev
+- izdelava namestitvenega diagrama
+- implementacija CI cevovoda
+- izdelava dokumentacije
+
+### Klemen Remec
+
+**Vodja dokumentacije in načrtovanja**:
+
+- vzpostavitev osnutka integracije
+- definicija aplikacijskega programskega vmesnika integracije
+- implementacija poslovne logike, povezane z upravljanjem prehodov med stanji
+- izdelava in pregled dokumentacije
+
+### Tara Majkič
+
+**Sistemski analitik**:
+
+- časovni načrt projekta
+- implementacija prototipa poslovne logike
+- predstavitev funkcionalnih zahtev
+- implementacija poslovne logike, povezane z upravljanjem naprav
+- izdelava paketnega diagrama
+- izdelava dokumentacije
+
+### Jaka Pelko
+
+**Vodja ekipe za integracijo z zunanjimi napravami**:
+
+- vzpostavitev okolja Frigate
+- vzpostavitev okolja MQTT posrednika
+- definicija nefunkcionalnih zahtev sistema
+- predstavitev funkcionalnih zahtev
+- implementacija poslovne logike, povezane z lokacijskimi conami
+- izdelava diagrama prehodov stanj
+- izdelava dokumentacije
+
+### Jaka Čelik
+
+**Vodja ekipe za uporabniški vmesnik**:
+
+- izdelava prototipa uporabniškega vmesnika
+- predstavitev funkcionalnih zahtev
+- implementacija uporabniškega vmesnika
+- izdelava komponentnega diagrama
+- izdelava dokumentacije
+
+Podrobnejša delitev nalog je bila definirana v [predlogu poročila, natančeneje v 6. poglavju (Vodenje projekta)](https://github.com/TPO-2024-2025/Projekt-20/blob/main/docs/01_Predlog_projekta.md#62-projektni-na%C4%8Drt).
+
+# 8 Refleksija
+
+### Izzivi
+
+Izziv je predstavljala predvsem organizacija dela, da smo se razvijalci med seboj čim manj čakali ali popravljali implementacije za nazaj. To smo reševali sproti, s tem da smo agilno prilagajali vrstni red delovnih nalog, ki so morale biti opravljene čim prej.
+
+Prav tako smo zaradi nepričakovanih zamud pri implementaciji istočasno zaključevali razvojni proces in že izdelovali poročilo. To iteracijo s tem nismo imeli tako velikih problemov, predvsem smo zaključevali vzpostavljanje procesa testiranja kode, sicer pa smo, ko se je implementacija v tem času vseeno nekoliko spreminjala, neaktualne dele poročil in grafov morali popravljati. Ob začetku naslednje iteracije si bomo poskusili postaviti tesnejše roke za posamezne delovne naloge, in upoštevali potreben dodaten čas za zaključne popravke.
+
+### Uspehi
+
+Kljub izzivom smo iteracijo zaključili uspešno še pred zaključnim rokom. Implementiran sistem implementira zamišljene funkcionalnosti, prav tako smo dosegli višjo raven razumevanja možnosti uporabe načrtovalskih vzorcev za namen preglednejše in lažje vzdržljive kode.

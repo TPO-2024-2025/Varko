@@ -1,0 +1,49 @@
+@startuml
+package "Varko integracija" {
+    component "<<component>>\nBase manager" as baseManager
+    component "<<component>>\nDevice manager" as deviceManager
+    component "<<component>>\nGroup manager" as groupManager
+    component "<<component>>\nState manager" as stateManager
+    component "<<component>>\nZone manager" as zonesManager
+    component "<<component>>\nVarko plošča" as varkoDashboard
+    deviceManager --|> baseManager
+    groupManager --|> baseManager
+    stateManager --|> baseManager
+    zonesManager --|> baseManager
+}
+
+package "Shramba" {
+    component "<<component>>\nShramba" as store
+}
+package "Entitete" {
+    component "<<component>>\nEntitete" as entities
+}
+
+component "<<component>>\nFrigate" as frigate
+component "<<component>>\nMQTT" as mqtt
+
+varkoDashboard ..> deviceManager : proži
+varkoDashboard ..> groupManager : proži
+varkoDashboard ..> zonesManager : proži
+varkoDashboard ..> stateManager : proži
+
+zonesManager ..> stateManager : proži
+
+interface "<<interface>>\nUporabniški vmesnik" as uporabniskiVmesnik
+interface "<<interface>>\nShramba" as storeInterface
+interface "<<interface>>\nmqtt" as mqttInterface
+interface "<<interface>>\nfrigate" as frigateInterface
+interface "<<interface>>\nEntitete" as entitiesInterface
+
+varkoDashboard o-- uporabniskiVmesnik
+frigate o-- frigateInterface
+mqtt --( frigateInterface
+mqtt o-- mqttInterface
+stateManager --( mqttInterface
+store o-- storeInterface
+baseManager --( storeInterface
+entities o-- entitiesInterface
+deviceManager --( entitiesInterface
+stateManager --( entitiesInterface
+
+@enduml

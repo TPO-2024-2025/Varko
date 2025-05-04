@@ -1,0 +1,113 @@
+@startuml
+abstract class BaseManager {
+    # logger: Logger
+    # hass: HomeAssistant
+    # store: Store
+    # data: Any
+    - services: list
+    + __init__(module_name: str, hass: HomeAssistant, store_key: str, data_default: Any): None
+    + __del__(): None
+    # initialize(): None
+    - register_services(): None
+    - unregister_services(): None
+}
+
+class GroupManager {
+    - instance: GroupManager
+    + __init__(hass: HomeAssistant)
+    + get_instance(hass: HomeAssistant): Coroutine[Any, Any, GroupManager]
+    + destroy(): None
+    + add_person(call: ServiceCall): Coroutine[Any, Any, None]
+    + remove_person(call: ServiceCall): Coroutine[Any, Any, None]
+    - publish_state_changed(members: set): None
+}
+BaseManager <|-- GroupManager
+
+class DeviceManager {
+    - instance: DeviceManager
+    + __init__(hass: HomeAssistant)
+    + get_instance(hass: HomeAssistant): Coroutine[Any, Any, DeviceManager]
+    + destroy(): None
+    + add_device(call: ServiceCall): Coroutine[Any, Any, None]
+    + remove_device(call: ServiceCall): Coroutine[Any, Any, None]
+    + enable_device(call: ServiceCall): Coroutine[Any, Any, None]
+    + disable_device(call: ServiceCall): Coroutine[Any, Any, None]
+    + control_device(device_id: str, command: str): Coroutine[Any, Any, None]
+}
+BaseManager <|-- DeviceManager
+
+class StateManager {
+    - instance: StateManager
+    - state: State
+    - presence_simulation_duration_minutes: int
+    - presence_simulation_timer: Task
+    - presence_simulation_stop_event: Event
+    - mqtt_frigate_subscription: Callable[[], None] | None
+    + __init__(hass: HomeAssistant): None
+    + get_instance(hass: HomeAssistant): Coroutine[Any, Any, StateManager]
+    + destroy(): None
+    + set_state_idle(call: ServiceCall): Coroutine[Any, Any, None]
+    + set_state_ready(call: ServiceCall): Coroutine[Any, Any, None]
+    + set_state_active(call: ServiceCall): Coroutine[Any, Any, None]
+    - start_presence_simulation(): None
+    - stop_presence_simulation(): None
+    - turn_off_all_devices(): Coroutine[Any, Any, None]
+    - presence_simulation_task(): Coroutine[Any, Any, None]
+    - presence_simulation(): Coroutine[Any, Any, None]
+    - wait_or_stop(delay: float): Coroutine[Any, Any, bool]
+    - setup_mqtt(): Coroutine[Any, Any, None]
+    - handle_person_detection(msg: ReceiveMessage): Coroutine[Any, Any, None]
+    - clear_mqtt(): None
+}
+BaseManager <|-- StateManager
+StateManager "1" *-- "1" State : has >
+
+abstract class State {
+    # _manager: StateManager
+    + __init__(manager: StateManager): None
+    + {abstract} set_state_idle(): Coroutine[Any, Any, None]
+    + {abstract} set_state_ready(): Coroutine[Any, Any, None]
+    + {abstract} set_state_active(): Coroutine[Any, Any, None]
+}
+
+class IdleState {
+    + set_state_idle(): Coroutine[Any, Any, None]
+    + set_state_ready(): Coroutine[Any, Any, None]
+    + set_state_active(): Coroutine[Any, Any, None]
+}
+State <|-- IdleState
+
+class ReadyState {
+    + set_state_idle(): Coroutine[Any, Any, None]
+    + set_state_ready(): Coroutine[Any, Any, None]
+    + set_state_active(): Coroutine[Any, Any, None]
+}
+State <|-- ReadyState
+
+class ActiveState {
+    + set_state_idle(): Coroutine[Any, Any, None]
+    + set_state_ready(): Coroutine[Any, Any, None]
+    + set_state_active(): Coroutine[Any, Any, None]
+}
+State <|-- ActiveState
+
+class ZoneManager {
+    - instance: ZoneManager
+    - group_tracker: Callable[[], None] | None
+    - device_trackers: list[Callable]
+    - device_entities: list[str]
+    + __init__(hass: HomeAssistant)
+    + get_instance(hass: HomeAssistant): Coroutine[Any, Any, ZoneManager]
+    + destroy(): None
+    + select_activation_zone(call: ServiceCall): Coroutine[Any, Any, None]
+    - setup_group_tracker(): Coroutine[Any, Any, None]
+    - setup_device_trackers(): Coroutine[Any, Any, None]
+    - clear_device_trackers(): None
+    - clear_group_tracker(): None
+    - handle_group_state_change(event: Event): Coroutine[Any, Any, None]
+    - handle_zone_device_state_change(event: Event): Coroutine[Any, Any, None]
+    - check_presence_in_zone(zone_entity_id: str, tracking_entities: list[str]): Coroutine[Any, Any, None]
+}
+BaseManager <|-- ZoneManager
+
+@enduml
