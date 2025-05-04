@@ -1,7 +1,6 @@
 from custom_components.varko.decorators import admin, service
 from custom_components.varko.services.base_manager import BaseManager
 from custom_components.varko.services.group_manager import GroupManager
-from custom_components.varko.services.state_manager import StateManager
 from homeassistant.helpers.event import async_track_state_change_event
 from homeassistant.components.zone import in_zone
 from custom_components.varko.const import DOMAIN
@@ -64,7 +63,7 @@ class ZoneManager(BaseManager):
             person_state = self._hass.states.get(person)
             if not person_state:
                 self._logger.warning(f"Person {person} does not exist.")
-                continue
+                return
 
             devices = person_state.attributes.get("device_trackers")
             if isinstance(devices, list):
@@ -75,10 +74,12 @@ class ZoneManager(BaseManager):
                 self._logger.warning(
                     f"Invalid device tracker format for {person}: {devices}"
                 )
-                continue
+                return
 
         if not self._device_entities:
-            self._logger.warning("No device trackers found for the users.")
+            self._logger.warning(
+                "No device trackers found for the users or no users present."
+            )
             return
 
         entities_to_track = self._device_entities + [zone_entity_id]
