@@ -36,7 +36,17 @@ async def async_setup(hass, config):
                 "/local/varko_panel.js",
                 "/config/custom_components/varko/www/varko_panel.js",
                 True,
-            )
+            ),
+            StaticPathConfig(
+                "/local/varko_panel.css",
+                "/config/custom_components/varko/www/varko_panel.css",
+                True,
+            ),
+            StaticPathConfig(
+                "/local/varko_panel.html",
+                "/config/custom_components/varko/www/varko_panel.html",
+                True,
+            ),
         ]
     )
 

@@ -1,0 +1,87 @@
+<div id="container">
+    <span id="base-settings-container">
+        <div id="devices-div" class="base-settings-div">
+            <h2>Devices</h2>
+            <div id="devices-holder" class="element-holder">
+            </div>
+            <button class="button" id="add-device-button">Add device</button>
+        </div>
+        <div id="zone-div" class="base-settings-div">
+            <h2>Zones</h2>
+            <div id="zones-holder" class="element-holder">
+            </div>
+        </div>
+        <div id="group-div" class="base-settings-div">
+            <h2>Groups</h2>
+            <div id="groups-holder" class="element-holder">
+            </div>
+        </div>
+    </span>
+    <div id="states">
+        <h2>States</h2>
+        <div id="varko-states-holder">
+            <button class="button" id="set-state-idle">Set idle</button>
+            <button class="button" id="set-state-ready">Set ready</button>
+            <button class="button" id="set-state-active">Set Active</button>
+        </div>
+    </div>
+</div>
+<dialog id="add-device-dialog">
+    <form id="addDeviceForm">
+        <h2>Add device</h2>
+        <label>
+            Shelly entity:
+            <select id="shelly-entity" name="entity" >
+                <option value=""></option>
+            </select>
+        </label>
+        <div id="conditional-fields" class="conditional">
+            <label>
+                Device type:
+                <select type="text" name="device_type" required>
+                    <option value="light">Light</option>
+                </select>
+            </label>
+            <label>
+                Device name:
+                <input type="text" name="device_name" required/>
+            </label>
+            <label>
+                Device ID:
+                <input type="text" name="device_id" required/>
+            </label>
+            <label>
+                Enabled:
+                <input type="checkbox" name="is_enabled" />
+            </label>
+        </div>
+        <span>
+            <button type="button" class="button" id="cancel-add-device">Cancel</button>
+            <button type="submit" class="button">Add</button>
+        </span>
+    </form>
+</dialog>
+<dialog id="device-element-dialog" entityId="">
+    <h2 id="device-element-dialog-title">Device</h2>
+    <span id="device-element-dialog-buttons">
+        <button type="button" class="button" id="cancel-device-button">Cancel</button>
+        <button type="button" class="button" id="remove-device-button">Remove</button>
+        <button type="button" class="button" id="enable-device-button">Enable</button>
+        <button type="button" class="button" id="disable-device-button">Disable</button>
+    </span>
+</dialog>
+<dialog id="zone-element-dialog" zoneId="">
+    <h2 id="zone-element-dialog-title">Zone</h2>
+    <span id="zone-element-dialog-buttons">
+        <button type="button" class="button" id="cancel-zone-button">Cancel</button>
+        <button type="button" class="button" id="select-zone-button">Select</button>
+    </span>
+</dialog>
+<dialog id="user-element-dialog" userId="">
+    <h2 id="user-element-dialog-title">User</h2>
+    <span id="user-element-dialog-buttons">
+        <button type="button" class="button" id="cancel-user-button">Cancel</button>
+        <button type="button" class="button" id="remove-user-button">Remove</button>
+        <button type="button" class="button" id="add-user-button">Add</button>
+    </span>
+</dialog>

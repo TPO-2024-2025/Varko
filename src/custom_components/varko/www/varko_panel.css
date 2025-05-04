@@ -1,0 +1,143 @@
+.button {
+    border: none;
+    border-radius: 16px;
+    padding: 16px;
+    background-color: #aeaeae;
+    width: fit-content;
+    align-self: center;
+    color: black;
+}
+
+.element {
+    border: none;
+    border-radius: 16px;
+    padding: 16px;
+    background-color: #aeaeae;
+    color: black;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#base-settings-container {
+    flex: 2;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+#other-settings-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.element-holder {
+    gap: 6px;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    margin: 8px;
+    flex: 1;
+}
+
+.base-settings-div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #1e1e1e;
+    margin: 8px;
+    padding: 8px;
+}
+
+dialog {
+    background-color: #404040;
+    border: none;
+    align-items: center;
+    border-radius: 16px;
+
+    h2 {
+        text-align: center;
+        margin: 10px;
+    }
+}
+
+#states {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 8px;
+    padding: 8px;
+    background-color: #1e1e1e;
+    width: fit-content;
+
+    #varko-states-holder {
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+        padding: 4px;
+        margin: 8px;
+        flex: 1;
+    }
+}
+
+#add-device-dialog {
+    background-color: #404040;
+    border: none;
+    align-items: center;
+    border-radius: 16px;
+}
+
+#addDeviceForm {
+    background-color: #404040;
+    padding: 20px 40px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    h2 {
+        text-align: center;
+        margin: 0;
+    }
+    label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    input[type="text"],
+    select {
+        background-color: #1e1e1e;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 8px;
+        width: 100%;
+    }
+    input[type="checkbox"] {
+        transform: scale(1.5);
+        margin-left: 10px;
+    }
+    .conditional {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .hidden {
+        display: none;
+    }
+    span {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 16px;
+    }
+    button {
+        flex: 1;
+    }
+}
+
