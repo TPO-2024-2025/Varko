@@ -33,7 +33,7 @@ Ekipa je dosegla zastavljeni cilj, torej končni produkt te iteracije vsebuje po
 
 ## 1.2 Spremembe
 
-Plan smo med iteracijo zaradi težav dobave zvočnika popravili, tako da integracijo zvočnika, za katerega predvidevamo podoben postopek integracije kot za luč, prestavljamo med delovne naloge naslednje integracije. Pri tem ne predvidevamo nobenih zamud ali blokad ostalih delovnih nalog prihodnje iteracije.
+Plan smo med iteracijo zaradi težav dobave zvočnika popravili, tako da integracijo zvočnika, za katerega predvidevamo podoben postopek integracije kot za luč, prestavljamo med delovne naloge naslednje iteracije. Pri tem ne predvidevamo nobenih zamud ali blokad ostalih delovnih nalog prihodnje iteracije.
 
 # 2 Potrebe naročnika
 
