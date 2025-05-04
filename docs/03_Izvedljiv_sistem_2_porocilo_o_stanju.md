@@ -121,7 +121,11 @@ Slika predstavlja namestitveni diagram Varko Home Assistant integracije. `Brskal
 
 ### Paketni diagram
 
-Na spodnji sliki je predstavljen paketni diagram, ki prikazuje poenostavljen logični pregled nad sistemom.
+Na spodnji sliki je predstavljen paketni diagram, ki prikazuje poenostavljen logični pregled nad sistemom. Paket VarkoPlošča predstavlja naš lasten ui, ki komunicira z naslednjimi paketi:
+UpravljanjeStanj - skrbi za ustrezno prehajanje stanj našega sistema,
+UpravljanjeSUS - skrbi za dodajanje / odstranitev članov SUS (skupina uporabnikov sistema),
+UpravljanjeCon - skrbi za logiko med uporabniki, ki so del SUS in izbrano cono,
+UpravljanjeNaprav - skrbi za logiko povezano s pametnimi napravami (dodajanje / odstranjevanje, aktivacija / deaktivacija).
 
 <p align="center">
   <img src="gradivo/img/Izvedljiv sistem/diagram_paketni.png" alt="Paketni diagram">
@@ -157,7 +161,7 @@ Spodnji diagram prikazuje razredno strukturo implementiranega sistema.
 
 Cilji iteracije so večinoma ostali isti kot v procesu načrtovanja iteracije. Kot že opisano v uvodu, se je skozi razvojni proces zaradi težav dobave zvočnika cilj testiranja integracije zvočnika zamaknil v naslednjo itreracijo.
 
-Na spodnih slikah je prikazano trenutno stanje Home Assistant kontrolne plošče naše integracije:
+Na spodnjih slikah je prikazano trenutno stanje Home Assistant kontrolne plošče naše integracije:
 
 <p align="center">
   <img src="gradivo/img/Izvedljiv sistem/ui_general.png" alt="Kontrolna plošča">
