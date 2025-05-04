@@ -167,9 +167,7 @@ Na spodnih slikah je prikazano trenutno stanje Home Assistant kontrolne plošče
   <img src="gradivo/img/Izvedljiv sistem/ui_detail.png" alt="Odprt meni kontrolne plošče">
 </p>
 
-<video align="center" width="1080" height="1920" controls>
-  <source src="gradivo/img/Izvedljiv sistem/video_naprave.mov" type="video/mp4">
-</video>
+Na dani [povezavi](https://drive.google.com/file/d/1jkdYJKgqECaB8Iw7G31vEh_gptoYXKOg/view) je dostopen video, na katerem pokažemo delovanje integracije - natančneje ročne aktivacije in deaktivacije sistema, in s tem posledično tudi simulacije prisotnosti (ta v danem primeru prižge luč).
 
 Diagrami sestave razvitega sistema in izzivi pri razvoju so vidni v 4. poglavju (opis sistema).
 
