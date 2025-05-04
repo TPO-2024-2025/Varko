@@ -121,7 +121,7 @@ Slika predstavlja namestitveni diagram Varko Home Assistant integracije. `Brskal
 
 ### Paketni diagram
 
-Na spodnji sliki je predstavljen paketni diagram, ki prikazuje poenostavljen logični pregled nad sistemom. Paket VarkoPlošča predstavlja naš lasten ui, ki komunicira z naslednjimi paketi:
+Na spodnji sliki je predstavljen paketni diagram, ki prikazuje poenostavljen logični pregled nad sistemom. Paket VarkoPlošča predstavlja naš lasten uporabniški vmesnik, ki komunicira z naslednjimi paketi:
 UpravljanjeStanj - skrbi za ustrezno prehajanje stanj našega sistema,
 UpravljanjeSUS - skrbi za dodajanje / odstranitev članov SUS (skupina uporabnikov sistema),
 UpravljanjeCon - skrbi za logiko med uporabniki, ki so del SUS in izbrano cono,
