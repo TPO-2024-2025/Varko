@@ -179,7 +179,7 @@ En od ciljev iteracije je bila priprava zbirke testov enot, s katerimi bi lažje
 
 Skupno je bilo napisanih 78 testov enot, ki testirajo funkcionalnosti sistema.
 
-Testiranje se izvaja avtomatično preko Github Actions, ki se pošenejo na vsakem Pull Requestu. Tako se še pred združitvijo kode na glavno vejo preverja novo-napisano kodo.
+Testiranje se izvaja avtomatično preko Github Actions, ki se poženejo na vsakem Pull Requestu. Tako se še pred združitvijo kode na glavno vejo preverja novo-napisano kodo.
 
 ### Statistika končne implementacije prototipa sistema
 
