@@ -111,6 +111,8 @@ Nekaj težav se je pojavilo tudi zaradi neintuitivnega življenjskega cikla inte
 
 ## 4.2 Osrednji arhiterkturni pogledi
 
+Diagramov zaporedij za komponente zaradi popolne implementacije nismo vključili.
+
 ### Namestitveni diagram
 
 Slika predstavlja namestitveni diagram Varko Home Assistant integracije. `Brskalnik` in `Telefon` nista ovita v posebno okolje saj delujeta na večini operacijskih sistemov. `Telefon` se uporablja za zaznavanje lokacije uporabnika.
