@@ -141,23 +141,3 @@ select_activation_zone:
       selector:
         entity:
           domain: zone
-
-# Notification service
-send_notification:
-  name: Send Notification
-  description: Send a notification about system status or detected intruders
-  fields:
-    message:
-      name: Message
-      description: The notification message to send
-      required: true
-      example: "Intruder detected in living room"
-      selector:
-        text:
-    recipients:
-      name: Recipients
-      description: List of persons to notify (empty = all configured users)
-      required: false
-      example: ["person.john", "person.jane"]
-      selector:
-        text:

@@ -1,20 +1,21 @@
 import asyncio
 import random
 
-from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.components import mqtt
+from homeassistant.core import HomeAssistant, ServiceCall
 
 from custom_components.varko.const import (
     DOMAIN,
+    FRIGATE_MQTT_PERSON_TOPIC,
     STATE_ACTIVE,
     STATE_ENTITY_ID,
     STATE_IDLE,
     STATE_READY,
-    FRIGATE_MQTT_PERSON_TOPIC,
 )
 from custom_components.varko.decorators import admin, service
 from custom_components.varko.services.base_manager import BaseManager
 from custom_components.varko.services.device_manager import DeviceManager
+from custom_components.varko.services.group_manager import GroupManager
 
 
 class State:
@@ -67,6 +68,7 @@ class ReadyState(State):
 
         # Start presence simulation
         self._manager._start_presence_simulation()
+        await self._manager._send_notification("System is now active.")
 
 
 class ActiveState(State):
@@ -85,6 +87,7 @@ class ActiveState(State):
 
         # Stop presence simulation
         self._manager._stop_presence_simulation()
+        await self._manager._send_notification("System is now ready.")
 
     async def set_state_active(self):
         self._manager._logger.info("Resetting ACTIVE system state")
@@ -278,3 +281,32 @@ class StateManager(BaseManager):
             self._mqtt_frigate_subscription()
             self._mqtt_frigate_subscription = None
             self._logger.info("MQTT subscription to frigate/+/person cleared")
+
+    async def _send_notification(self, message: str):
+        group_manager = await GroupManager.get_instance(self._hass)
+        people = group_manager._data
+
+        devices = []
+        for person in people:
+            person_state = self._hass.states.get(person)
+            if not person_state:
+                self._logger.warning(f"Person {person} does not exist.")
+                continue
+
+            new_devices = person_state.attributes.get("device_trackers")
+            if isinstance(new_devices, list):
+                devices.extend(new_devices)
+            elif isinstance(new_devices, str):
+                devices.append(new_devices)
+
+        for device in devices:
+            self._logger.debug(f"Sending notification to {device}")
+            await self._hass.services.async_call(
+                "notify",
+                f"mobile_app_{device.split('.')[1]}",
+                {
+                    "title": "Varko",
+                    "message": message,
+                },
+                blocking=True,
+            )

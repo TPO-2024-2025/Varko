@@ -58,6 +58,7 @@ class StateManager {
     - setup_mqtt(): Coroutine[Any, Any, None]
     - handle_person_detection(msg: ReceiveMessage): Coroutine[Any, Any, None]
     - clear_mqtt(): None
+    - send_notification(message: str): Coroutine[Any, Any, None]
 }
 BaseManager <|-- StateManager
 StateManager "1" *-- "1" State : has >

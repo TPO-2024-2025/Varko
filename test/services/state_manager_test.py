@@ -189,6 +189,7 @@ class TestStateManager(unittest.IsolatedAsyncioTestCase):
         self.state_manager._start_presence_simulation = MagicMock()
         mock_call = MagicMock()
         mock_call.context.user_id = None
+        self.state_manager._send_notification = AsyncMock()
 
         # act
         await self.state_manager.set_state_active(mock_call)
@@ -199,6 +200,9 @@ class TestStateManager(unittest.IsolatedAsyncioTestCase):
             STATE_ENTITY_ID, STATE_ACTIVE
         )
         self.state_manager._start_presence_simulation.assert_called_once()
+        self.state_manager._send_notification.assert_called_with(
+            "System is now active."
+        )
 
     # Active -> Idle
     async def test_active_to_idle_transition(self):
@@ -223,6 +227,7 @@ class TestStateManager(unittest.IsolatedAsyncioTestCase):
         self.state_manager._stop_presence_simulation = MagicMock()
         mock_call = MagicMock()
         mock_call.context.user_id = None
+        self.state_manager._send_notification = AsyncMock()
 
         # act
         await self.state_manager.set_state_ready(mock_call)
@@ -231,6 +236,7 @@ class TestStateManager(unittest.IsolatedAsyncioTestCase):
         self.assertIsInstance(self.state_manager._state, ReadyState)
         self.mock_hass.states.async_set.assert_called_with(STATE_ENTITY_ID, STATE_READY)
         self.state_manager._stop_presence_simulation.assert_called_once()
+        self.state_manager._send_notification.assert_called_with("System is now ready.")
 
     # Active -> Active
     async def test_active_to_active_transition(self):

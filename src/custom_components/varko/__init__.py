@@ -17,15 +17,6 @@ from .services.zone_manager import ZoneManager
 
 _LOGGER = logging.getLogger(__name__)
 
-from .services import (
-    service_send_notification,
-)
-
-SERVICES = {
-    # Notification service
-    "send_notification": service_send_notification.handle_send_notification,
-}
-
 
 async def async_setup(hass, config):
     """Set up the Varko component"""
@@ -73,9 +64,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "config": entry.data,
         "devices": [],
     }
-    # Register services
-    for service_name, handler in SERVICES.items():
-        hass.services.async_register(DOMAIN, service_name, handler)
 
     await DeviceManager.get_instance(hass)
     await StateManager.get_instance(hass)
@@ -90,10 +78,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry"""
-    # Remove services when integration is unloaded
-    for service_name in SERVICES:
-        hass.services.async_remove(DOMAIN, service_name)
-
     unload_ok = await hass.config_entries.async_forward_entry_unload(
         entry, Platform.LIGHT
     )
