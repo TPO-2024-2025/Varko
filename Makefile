@@ -12,8 +12,11 @@ format: $(__venv_marker)
 .PHONY: format
 
 test: $(__venv_marker)
-	$(PYTHON) -m unittest discover -s test -p "*_test.py" --verbose
-	$(PYTHON) -m unittest discover -s test/services -p "*_test.py" --verbose
+	$(PYTHON) -m coverage run -m unittest discover -s test -p "*_test.py" --verbose
+	$(PYTHON) -m coverage run --append -m unittest discover -s test/services -p "*_test.py" --verbose
+	$(PYTHON) -m coverage report
+	$(PYTHON) -m coverage html --directory coverage
+	rm -f coverage/.gitignore .coverage
 .PHONY: test
 
 start-%:
