@@ -6,10 +6,12 @@ package "Varko integracija" {
     component "<<component>>\nState manager" as stateManager
     component "<<component>>\nZone manager" as zonesManager
     component "<<component>>\nVarko plošča" as varkoDashboard
+    component "<<component>>\nRadioBrowserAPI" as radioBrowserAPI
     deviceManager --|> baseManager
     groupManager --|> baseManager
     stateManager --|> baseManager
     zonesManager --|> baseManager
+    radioBrowserAPI --|> baseManager
 }
 
 package "Shramba" {
@@ -26,6 +28,8 @@ varkoDashboard ..> deviceManager : proži
 varkoDashboard ..> groupManager : proži
 varkoDashboard ..> zonesManager : proži
 varkoDashboard ..> stateManager : proži
+varkoDashboard ..> radioBrowserAPI : proži
+deviceManager ..> radioBrowserAPI: proži
 
 zonesManager ..> stateManager : proži
 

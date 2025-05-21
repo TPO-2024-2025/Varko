@@ -24,8 +24,8 @@ remove_person:
           domain: person
 
 # Device management services
-add_device:
-  name: Add Device
+add_light_device:
+  name: Add Light Device
   description: Add a device to be controlled by the presence simulation system
   fields:
     entity:
@@ -36,15 +36,6 @@ add_device:
         entity:
           domain: light
           integration: shelly
-    device_type:
-      name: Device Type
-      description: The type of the device to be added
-      required: true
-      example: "light"
-      selector:
-        select:
-          options:
-            - "light"
     device_name:
       name: Device Name
       description: The name of the device to be added
@@ -67,6 +58,26 @@ add_device:
       selector:
         text:
 
+add_media_device:
+  name: Add Media Device
+  description: Add a media device to be controlled by the presence simulation system
+  fields:
+    entity:
+      name: Media Entity
+      description: Link an existing media device instead of creating a new one
+      required: true
+      selector:
+        entity:
+          domain: media_player
+          integration: cast
+    is_enabled:
+      name: Enabled
+      description: Immediately activate this device
+      required: false
+      default: true
+      selector:
+        boolean:
+
 remove_device:
   name: Remove Device
   description: Remove a device from the presence simulation system
@@ -76,12 +87,14 @@ remove_device:
       description: Select the device to remove
       required: true
       selector:
-        entity:
-          domain: light
+        entity:   
           filter:
-            - integration: varko
-            - integration: shelly
-
+            - domain: light
+            - integration:
+                - varko
+                - shelly
+                - cast
+            - domain: media_player
 enable_device:
   name: Enable Device
   description: Enable a device for use in the presence simulation system
@@ -92,10 +105,13 @@ enable_device:
       required: true
       selector:
         entity:
-          domain: light
           filter:
-            - integration: varko
-            - integration: shelly
+            - domain: light
+            - integration:
+                - varko
+                - shelly
+                - cast
+            - domain: media_player
 
 disable_device:
   name: Disable Device
@@ -107,10 +123,44 @@ disable_device:
       required: true
       selector:
         entity:
-          domain: light
           filter:
-            - integration: varko
-            - integration: shelly
+            - domain: light
+            - integration:
+                - varko
+                - shelly
+                - cast
+            - domain: media_player
+
+choose_radio_station:
+  name: Choose Radio Station
+  description: Choose a radio station used by media devices in the presence simulation system
+  fields:
+    radio_country_code:
+      name: Radio Country Code
+      description: The country code of the radio station to play
+      required: true
+      example: "SI"
+      selector:
+        text:
+    station_name:
+      name: Station Name
+      description: The name of the radio station to play
+      required: true
+      example: "Radio 1"
+      selector:
+        text:
+
+get_list_of_stations_per_country:
+  name: Get List of Stations Per Country
+  description: Get a list of radio stations per country
+  fields:
+    radio_country_code:
+      name: Radio Country Code
+      description: The country code to get the list of stations for
+      required: true
+      example: "SI"
+      selector:
+        text:
 
 # System state services
 set_state_idle:

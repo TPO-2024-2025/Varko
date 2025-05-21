@@ -9,11 +9,13 @@ from custom_components.varko.const import (
     DOMAIN,
     ENTITY,
     ENTITY_ID,
+    RADIO_STATION_UUID,
     IS_ENABLED,
 )
 from custom_components.varko.decorators import admin, service
 from custom_components.varko.light import VarkoLight
 from custom_components.varko.services.base_manager import BaseManager
+from custom_components.varko.radio import RadioBrowserAPI
 
 
 class DeviceManager(BaseManager):
@@ -37,9 +39,8 @@ class DeviceManager(BaseManager):
 
     @service
     @admin
-    async def add_device(self, call: ServiceCall):
+    async def add_light_device(self, call: ServiceCall):
         entity_id = call.data.get(ENTITY)
-        device_type = call.data.get(DEVICE_TYPE)
         device_name = call.data.get(DEVICE_NAME)
         is_enabled = call.data.get(IS_ENABLED, True)
         device_id = call.data.get(DEVICE_ID)
@@ -57,7 +58,7 @@ class DeviceManager(BaseManager):
             return
 
         new_device = {
-            DEVICE_TYPE: device_type,
+            DEVICE_TYPE: "light",
             DEVICE_NAME: device_name,
             IS_ENABLED: is_enabled,
             DEVICE_ID: device_id,
@@ -100,6 +101,56 @@ class DeviceManager(BaseManager):
             self._logger.debug(
                 f"Added {device_name} linked to existing entity {entity_id}."
             )
+
+    @service
+    @admin
+    async def add_media_device(self, call: ServiceCall):
+        entity_id = call.data.get(ENTITY)
+        is_enabled = call.data.get(IS_ENABLED, True)
+
+        if any(
+            device.get(ENTITY_ID) == entity_id
+            for device in self._data
+            if ENTITY_ID in device
+        ):
+            self._logger.warning(f"Entity with {entity_id} already exists.")
+            return
+
+        entity_registry = async_get_entity_registry(self._hass)
+        entity_entry = entity_registry.async_get(entity_id)
+        if not entity_entry:
+            self._logger.error(f"Entity {entity_id} not found in registry")
+            return
+
+        new_device = {
+            DEVICE_TYPE: "media_player",
+            IS_ENABLED: is_enabled,
+            DEVICE_ID: entity_entry.unique_id,
+            ENTITY_ID: entity_id,
+            RADIO_STATION_UUID: None,
+        }
+
+        self._data.append(new_device)
+        await self._store.async_save(self._data)
+
+        entry = next(
+            (entry for entry in self._hass.config_entries.async_entries(DOMAIN)),
+            None,
+        )
+        if entry:
+            devices = entry.data.get("devices", [])
+            devices.append(new_device)
+            self._hass.config_entries.async_update_entry(
+                entry, data={"devices": devices}
+            )
+        else:
+            self._logger.error("No config entry found for Varko.")
+            return
+
+        self._hass.data[DOMAIN][entry.entry_id]["devices"].append(new_device)
+        self._logger.debug(
+            f"Added {entity_id} as a media player device. (is_enabled: {is_enabled})"
+        )
 
     @service
     @admin
@@ -321,12 +372,41 @@ class DeviceManager(BaseManager):
         await self._store.async_save(self._data)
         self._logger.debug(f"Disabled device {device_id} (Entity {entity_id}).")
 
+    @service
+    @admin
+    async def choose_radio_station(self, call: ServiceCall):
+        radio_country_code = call.data.get("radio_country_code")
+        station_name = call.data.get("station_name")
+
+        radio_api = await RadioBrowserAPI.get_instance(self._hass)
+        station_uuid = await radio_api.get_station_uuid(
+            station_name, radio_country_code
+        )
+
+        media_players = [
+            device for device in self._data if device[DEVICE_TYPE] == "media_player"
+        ]
+
+        if not media_players:
+            self._logger.warning("No media players found in Varko data.")
+            return
+
+        for device in media_players:
+            device[RADIO_STATION_UUID] = station_uuid
+
+        await self._store.async_save(self._data)
+
+        self._logger.debug(
+            f"Updated media players with station UUID {station_uuid} for {station_name} in {radio_country_code}"
+        )
+
     async def control_device(self, device_id: str, command: str):
         normalized_command = command.upper()
 
         device = next(
             (device for device in self._data if device[DEVICE_ID] == device_id), None
         )
+
         if not device:
             self._logger.error(f"Device {device_id} not found in store data")
             return
@@ -347,13 +427,67 @@ class DeviceManager(BaseManager):
         try:
             if normalized_command == "ON":
                 self._logger.debug(f"async_turn_on should be called")
-                await self._hass.services.async_call(
-                    "light", "turn_on", {"entity_id": entity_id}, blocking=True
-                )
+                if device.get(DEVICE_TYPE) == "light":
+                    await self._hass.services.async_call(
+                        "light", "turn_on", {"entity_id": entity_id}, blocking=True
+                    )
+                elif device.get(DEVICE_TYPE) == "media_player":
+                    await self._hass.services.async_call(
+                        "media_player",
+                        "turn_on",
+                        {"entity_id": entity_id},
+                        blocking=True,
+                    )
             elif normalized_command == "OFF":
                 self._logger.debug(f"async_turn_off should be called")
+                if device.get(DEVICE_TYPE) == "light":
+                    await self._hass.services.async_call(
+                        "light", "turn_off", {"entity_id": entity_id}, blocking=True
+                    )
+                elif device.get(DEVICE_TYPE) == "media_player":
+                    await self._hass.services.async_call(
+                        "media_player",
+                        "turn_off",
+                        {"entity_id": entity_id},
+                        blocking=True,
+                    )
+            elif normalized_command == "PLAY_MEDIA":
+                if device.get(DEVICE_TYPE) != "media_player":
+                    self._logger.error(f"Device {device_id} is not a media player")
+                    return
+
+                if device.get(RADIO_STATION_UUID) is None:
+                    radio_api = await RadioBrowserAPI.get_instance(self._hass)
+                    default_station_uuid = await radio_api.get_station_uuid(
+                        "Radio Slovenija", "SI"
+                    )
+                    device[RADIO_STATION_UUID] = default_station_uuid
+                    await self._store.async_save(self._data)
+
+                selected_station_uuid = device.get(RADIO_STATION_UUID)
+
+                self._logger.debug(f"async_media_play should be called")
                 await self._hass.services.async_call(
-                    "light", "turn_off", {"entity_id": entity_id}, blocking=True
+                    "media_player",
+                    "play_media",
+                    {
+                        "entity_id": entity_id,
+                        "media_content_id": f"media-source://radio_browser/{selected_station_uuid}",
+                        "media_content_type": "music",
+                    },
+                    blocking=True,
+                )
+            elif normalized_command == "STOP_MEDIA":
+                if device.get(DEVICE_TYPE) != "media_player":
+                    self._logger.error(f"Device {device_id} is not a media player")
+                    return
+
+                self._logger.debug(f"async_media_stop should be called")
+                await self._hass.services.async_call(
+                    "media_player",
+                    "media_stop",
+                    {"entity_id": entity_id},
+                    blocking=True,
                 )
             else:
                 raise ValueError(f"Invalid command: {command}")

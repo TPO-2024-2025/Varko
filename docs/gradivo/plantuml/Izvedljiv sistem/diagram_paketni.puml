@@ -13,6 +13,7 @@ package "Home Assistant" <<aplikacija>> {
         package "UpravljanjeCon"
         package "UpravljanjeSUS"
         package "UpravljanjeStanj"
+        package "UpravljanjeRadioPostaje"
     }
 
 }
@@ -32,7 +33,9 @@ VarkoPlošča --> UpravljanjeNaprav : "proži"
 VarkoPlošča --> UpravljanjeCon : "proži"
 VarkoPlošča --> UpravljanjeSUS : "proži"
 VarkoPlošča --> UpravljanjeStanj : "proži"
+VarkoPlošča --> UpravljanjeRadioPostaje : "proži"
 UpravljanjeNaprav .-> Entitete : "dostopa"
+UpravljanjeNaprav --> UpravljanjeRadioPostaje : "proži"
 UpravljanjeSUS .-> Entitete : "dostopa"
 UpravljanjeCon .-> Entitete : "dostopa"
 Varko .-> Store : "dostopa"

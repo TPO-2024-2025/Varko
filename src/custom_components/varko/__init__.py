@@ -15,6 +15,8 @@ from .const import DOMAIN
 from .services.device_manager import DeviceManager
 from .services.zone_manager import ZoneManager
 
+from custom_components.varko.radio import RadioBrowserAPI
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -69,6 +71,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await StateManager.get_instance(hass)
     await GroupManager.get_instance(hass)
     await ZoneManager.get_instance(hass)
+    await RadioBrowserAPI.get_instance(hass)
 
     await hass.async_create_task(
         hass.config_entries.async_forward_entry_setups(entry, [Platform.LIGHT])
@@ -86,6 +89,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     DeviceManager.destroy()
     GroupManager.destroy()
     ZoneManager.destroy()
+    await RadioBrowserAPI.destroy()
 
     if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id, None)

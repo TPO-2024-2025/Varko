@@ -1,3 +1,38 @@
+const countries  = [
+    { name: "Austria", code: "AT" },
+    { name: "Belgium", code: "BE" },
+    { name: "Bulgaria", code: "BG" },
+    { name: "Croatia", code: "HR" },
+    { name: "Cyprus", code: "CY" },
+    { name: "Czech Republic", code: "CZ" },
+    { name: "Denmark", code: "DK" },
+    { name: "Estonia", code: "EE" },
+    { name: "Finland", code: "FI" },
+    { name: "France", code: "FR" },
+    { name: "Germany", code: "DE" },
+    { name: "Greece", code: "GR" },
+    { name: "Hungary", code: "HU" },
+    { name: "Iceland", code: "IS" },
+    { name: "Ireland", code: "IE" },
+    { name: "Italy", code: "IT" },
+    { name: "Latvia", code: "LV" },
+    { name: "Lithuania", code: "LT" },
+    { name: "Luxembourg", code: "LU" },
+    { name: "Malta", code: "MT" },
+    { name: "Netherlands", code: "NL" },
+    { name: "Norway", code: "NO" },
+    { name: "Poland", code: "PL" },
+    { name: "Portugal", code: "PT" },
+    { name: "Romania", code: "RO" },
+    { name: "Slovakia", code: "SK" },
+    { name: "Slovenia", code: "SI" },
+    { name: "Spain", code: "ES" },
+    { name: "Sweden", code: "SE" },
+    { name: "Switzerland", code: "CH" },
+    { name: "United Kingdom", code: "GB" },
+    { name: "United States", code: "US" },
+]
+
 class VarkoPanel extends HTMLElement {
     connectedCallback() {
         this.attachShadow({mode: "open"})
@@ -27,6 +62,51 @@ class VarkoPanel extends HTMLElement {
         this._loadZoneElementDialog();
         this._loadUserElementDialog()
         this._loadStatesListeners();
+        this._populateCountrySelect();
+        this._setupRadioStationsListeners();
+        this._setupRadioButtons();
+    }
+
+    _setupRadioButtons() {
+        const selectStationButton = this.shadowRoot.getElementById("select-station-button");
+        const countrySelect = this.shadowRoot.getElementById("country-select");
+        const stationSelect = this.shadowRoot.getElementById("station-select");
+
+        selectStationButton.addEventListener("click", async () => {
+            const selectedStation = stationSelect.value;
+            const selectedCountry = countrySelect.value;
+            await this._callService("varko.choose_radio_station", { station_name: selectedStation, radio_country_code: selectedCountry });
+            console.log("Selected station:", selectedStation);
+            console.log("Selected country:", selectedCountry);
+        });
+    }
+
+    _populateCountrySelect() {
+        const countrySelect = this.shadowRoot.getElementById("country-select");
+        countries.forEach(country => {
+            const option = document.createElement("option");
+            option.value = country.code;
+            option.textContent = country.name;
+            countrySelect.appendChild(option);
+        });
+
+        countrySelect.addEventListener("change", async () => {
+            const selectedCountry = countrySelect.value;
+            await this._callService("varko.get_list_of_stations_per_country", { radio_country_code: selectedCountry });
+            console.log("Selected country:", selectedCountry);
+        });
+    }
+
+    _setupRadioStationsListeners() {
+        this.hass.connection.subscribeEvents(
+            (event) => {
+                console.log("Received event:", event);
+                if (event.event_type === "varko.radio_stations_list") {
+                    this._handleRadioStations(event);
+                }
+            },
+            "varko.radio_stations_list"
+        );
     }
 
     _loadLights() {
@@ -233,6 +313,23 @@ class VarkoPanel extends HTMLElement {
         readyButton.addEventListener("click", () => {
             this._callService("varko.set_state_ready", {});
             alert("State set to ready");
+        });
+    }
+
+    _handleRadioStations(event) {
+        console.log("Handling radio stations");
+        const radioStations = event.data.stations;
+        const countryCode = event.data.country_code;
+        console.log(radioStations);
+        console.log(countryCode);
+
+        const stationSelect = this.shadowRoot.getElementById("station-select");
+        stationSelect.innerHTML = "";
+        radioStations.forEach(station => {
+            const option = document.createElement("option");
+            option.value = station;
+            option.textContent = station;
+            stationSelect.appendChild(option);
         });
     }
 

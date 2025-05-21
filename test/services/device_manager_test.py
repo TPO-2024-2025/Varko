@@ -1,8 +1,6 @@
 import unittest
 from unittest.mock import MagicMock, patch, AsyncMock
 
-from homeassistant.helpers.entity_registry import RegistryEntry
-
 from custom_components.varko.services.device_manager import DeviceManager
 from custom_components.varko.const import DOMAIN
 from custom_components.varko.light import VarkoLight
@@ -55,14 +53,13 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
         # assert
         self.assertIsNone(DeviceManager._DeviceManager__instance)
 
-    async def test_should_add_existing_device(self):
+    async def test_should_add_existing_light_device(self):
         # ---------------- Arrange ----------------
 
         # Mock service call with device data
         call = MagicMock()
         call.data = {
             "device_id": "fcf4b2",
-            "device_type": "light",
             "device_name": "myLight",
             "is_enabled": True,
             "entity": "light.light",
@@ -90,7 +87,7 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
 
         # ---------------- Act ----------------
 
-        await self.device_manager.add_device(call)
+        await self.device_manager.add_light_device(call)
 
         # ---------------- Assert ----------------
 
@@ -108,14 +105,13 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len(hass_devices), 1)
         self.assertEqual(hass_devices[0]["device_id"], "fcf4b2")
 
-    async def test_should_add_new_device(self):
+    async def test_should_add_new_light_device(self):
         # ---------------- Arrange ----------------
 
         # Mock service call with device data without entity field
         call = MagicMock()
         call.data = {
             "device_id": "fcf4b2",
-            "device_type": "light",
             "device_name": "myLight",
             "is_enabled": True,
         }
@@ -151,7 +147,7 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
             "custom_components.varko.services.device_manager.async_get_platforms",
             return_value=[mock_platform],
         ):
-            await self.device_manager.add_device(call)
+            await self.device_manager.add_light_device(call)
 
         # ---------------- Assert ----------------
 
@@ -163,14 +159,13 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(added_entities[0].unique_id, "fcf4b2")
         self.assertEqual(added_entities[0].name, "myLight")
 
-    async def test_should_not_add_device_with_existing_device_id(self):
+    async def test_should_not_add_light_device_with_existing_device_id(self):
         # ---------------- Arrange ----------------
 
         # Mock service call with device data
         call = MagicMock()
         call.data = {
             "device_id": "fcf4b2",
-            "device_type": "light",
             "device_name": "myLight",
             "is_enabled": True,
         }
@@ -210,7 +205,7 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
 
         # ---------------- Act ----------------
 
-        await self.device_manager.add_device(call)
+        await self.device_manager.add_light_device(call)
 
         # ---------------- Assert ----------------
 
@@ -225,14 +220,13 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len(hass_devices), 1)
         self.assertEqual(hass_devices[0]["device_id"], "fcf4b2")
 
-    async def test_should_not_add_device_with_existing_entity_id(self):
+    async def test_should_not_add_light_device_with_existing_entity_id(self):
         # ---------------- Arrange ----------------
 
         # Mock service call with device data
         call = MagicMock()
         call.data = {
             "device_id": "fcf4b2",
-            "device_type": "light",
             "device_name": "myLight",
             "is_enabled": True,
             "entity": "light.light",
@@ -274,7 +268,7 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
 
         # ---------------- Act ----------------
 
-        await self.device_manager.add_device(call)
+        await self.device_manager.add_light_device(call)
 
         # ---------------- Assert ----------------
 
@@ -288,6 +282,145 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
         hass_devices = self.device_manager._hass.data[DOMAIN][entry_id]["devices"]
         self.assertEqual(len(hass_devices), 1)
         self.assertEqual(hass_devices[0]["entity_id"], "light.light")
+
+    async def test_should_add_existing_media_device(self):
+        # ---------------- Arrange ----------------
+
+        # Mock service call with device data
+        call = MagicMock()
+        call.data = {
+            "entity": "media_player.my_media_player",
+            "is_enabled": True,
+        }
+
+        # Allow access through auth check
+        self.device_manager._hass.auth.async_get_user = AsyncMock(
+            return_value=MagicMock()
+        )
+
+        # Mock configuration entry and its devices
+        mock_entry = MagicMock()
+        entry_id = "mock_entry_id"
+        mock_entry.entry_id = entry_id
+        mock_entry.data = {"devices": []}
+        self.device_manager._hass.config_entries.async_entries.return_value = [
+            mock_entry
+        ]
+
+        entity_entry = MagicMock()
+        entity_entry.unique_id = "fcf4b2"
+
+        # Prepare hass.data structure for the domain
+        self.device_manager._hass.data = {DOMAIN: {entry_id: {"devices": []}}}
+
+        # Mock store
+        self.device_manager._store.async_save = AsyncMock()
+
+        mock_registry = MagicMock()
+        mock_entity_entry = MagicMock()
+        mock_entity_entry.entity_id = "media_player.my_media_player"
+        mock_entity_entry.unique_id = "fcf4b2"
+        mock_entity_entry.config_entry_id = entry_id
+        mock_registry.async_get.return_value = mock_entity_entry
+
+        with patch(
+            "custom_components.varko.services.device_manager.async_get_entity_registry",
+            return_value=mock_registry,
+        ):
+            # ---------------- Act ----------------
+            await self.device_manager.add_media_device(call)
+
+        # ---------------- Assert ----------------
+
+        # Check internal state updated
+        self.assertEqual(len(self.device_manager._data), 1)
+
+        # Check store saved
+        self.mock_store.async_save.assert_called_once()
+
+        # Check config entry updated
+        self.assertEqual(mock_entry.data["devices"][0]["device_id"], "fcf4b2")
+
+        # Check hass.data updated
+        hass_devices = self.device_manager._hass.data[DOMAIN][entry_id]["devices"]
+        self.assertEqual(len(hass_devices), 1)
+        self.assertEqual(hass_devices[0]["device_id"], "fcf4b2")
+
+    async def test_should_not_add_media_device_with_existing_entity_id(self):
+        # ---------------- Arrange ----------------
+        # Mock service call with device data
+        call = MagicMock()
+        call.data = {
+            "entity": "media_player.my_media_player",
+            "is_enabled": True,
+        }
+
+        # Allow access through auth check
+        self.device_manager._hass.auth.async_get_user = AsyncMock(
+            return_value=MagicMock()
+        )
+
+        # Mock configuration entry with an existing device
+        mock_entry = MagicMock()
+        entry_id = "mock_entry_id"
+        mock_entry.entry_id = entry_id
+        mock_entry.data = {
+            "devices": [
+                {
+                    "device_id": "fcf4b2",
+                    "device_type": "media_player",
+                    "device_name": "myMediaPlayer",
+                    "is_enabled": True,
+                    "entity_id": "media_player.my_media_player",
+                }
+            ]
+        }
+        self.device_manager._hass.config_entries.async_entries.return_value = [
+            mock_entry
+        ]
+
+        # Prepare hass.data structure with existing device
+        self.device_manager._hass.data = {
+            DOMAIN: {entry_id: {"devices": [mock_entry.data["devices"][0]]}}
+        }
+
+        # Store also includes the device
+        self.device_manager._data = [mock_entry.data["devices"][0]]
+        # Mock persistence layer
+        self.device_manager._store.async_save = AsyncMock()
+
+        # Create a more complete mock for the entity registry
+        mock_registry = MagicMock()
+
+        # Mock the async_get method to return our entity entry
+        mock_entity_entry = MagicMock()
+        mock_entity_entry.entity_id = "media_player.my_media_player"
+        mock_entity_entry.unique_id = "fcf4b2"
+        mock_entity_entry.config_entry_id = entry_id
+
+        # For newer Home Assistant versions, we need to mock _entities_data
+        mock_registry._entities_data = {
+            "media_player.my_media_player": mock_entity_entry
+        }
+        mock_registry.async_get = MagicMock(return_value=mock_entity_entry)
+
+        with patch(
+            "custom_components.varko.services.device_manager.async_get_entity_registry",
+            return_value=mock_registry,
+        ):
+            # ---------------- Act ----------------
+            await self.device_manager.add_media_device(call)
+
+        # ---------------- Assert ----------------
+        # Ensure no new device was added
+        self.assertEqual(len(self.device_manager._data), 1)
+
+        # async_save should NOT be called
+        self.device_manager._store.async_save.assert_not_called()
+
+        # Ensure hass.data still only has one device
+        hass_devices = self.device_manager._hass.data[DOMAIN][entry_id]["devices"]
+        self.assertEqual(len(hass_devices), 1)
 
     async def test_should_remove_existing_device(self):
         # ---------------- Arrange ----------------
@@ -327,13 +460,12 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
         self.device_manager._hass.data = {DOMAIN: {entry_id: {"devices": [device]}}}
 
         # Patch entity registry
+        mock_entity_entry = MagicMock()
+        mock_entity_entry.entity_id = entity_id
+        mock_entity_entry.unique_id = device_id
+        mock_entity_entry.config_entry_id = entry_id
+
         mock_registry = MagicMock()
-        mock_entity_entry = RegistryEntry(
-            entity_id=entity_id,
-            unique_id=device_id,
-            platform="varko",
-            config_entry_id=entry_id,
-        )
         mock_registry.async_get.return_value = mock_entity_entry
         mock_registry.async_get_entity_id.return_value = entity_id
         mock_registry.async_remove = MagicMock()
@@ -403,13 +535,12 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
         self.device_manager._hass.data = {DOMAIN: {entry_id: {"devices": [device]}}}
 
         # Patch entity registry
+        mock_entity_entry = MagicMock()
+        mock_entity_entry.entity_id = entity_id
+        mock_entity_entry.unique_id = device_id
+        mock_entity_entry.config_entry_id = entry_id
+
         mock_registry = MagicMock()
-        mock_entity_entry = RegistryEntry(
-            entity_id=entity_id,
-            unique_id=device_id,
-            platform="varko",
-            config_entry_id=entry_id,
-        )
         mock_registry.async_get.return_value = mock_entity_entry
         mock_registry.async_remove = MagicMock()
 
@@ -473,13 +604,12 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
 
         self.device_manager._hass.data = {DOMAIN: {entry_id: {"devices": [device]}}}
 
+        mock_entity_entry = MagicMock()
+        mock_entity_entry.entity_id = entity_id
+        mock_entity_entry.unique_id = device_id
+        mock_entity_entry.config_entry_id = entry_id
+
         mock_registry = MagicMock()
-        mock_entity_entry = RegistryEntry(
-            entity_id=entity_id,
-            unique_id=device_id,
-            platform="varko",
-            config_entry_id=entry_id,
-        )
         mock_registry.async_get.return_value = mock_entity_entry
 
         with patch(
@@ -545,13 +675,12 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
             DOMAIN: {entry_id: {"devices": [device.copy()]}}
         }
 
+        mock_entity_entry = MagicMock()
+        mock_entity_entry.entity_id = entity_id
+        mock_entity_entry.unique_id = device_id
+        mock_entity_entry.config_entry_id = entry_id
+
         mock_registry = MagicMock()
-        mock_entity_entry = RegistryEntry(
-            entity_id=entity_id,
-            unique_id=device_id,
-            platform="varko",
-            config_entry_id=entry_id,
-        )
         mock_registry.async_get.return_value = mock_entity_entry
 
         with patch(
@@ -603,13 +732,12 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
 
         self.device_manager._hass.data = {DOMAIN: {entry_id: {"devices": [device]}}}
 
+        mock_entity_entry = MagicMock()
+        mock_entity_entry.entity_id = entity_id
+        mock_entity_entry.unique_id = device_id
+        mock_entity_entry.config_entry_id = entry_id
+
         mock_registry = MagicMock()
-        mock_entity_entry = RegistryEntry(
-            entity_id=entity_id,
-            unique_id=device_id,
-            platform="varko",
-            config_entry_id=entry_id,
-        )
         mock_registry.async_get.return_value = mock_entity_entry
 
         with patch(
@@ -675,13 +803,12 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
             DOMAIN: {entry_id: {"devices": [device.copy()]}}
         }
 
+        mock_entity_entry = MagicMock()
+        mock_entity_entry.entity_id = entity_id
+        mock_entity_entry.unique_id = device_id
+        mock_entity_entry.config_entry_id = entry_id
+
         mock_registry = MagicMock()
-        mock_entity_entry = RegistryEntry(
-            entity_id=entity_id,
-            unique_id=device_id,
-            platform="varko",
-            config_entry_id=entry_id,
-        )
         mock_registry.async_get.return_value = mock_entity_entry
 
         with patch(
@@ -697,15 +824,129 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
         self.device_manager._hass.config_entries.async_update_entry.assert_not_called()
         self.device_manager._store.async_save.assert_not_awaited()
 
+    async def test_choose_radio_station_success(self):
+        # ---------------- Arrange ----------------
+        call = MagicMock()
+        call.data = {"radio_country_code": "SI", "station_name": "Radio 1"}
+
+        self.device_manager._hass.auth.async_get_user = AsyncMock(
+            return_value=MagicMock()
+        )
+
+        device = {
+            "device_type": "media_player",
+            "device_id": "tg6kg6kcnv",
+            "is_enabled": True,
+            "entity_id": "media_player.test_media_player",
+            "radio_station_uuid": None,
+        }
+        self.device_manager._data = [device]
+
+        self.device_manager._store.async_save = AsyncMock()
+
+        radio_api = AsyncMock()
+        radio_api.get_station_uuid.return_value = "abc123"
+
+        with patch(
+            "custom_components.varko.radio.RadioBrowserAPI.get_instance",
+            return_value=radio_api,
+        ):
+            # ---------------- Act ----------------
+            await self.device_manager.choose_radio_station(call)
+
+        # ---------------- Assert ----------------
+        self.assertEqual(self.device_manager._data[0]["radio_station_uuid"], "abc123")
+        self.device_manager._store.async_save.assert_awaited_once_with([device])
+
+    async def test_choose_radio_station_multiple_devices_success(self):
+        # ---------------- Arrange ----------------
+        call = MagicMock()
+        call.data = {"radio_country_code": "SI", "station_name": "Radio 1"}
+
+        self.device_manager._hass.auth.async_get_user = AsyncMock(
+            return_value=MagicMock()
+        )
+
+        device1 = {
+            "device_type": "media_player",
+            "device_id": "tg6kg6kcnv",
+            "is_enabled": True,
+            "entity_id": "media_player.test_media_player",
+            "radio_station_uuid": None,
+        }
+
+        device2 = {
+            "device_type": "media_player",
+            "device_id": "tg6kg6kcnv2",
+            "is_enabled": True,
+            "entity_id": "media_player.test_media_player2",
+            "radio_station_uuid": "1jn2nj3",
+        }
+
+        self.device_manager._data = [device1, device2]
+
+        self.device_manager._store.async_save = AsyncMock()
+
+        radio_api = AsyncMock()
+        radio_api.get_station_uuid.return_value = "abc123"
+
+        with patch(
+            "custom_components.varko.radio.RadioBrowserAPI.get_instance",
+            return_value=radio_api,
+        ):
+            # ---------------- Act ----------------
+            await self.device_manager.choose_radio_station(call)
+
+        # ---------------- Assert ----------------
+        self.assertEqual(self.device_manager._data[0]["radio_station_uuid"], "abc123")
+        self.assertEqual(self.device_manager._data[1]["radio_station_uuid"], "abc123")
+        self.device_manager._store.async_save.assert_awaited_once_with(
+            [device1, device2]
+        )
+
+    async def test_choose_radio_station_no_media_players(self):
+        # ---------------- Arrange ----------------
+        call = MagicMock()
+        call.data = {"radio_country_code": "SI", "station_name": "Radio 1"}
+
+        self.device_manager._hass.auth.async_get_user = AsyncMock(
+            return_value=MagicMock()
+        )
+
+        device = {
+            "device_type": "light",
+            "device_id": "tg6kg6kcnv",
+            "is_enabled": True,
+            "entity_id": "light.test_light",
+        }
+        self.device_manager._data = [device]
+
+        self.device_manager._store.async_save = AsyncMock()
+
+        radio_api = AsyncMock()
+        radio_api.get_station_uuid.return_value = "abc123"
+
+        with patch(
+            "custom_components.varko.radio.RadioBrowserAPI.get_instance",
+            return_value=radio_api,
+        ):
+            # ---------------- Act ----------------
+            await self.device_manager.choose_radio_station(call)
+
+        # ---------------- Assert ----------------
+        self.device_manager._store.async_save.assert_not_awaited()
+
     async def test_control_device_turns_on_light(self):
         device_id = "abc123"
         entity_id = "light.test_light"
+        device_type = "light"
 
         device = {
             "device_id": device_id,
             "device_name": "Test Light",
             "is_enabled": True,
             "entity_id": entity_id,
+            "device_type": device_type,
         }
 
         self.device_manager._data = [device]
@@ -725,12 +966,14 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
     async def test_control_device_turns_off_light(self):
         device_id = "abc123"
         entity_id = "light.test_light"
+        device_type = "light"
 
         device = {
             "device_id": device_id,
             "device_name": "Test Light",
             "is_enabled": True,
             "entity_id": entity_id,
+            "device_type": device_type,
         }
 
         self.device_manager._data = [device]
@@ -741,6 +984,166 @@ class TestDeviceManager(unittest.IsolatedAsyncioTestCase):
 
         self.device_manager._hass.services.async_call.assert_awaited_once_with(
             "light", "turn_off", {"entity_id": entity_id}, blocking=True
+        )
+
+    async def test_control_device_turns_on_media_player(self):
+        device_id = "abc123"
+        entity_id = "media_player.test_media_player"
+        device_type = "media_player"
+
+        device = {
+            "device_id": device_id,
+            "is_enabled": True,
+            "entity_id": entity_id,
+            "device_type": device_type,
+            "radio_station_uuid": "kjiha2",
+        }
+
+        self.device_manager._data = [device]
+
+        # Simulate state existing
+        self.device_manager._hass.states.get = MagicMock(return_value=MagicMock())
+
+        # Mock service call
+        self.device_manager._hass.services.async_call = AsyncMock()
+
+        await self.device_manager.control_device(device_id, "on")
+
+        self.device_manager._hass.services.async_call.assert_awaited_once_with(
+            "media_player", "turn_on", {"entity_id": entity_id}, blocking=True
+        )
+
+    async def test_control_device_turns_off_media_player(self):
+        device_id = "abc123"
+        entity_id = "media_player.test_media_player"
+        device_type = "media_player"
+
+        device = {
+            "device_id": device_id,
+            "is_enabled": True,
+            "entity_id": entity_id,
+            "device_type": device_type,
+            "radio_station_uuid": "kjiha2",
+        }
+
+        self.device_manager._data = [device]
+
+        # Simulate state existing
+        self.device_manager._hass.states.get = MagicMock(return_value=MagicMock())
+
+        # Mock service call
+        self.device_manager._hass.services.async_call = AsyncMock()
+
+        await self.device_manager.control_device(device_id, "off")
+
+        self.device_manager._hass.services.async_call.assert_awaited_once_with(
+            "media_player", "turn_off", {"entity_id": entity_id}, blocking=True
+        )
+
+    async def test_control_device_play_media(self):
+        device_id = "abc123"
+        entity_id = "media_player.test_media_player"
+        device_type = "media_player"
+
+        device = {
+            "device_id": device_id,
+            "is_enabled": True,
+            "entity_id": entity_id,
+            "device_type": device_type,
+            "radio_station_uuid": "kjiha2",
+        }
+
+        self.device_manager._data = [device]
+
+        # Simulate state existing
+        self.device_manager._hass.states.get = MagicMock(return_value=MagicMock())
+
+        # Mock service call
+        self.device_manager._hass.services.async_call = AsyncMock()
+
+        await self.device_manager.control_device(device_id, "play_media")
+
+        self.device_manager._hass.services.async_call.assert_awaited_once_with(
+            "media_player",
+            "play_media",
+            {
+                "entity_id": entity_id,
+                "media_content_id": f"media-source://radio_browser/{device['radio_station_uuid']}",
+                "media_content_type": "music",
+            },
+            blocking=True,
+        )
+
+    async def test_control_device_play_media_uuid_not_set(self):
+        device_id = "abc123"
+        entity_id = "media_player.test_media_player"
+        device_type = "media_player"
+
+        device = {
+            "device_id": device_id,
+            "is_enabled": True,
+            "entity_id": entity_id,
+            "device_type": device_type,
+            "radio_station_uuid": None,
+        }
+
+        self.device_manager._data = [device]
+
+        # Simulate state existing
+        self.device_manager._hass.states.get = MagicMock(return_value=MagicMock())
+
+        # Mock service call
+        self.device_manager._hass.services.async_call = AsyncMock()
+
+        self.device_manager._store.async_save = AsyncMock()
+
+        radio_api = AsyncMock()
+        radio_api.get_station_uuid.return_value = "abc123"
+
+        with patch(
+            "custom_components.varko.radio.RadioBrowserAPI.get_instance",
+            return_value=radio_api,
+        ):
+
+            await self.device_manager.control_device(device_id, "play_media")
+
+        self.assertEqual(self.device_manager._data[0]["radio_station_uuid"], "abc123")
+        self.device_manager._hass.services.async_call.assert_awaited_once_with(
+            "media_player",
+            "play_media",
+            {
+                "entity_id": entity_id,
+                "media_content_id": f"media-source://radio_browser/{device['radio_station_uuid']}",
+                "media_content_type": "music",
+            },
+            blocking=True,
+        )
+
+    async def test_control_device_stop_media(self):
+        device_id = "abc123"
+        entity_id = "media_player.test_media_player"
+        device_type = "media_player"
+
+        device = {
+            "device_id": device_id,
+            "is_enabled": True,
+            "entity_id": entity_id,
+            "device_type": device_type,
+            "radio_station_uuid": "kjiha2",
+        }
+
+        self.device_manager._data = [device]
+
+        # Simulate state existing
+        self.device_manager._hass.states.get = MagicMock(return_value=MagicMock())
+
+        # Mock service call
+        self.device_manager._hass.services.async_call = AsyncMock()
+
+        await self.device_manager.control_device(device_id, "stop_media")
+
+        self.device_manager._hass.services.async_call.assert_awaited_once_with(
+            "media_player", "media_stop", {"entity_id": entity_id}, blocking=True
         )
 
     async def test_control_device_device_not_found(self):

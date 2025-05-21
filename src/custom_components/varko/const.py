@@ -6,6 +6,7 @@ DEVICE_ID = "device_id"
 IS_ENABLED = "is_enabled"
 ENTITY = "entity"
 ENTITY_ID = "entity_id"
+RADIO_STATION_UUID = "radio_station_uuid"
 
 STATE_ENTITY_ID = f"{DOMAIN}.system_state"
 STATE_IDLE = "idle"

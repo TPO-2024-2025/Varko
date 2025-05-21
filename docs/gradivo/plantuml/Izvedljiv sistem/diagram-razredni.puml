@@ -1,5 +1,5 @@
 @startuml
-abstract class BaseManager {
+abstract class BaseManager <<abstract>> {
     # logger: Logger
     # hass: HomeAssistant
     # store: Store
@@ -12,7 +12,7 @@ abstract class BaseManager {
     - unregister_services(): None
 }
 
-class GroupManager {
+class GroupManager <<manager>> <<singleton>> {
     - instance: GroupManager
     + __init__(hass: HomeAssistant)
     + get_instance(hass: HomeAssistant): Coroutine[Any, Any, GroupManager]
@@ -23,20 +23,22 @@ class GroupManager {
 }
 BaseManager <|-- GroupManager
 
-class DeviceManager {
+class DeviceManager <<manager>> <<singleton>> {
     - instance: DeviceManager
     + __init__(hass: HomeAssistant)
     + get_instance(hass: HomeAssistant): Coroutine[Any, Any, DeviceManager]
     + destroy(): None
-    + add_device(call: ServiceCall): Coroutine[Any, Any, None]
+    + add_light_device(call: ServiceCall): Coroutine[Any, Any, None]
+    + add_media_device(call: ServiceCall): Coroutine[Any, Any, None]
     + remove_device(call: ServiceCall): Coroutine[Any, Any, None]
     + enable_device(call: ServiceCall): Coroutine[Any, Any, None]
     + disable_device(call: ServiceCall): Coroutine[Any, Any, None]
+    + choose_radio_station(call: ServiceCall): Coroutine[Any, Any, None]
     + control_device(device_id: str, command: str): Coroutine[Any, Any, None]
 }
 BaseManager <|-- DeviceManager
 
-class StateManager {
+class StateManager <<manager>> <<singleton>> {
     - instance: StateManager
     - state: State
     - presence_simulation_duration_minutes: int
@@ -63,7 +65,7 @@ class StateManager {
 BaseManager <|-- StateManager
 StateManager "1" *-- "1" State : has >
 
-abstract class State {
+abstract class State <<abstract>> {
     # _manager: StateManager
     + __init__(manager: StateManager): None
     + {abstract} set_state_idle(): Coroutine[Any, Any, None]
@@ -71,28 +73,28 @@ abstract class State {
     + {abstract} set_state_active(): Coroutine[Any, Any, None]
 }
 
-class IdleState {
+class IdleState <<state>> {
     + set_state_idle(): Coroutine[Any, Any, None]
     + set_state_ready(): Coroutine[Any, Any, None]
     + set_state_active(): Coroutine[Any, Any, None]
 }
 State <|-- IdleState
 
-class ReadyState {
+class ReadyState <<state>> {
     + set_state_idle(): Coroutine[Any, Any, None]
     + set_state_ready(): Coroutine[Any, Any, None]
     + set_state_active(): Coroutine[Any, Any, None]
 }
 State <|-- ReadyState
 
-class ActiveState {
+class ActiveState <<state>> {
     + set_state_idle(): Coroutine[Any, Any, None]
     + set_state_ready(): Coroutine[Any, Any, None]
     + set_state_active(): Coroutine[Any, Any, None]
 }
 State <|-- ActiveState
 
-class ZoneManager {
+class ZoneManager <<manager>> <<singleton>> {
     - instance: ZoneManager
     - group_tracker: Callable[[], None] | None
     - device_trackers: list[Callable]
@@ -111,4 +113,40 @@ class ZoneManager {
 }
 BaseManager <|-- ZoneManager
 
+class RadioBrowserAPI <<control>> <<singleton>> {
+    - instance: RadioBrowserAPI
+    - base_urls: list[str]
+    - session: ClientSession | None
+    + __init__(hass: HomeAssistant)
+    + get_instance(hass: HomeAssistant): Coroutine[Any, Any, RadioBrowserAPI]
+    + destroy(): Coroutine[Any, Any, None]
+    + get_station_uuid(name: str, countrycode: str): Coroutine[Any, Any, Optional[str]]
+    + get_list_of_stations_per_country(call: ServiceCall): Coroutine[Any, Any, List[str]]
+    - setup(): Coroutine[Any, Any, None]
+    - cleanup(): Coroutine[Any, Any, None]
+    - get_radiobrowser_base_urls(): Coroutine[Any, Any, List[str]]
+    - fetch_json(url: str, params: Optional[Dict]): Coroutine[Any, Any, Union[Dict, List]]
+}
+BaseManager <|-- RadioBrowserAPI
+
+class VarkoLight <<entity>> {
+    - state: bool
+    - attr_has_entity_name: bool
+    - attr_supported_color_modes: set[ColorMode]
+    - attr_color_mode: ColorMode
+    - hass: HomeAssistant
+    - attr_name: str
+    - attr_unique_id: str
+    - attr_config_entry_id: str
+    - command_topic: str
+    - state_topic: str
+    + is_on: bool
+    + unique_id: str | None
+    
+    + __init__(hass: HomeAssistant, name: str, device_id: str, config_entry_id: str): None
+    + async_turn_on(): Coroutine[Any, Any, None]
+    + async_turn_off(): Coroutine[Any, Any, None]
+    + async_added_to_hass(): Coroutine[Any, Any, None]
+}
+DeviceManager "1" *-- "*" VarkoLight : manages >
 @enduml
