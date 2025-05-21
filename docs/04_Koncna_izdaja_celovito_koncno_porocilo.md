@@ -104,7 +104,7 @@ Brezhibno delovanje sistema, ki ne zahteva veliko vzdrževanja. Po začetni nast
 
 ## 2.2 Uporabniške zahteve
 
-Spodaj so opisane zaznane uporabniške zahteve in sprejemni testi.
+Spodaj so opisane zaznane uporabniške zahteve v obliki uporabniških zgodb. Vsaka je najprej definirana, nato pa so našteti in opisani še sprejemni testi.
 
 1. **Avtomatska aktivacija sistema** - Kot administrator sistema želim, da se pametne naprave avtomatsko vklopijo, ko so izven lokacijske cone objekta vsi uporabniki in je zaznana nezaželjena oseba, da objekt daje vtis prisotnosti uporabnikov.
     
@@ -216,6 +216,8 @@ Na spodnjih slikah je prikazana kontrolna plošča integracije, ki omogoča:
   <img src="gradivo/img/Izvedljiv sistem/ui_general.png" alt="Splošen izgled UI">
 </p>
 
+Spodnja slika predstavlja pojavno okno z menijem, ki se pojavi ob kliku na opcijo "Add device". Vsebuje vnosna polja, ki jih je potrebno pred potrditvijo izpolniti.
+
 <p align="center">
   <img src="gradivo/img/Izvedljiv sistem/ui_detail.png" alt="Izgled UI menija">
 </p>
@@ -223,6 +225,8 @@ Na spodnjih slikah je prikazana kontrolna plošča integracije, ki omogoča:
 Do določenih nastavitev lahko dostopa le administrator sitema Home Assistant, do ostalih pa tudi drugi avtenticirani uporabniki. Ob poskusu nedovoljenega dostopa do funkcionalnosti se uporabniku prikaže obvestilo o premajhnih pooblastilih.
 
 #### Vmesniki do zunanjih sistemov
+
+Spodaj so opisani načini dostopov do osrednjega sistema - način komunikacije uporabniškega vmesnika, kamere in pametnih naprav.
 
 ##### Uporabniški vmesnik
 
@@ -1324,6 +1328,8 @@ Nekaj težav se je pojavilo tudi zaradi neintuitivnega življenjskega cikla inte
 
 ### Namestitveni diagram
 
+[//]: # (TODO: HTTPS NAMESTO HTTP/S (ODSTRANI “/”))
+
 Na spodnji sliki je predstavljen namestitveni diagram sistema.
 
 Glavni koordinator izvajanja sistema je `Docker Compose`, ki se sam izvaja v okolju `Docker Host`. `Docker Compose` koordinira posamezne vsebnike, vsak predstavlja svojo funkcijo - `Frigate` kot sistem za prepoznavo ljudi na video posnetku v primeru zaznave subjekta pošlje sporočilo v protokolu MQTT, ki se preko `MQTT posrednika` prepošlje sistemu `Home Assistant`, ki pa vsebuje integracijo Varko. Tako `Frigate` kot `MQTT posrednik` potrebujeta konfiguracijsko datoteko. `Brskalnik` in `Telefon` nista ovita v posebno okolje saj delujeta na večini operacijskih sistemov; oba komunicirata z glavnino sistema preko protokola HTTP(S). `Telefon` se uporablja za zaznavanje lokacije uporabnika.
@@ -1335,6 +1341,7 @@ Glavni koordinator izvajanja sistema je `Docker Compose`, ki se sam izvaja v oko
 ### Paketni diagram
 
 [//]: # (TODO: VKLJUČI LIGHT, MEDIA PLAYER IN NOTIFICATIONE)
+[//]: # (TODO: V PAKETE VPIŠI VSEBOVANE RAZREDE)
 
 Na spodnji sliki je predstavljen paketni diagram, ki prikazuje poenostavljen logični pregled sistema.
 
@@ -1351,6 +1358,8 @@ Paket `VarkoPlošča` predstavlja naš lasten uporabniški vmesnik, ki komunicir
 ### Komponentni diagram
 
 [//]: # (TODO: VKLJUČI LIGHT, MEDIA PLAYER IN NOTIFICATIONE)
+[//]: # (TODO: ODSTRANI AGREGACIJE PRI INTERFACIH)
+[//]: # (TODO: ODSTRANI EXTEND PUŠČICE MED MANAGERJI)
 
 Na spodnji sliki je predstavljen komponentni diagram sistema.
 
@@ -1372,7 +1381,7 @@ Spodnji diagram prikazuje diagram prehodov stanj, kjer so označena tri glavna (
 [//]: # (TODO: DODAJ DIAGRAM ZAPOREDJA)
 
 ### Razredni diagram
-[//]: # (TODO: VKLJUČI NAČRTOVALSKE VZORCE IN JIH OPIŠI)
+[//]: # (TODO: VKLJUČI NAČRTOVALSKE VZORCE IN JIH OPIŠI - VZORCE OBKROŽI IN NAPIŠI IME)
 [//]: # (TODO: VKLJUČI LIGHT, MEDIA PLAYER IN NOTIFICATIONE)
 
 Spodnji diagram prikazuje razredno strukturo implementiranega sistema.
@@ -1446,6 +1455,8 @@ Na spodnjih slikah je prikazana kontrolna plošča integracije, ki omogoča:
 <p align="center">
   <img src="gradivo/img/Izvedljiv sistem/ui_general.png" alt="Kontrolna plošča">
 </p>
+
+Spodnja slika predstavlja pojavno okno z menijem, ki se pojavi ob kliku na opcijo "Add device". Vsebuje vnosna polja, ki jih je potrebno pred potrditvijo izpolniti.
 
 <p align="center">
   <img src="gradivo/img/Izvedljiv sistem/ui_detail.png" alt="Odprt meni kontrolne plošče">
@@ -1596,7 +1607,7 @@ Kritična pot je označena s simbolom :blue_square:, torej zaporedna opravila s 
 | :blue_square: 4.4 Uporabniško testiranje | 5 | 6.5 | 12.5 | 5 | 4 | 4.1 | Uporabniško testiran končni izdelek |
 | **Vodenje projektne ekipe** | / | 24.2 | 19.5 | 59  | / | / | Uspešno izveden projekt |
 
-Sktivnosti na kritični poti so označene z modro oznako.
+Aktivnosti na kritični poti so označene z modro oznako.
 
 Vseskupaj $54$ dni iz kritične poti * $5$ študentov = $270$ ŠČD oz. ŠČU dela.
 Glede na razporeditev dela pride $223$ ŠČD oz. ŠČU dela na kritični poti.
