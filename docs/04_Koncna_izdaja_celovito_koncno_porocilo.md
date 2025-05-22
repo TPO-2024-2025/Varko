@@ -1314,6 +1314,10 @@ Vzorec `singleton` smo uporabili pri [implementaciji posameznih managerjev](http
 
 Vzorec `state` smo uporabili za [prehajanje med stanji](https://github.com/TPO-2024-2025/Projekt-20/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/services/state_manager.py#L20-L93) znotraj naše integracije. Z njim smo zagotovili pravilno prehajanje med stanji sistema in ob enem ohranili kodo pregledno in enostavno.
 
+**Entity**
+
+Vzorec `entity` smo uporabili za [upravljanje luči](https://github.com/TPO-2024-2025/Projekt-20/blob/2aafe714672bde674a891a6cbfaddf502ba297c7/src/custom_components/varko/light.py#L46-L99). Z vzorcem smo poskrbeli za enostavnejše upravljanje z entitetami pametnih naprav.
+
 ### Izzivi implementacije
 
 Izzivi, ki so se med razvojem razvojem sistema pojavili, so bili redki.
@@ -1380,8 +1384,6 @@ Spodnji diagram prikazuje splošen diagram zaporedja delovanja integracije. Sled
 </p>
 
 ### Razredni diagram
-[//]: # (TODO: VKLJUČI NAČRTOVALSKE VZORCE IN JIH OPIŠI - VZORCE OBKROŽI IN NAPIŠI IME)
-[//]: # (TODO: VKLJUČI LIGHT, MEDIA PLAYER IN NOTIFICATIONE)
 
 Spodnji diagram prikazuje razredno strukturo implementiranega sistema.
 
