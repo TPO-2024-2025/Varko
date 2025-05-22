@@ -1340,9 +1340,6 @@ Glavni koordinator izvajanja sistema je `Docker Compose`, ki se sam izvaja v oko
 
 ### Paketni diagram
 
-[//]: # (TODO: VKLJUČI LIGHT, MEDIA PLAYER IN NOTIFICATIONE)
-[//]: # (TODO: V PAKETE VPIŠI VSEBOVANE RAZREDE)
-
 Na spodnji sliki je predstavljen paketni diagram, ki prikazuje poenostavljen logični pregled sistema.
 
 Paket `VarkoPlošča` predstavlja naš lasten uporabniški vmesnik, ki komunicira z naslednjimi paketi:
@@ -1350,6 +1347,8 @@ Paket `VarkoPlošča` predstavlja naš lasten uporabniški vmesnik, ki komunicir
 - `UpravljanjeSUS` skrbi za dodajanje / odstranitev članov SUS (skupina uporabnikov sistema),
 - `UpravljanjeCon` skrbi za logiko med uporabniki, ki so del SUS in izbrano cono,
 - `UpravljanjeNaprav` skrbi za logiko povezano s pametnimi napravami (dodajanje / odstranjevanje, aktivacija / deaktivacija).
+- `UpravljanjeRadioPostaje` skrbi za logiko povezave do API-ja z radio postajami, ki se uporablja za upravljanje zvočnih integriranih naprav.
+- `Store` in `Entitete` so abstrakcije, zagotovljene s strani sistema Home Assistant, ki jih integracija uporablja za delovanje - shrambo in dostop do "entitet" (npr. uporabniki, naprave, ...) definiranih v sistemu Home Assistant.
 
 <p align="center">
   <img src="gradivo/img/Izvedljiv sistem/diagram_paketni.png" alt="Paketni diagram">

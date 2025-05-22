@@ -3,24 +3,45 @@ title Paketni Diagram
 
 package "Home Assistant" <<aplikacija>> {
 
-    package "UporabniškiVmesnik"
-    package "Store" <<shramba>>
-    package "Entitete"
+    package "UporabniškiVmesnik" {
+    }
+    package "Store" <<Home Assistant shramba>> {
+    }
+    package "Entitete" <<Home Assistant entitete>> {
+    }
 
     package "Varko" <<podsistem>> {
-        package "VarkoPlošča"
-        package "UpravljanjeNaprav"
-        package "UpravljanjeCon"
-        package "UpravljanjeSUS"
-        package "UpravljanjeStanj"
-        package "UpravljanjeRadioPostaje"
+        package "VarkoPlošča" {
+        }
+        package "UpravljanjeNaprav" {
+            class DeviceManager {}
+            class VarkoLight {}
+        }
+        package "UpravljanjeCon" {
+            class ZoneManager {}
+        }
+        package "UpravljanjeSUS" {
+            class GroupManager {}
+        }
+        package "UpravljanjeStanj" {
+            class StateManager {}
+            class State {}
+            class IdleState {}
+            class ReadyState {}
+            class ActiveState {}
+        }
+        package "UpravljanjeRadioPostaje" {
+            class RadioBrowserAPI {}
+        }
     }
 
 }
 
 package "Zunanji sistemi" {
-     package "Frigate"
-     package "MQTT"
+    package "Frigate" {
+    }
+    package "MQTT" {
+    }
 }
 
 UporabniškiVmesnik .-> VarkoPlošča : "dostopa"
