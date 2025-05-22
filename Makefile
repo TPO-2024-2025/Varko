@@ -14,8 +14,8 @@ format: $(__venv_marker)
 test: $(__venv_marker)
 	rm -rf coverage
 	mkdir coverage
-	$(PYTHON) -m coverage run -m unittest discover -s test -p "*_test.py" --verbose
-	$(PYTHON) -m coverage run --append -m unittest discover -s test/services -p "*_test.py" --verbose
+	$(PYTHON) -m coverage run --source=src -m unittest discover -s test -p "*_test.py" --verbose
+	$(PYTHON) -m coverage run --source=src --append -m unittest discover -s test/services -p "*_test.py" --verbose
 	$(PYTHON) -m coverage report
 	$(PYTHON) -m coverage html --directory coverage
 	rm -f coverage/.gitignore .coverage
