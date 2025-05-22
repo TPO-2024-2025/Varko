@@ -1356,11 +1356,9 @@ Paket `VarkoPlošča` predstavlja naš lasten uporabniški vmesnik, ki komunicir
 
 ### Komponentni diagram
 
-[//]: # (TODO: VKLJUČI LIGHT, MEDIA PLAYER IN NOTIFICATIONE)
-
 Na spodnji sliki je predstavljen komponentni diagram sistema.
 
-Komponenti `Frigate` in `MQTT posrednik` se preko vmesnikov povezujeta v dejansko integracijo. Ta ima podobno notranjo zgradbo, kot je opisana pri paketnem diagramu. `Device manager` in `State manager` se preko vmesnika povezujeta na `Entitete`, ki predstavljajo logične celote, integrirane v sistem Home Assistant. `Base manager` se preko vmesnika povezuje na `Shrambo`, ki predstavlja interno shrambo, ki jo sistem Home Assistant ponuja vsem integracijam.
+Komponenti `Frigate` in `MQTT posrednik` se preko vmesnikov povezujeta v dejansko integracijo. Ta ima podobno notranjo zgradbo, kot je opisana pri paketnem diagramu. `Device manager` in `State manager` se preko vmesnika povezujeta na `Entitete`, ki predstavljajo logične celote, integrirane v sistem Home Assistant. `Base manager` se preko vmesnika povezuje na `Shrambo`, ki predstavlja interno shrambo, ki jo sistem Home Assistant ponuja vsem integracijam. `UpravljanjeRadioPostaje` priskrbi radijske postaje - avdio prenos, ki naj se predvaja na napravah.
 
 <p align="center">
   <img src="gradivo/img/Izvedljiv sistem/diagram_komponentni.png" alt="Komponentni diagram">
