@@ -335,8 +335,6 @@ Spodnji diagram primerov uprabe grafično prikazuje glavne funkcionalnosti naše
   <img src="gradivo/img/Osnutek%20sistema/diagram_primerov_uporabe.png" alt="Opis sistema" width="1000">
 </p>
 
-[//]: # (TODO: POPRAVI INCLUDES PUŠČICE)
-
 ### 3.3.2 Specifikacije primerov uporabe
 
 Sledeče funkcionalne zahteve opisujejo konkretne funkcionalnosti, ki jih mora sistem podpirati za uspešno delovanje in izpolnjevanje potreb uporabnikov. Razvrščene so po padajoči prioriteti, od ‘Must have’, ki označuje ključne in nujno potrebne funkcionalnosti, do ‘Would have’, ki se nanaša na funkcionalnosti, ki za trenutno verzijo rešitve niso ključne in bodo realizirane v prihodnosti.
@@ -1328,8 +1326,6 @@ Nekaj težav se je pojavilo tudi zaradi neintuitivnega življenjskega cikla inte
 
 ### Namestitveni diagram
 
-[//]: # (TODO: HTTPS NAMESTO HTTP/S (ODSTRANI “/”))
-
 Na spodnji sliki je predstavljen namestitveni diagram sistema.
 
 Glavni koordinator izvajanja sistema je `Docker Compose`, ki se sam izvaja v okolju `Docker Host`. `Docker Compose` koordinira posamezne vsebnike, vsak predstavlja svojo funkcijo - `Frigate` kot sistem za prepoznavo ljudi na video posnetku v primeru zaznave subjekta pošlje sporočilo v protokolu MQTT, ki se preko `MQTT posrednika` prepošlje sistemu `Home Assistant`, ki pa vsebuje integracijo Varko. Tako `Frigate` kot `MQTT posrednik` potrebujeta konfiguracijsko datoteko. `Brskalnik` in `Telefon` nista ovita v posebno okolje saj delujeta na večini operacijskih sistemov; oba komunicirata z glavnino sistema preko protokola HTTP(S). `Telefon` se uporablja za zaznavanje lokacije uporabnika.
@@ -1358,8 +1354,6 @@ Paket `VarkoPlošča` predstavlja naš lasten uporabniški vmesnik, ki komunicir
 ### Komponentni diagram
 
 [//]: # (TODO: VKLJUČI LIGHT, MEDIA PLAYER IN NOTIFICATIONE)
-[//]: # (TODO: ODSTRANI AGREGACIJE PRI INTERFACIH)
-[//]: # (TODO: ODSTRANI EXTEND PUŠČICE MED MANAGERJI)
 
 Na spodnji sliki je predstavljen komponentni diagram sistema.
 
@@ -1378,7 +1372,12 @@ Spodnji diagram prikazuje diagram prehodov stanj, kjer so označena tri glavna (
 </p>
 
 ### Diagram zaporedja
-[//]: # (TODO: DODAJ DIAGRAM ZAPOREDJA)
+
+Spodnji diagram prikazuje splošen diagram zaporedja delovanja integracije. Sledeči akterji ostajajo enaki kot v zgornjih diagramih. Zgornji del diagrama prikazuje prehod in delovanje v stanje READY, spodaj še za stanje READY in na koncu prehod v osnovno stanje IDLE. Pomen stanj je opisan v diagramu prehodov stanj.
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/diagram_zaporedja.png" alt="Diagram zaporedja">
+</p>
 
 ### Razredni diagram
 [//]: # (TODO: VKLJUČI NAČRTOVALSKE VZORCE IN JIH OPIŠI - VZORCE OBKROŽI IN NAPIŠI IME)

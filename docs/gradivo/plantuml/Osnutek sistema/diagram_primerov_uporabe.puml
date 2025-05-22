@@ -1,0 +1,60 @@
+@startuml
+left to right direction
+
+actor Administrator as admin
+actor "Uporabnik v \nskupini uporabnikov" as navadni_uporabnik
+
+rectangle "Sistem Varko" {
+usecase "Dodajanje pametne naprave" as F1
+usecase "Aktivacija pametne naprave" as F2
+usecase "Deaktivacija pametne naprave" as F3
+usecase "Odstranitev pametne naprave" as F4
+usecase "Določitev cone" as F5
+usecase "Upravljanje s skupino uporabnikov" as F8
+usecase "Avtomatski prehod sistema iz \nstanja mirovanja v stanje pripravljenosti" as F9
+usecase "Obdelava video pretoka in detekcija oseb" as F10
+usecase "Avtomatski prehod sistema v \naktivno stanje iz stanja pripravljenosti" as F11
+usecase "Izvajanje simulacije prisotnosti" as F12
+usecase "Pošiljanje obvestil" as F14
+usecase "Avtomatski prehod sistema iz \naktivnega stanja v stanje pripravljenosti" as F15
+usecase "Avtomatski prehod sistema iz stanja \npripravljenosti v stanje mirovanja" as F16
+usecase "Ročni preklop sistema v aktivno stanje" as F17
+usecase "Ročna preklop sistema v stanje mirovanja" as F18
+
+actor "Sistemski števec" as stevec
+}
+
+actor "Kamera s podporo RTSP" as kamera
+actor "Zunanja naprava za \nsimulacijo prisotnosti" as naprava
+
+admin --|> navadni_uporabnik
+
+admin --> F1
+admin --> F2
+admin --> F3
+admin --> F4
+admin --> F5
+admin --> F8
+admin --> F17
+admin --> F18
+
+navadni_uporabnik --> F9
+navadni_uporabnik --> F16
+
+stevec -> F15
+
+F10 <-- kamera
+naprava <-up-- F12
+
+F12 <-. F11 : <<include>>
+F17 .> F12 : <<include>>
+F14 <. F11 : <<include>>
+
+
+F11 .> F10 : <<extend>>
+note on link
+Pogoj: Zaznana oseba
+Razširitvena točka: Avtomatski prehod sistema v aktivno stanje
+end note
+
+@enduml

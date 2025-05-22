@@ -1,0 +1,68 @@
+@startuml
+actor Uporabnik
+participant "Mobilna aplikacija Home Assistant" as MobilnaAplikacija
+participant "Sistem Home Assistant" as HomeAssistant
+participant "Sistem integracije Varko" as VarkoIntegracija
+participant Kamera
+participant "Sistem Frigate" as Frigate
+participant "MQTT posrednik" as MQTTPosrednik
+participant "Integrirane pametne naprave" as PametneNaprave
+
+Uporabnik -> MobilnaAplikacija: Uporabnik zapusti cono
+MobilnaAplikacija -> HomeAssistant: Posodobi lokacijo uporabnika\n(Izven cone)
+HomeAssistant -> VarkoIntegracija: Obvesti o spremembi lokacije uporabnika
+alt Vsi uporabniki izven lokacijske cone
+    VarkoIntegracija -> VarkoIntegracija: Vsi uporabniki izven cone
+    VarkoIntegracija -> VarkoIntegracija: Prehod stanja v READY
+    VarkoIntegracija --> Uporabnik: Pošlji obvestilo
+end
+
+loop
+    Kamera -> Frigate: RTSP video prenos
+end
+
+alt Stanje READY
+    Frigate -> Frigate: Analiziraj video prenos
+    alt Zaznana oseba
+        Frigate -> MQTTPosrednik: Obvesti o dogodku zaznave osebe
+        MQTTPosrednik -> HomeAssistant: Obvesti o dogodku zaznave osebe
+        HomeAssistant -> VarkoIntegracija: Obvesti o dogodku zaznave osebe
+        VarkoIntegracija -> VarkoIntegracija: Prehod Stanja v ACTIVE
+        VarkoIntegracija --> Uporabnik: Pošlji obvestilo
+        loop Za vsako konfigurirano pametno napravo
+            VarkoIntegracija -> MQTTPosrednik: Aktiviraj naprave
+            MQTTPosrednik -> PametneNaprave: Aktiviraj naprave
+            PametneNaprave --> MQTTPosrednik: Posodobitev stanja naprav
+            MQTTPosrednik -> HomeAssistant: Posodobitev stanja naprav
+        end
+    end
+end
+
+alt Stanje ACTIVE
+    Frigate -> Frigate: Analiziraj video prenos
+    loop
+        VarkoIntegracija -> VarkoIntegracija: Zmanjšuj čas časovnika stanja ACTIVE
+    else Ponovna zaznava osebe
+        VarkoIntegracija -> VarkoIntegracija: Ponastavi časovnik stanja ACTIVE
+    end
+    alt Časovnik stanja ACTIVE se izteče
+        VarkoIntegracija -> VarkoIntegracija: Prehod Stanja v READY
+        loop Za vsako konfigurirano pametno napravo
+            VarkoIntegracija -> MQTTPosrednik: Deaktiviraj naprave
+            MQTTPosrednik -> PametneNaprave: Deaktiviraj naprave
+            PametneNaprave --> MQTTPosrednik: Posodobitev stanja naprav
+            MQTTPosrednik -> HomeAssistant: Posodobitev stanja naprav
+        end
+    end
+end
+
+Uporabnik -> MobilnaAplikacija: Uporabnik vstopi v cono
+MobilnaAplikacija -> HomeAssistant: Posodobi lokacijo uporabnika\n(Znotraj cone)
+HomeAssistant -> VarkoIntegracija: Obvesti o spremembi lokacije uporabnika
+alt Edini uporabnik v coni
+    VarkoIntegracija -> VarkoIntegracija: Vsaj en uporabnik znotraj cone
+    VarkoIntegracija -> VarkoIntegracija: Prehod Stanja v IDLE
+    VarkoIntegracija --> Uporabnik: Pošlji Obvestilo: Sistem Deaktiviran
+end
+
+@enduml

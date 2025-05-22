@@ -28,8 +28,8 @@ node "Telefon" as mobileDevice <<izvajalno okolje>> {
     artifact "Home Assistant Aplikacija"
 }
 
-haWebUI --> dockerHost : <<HTTP/S>>
-mobileDevice --> dockerHost : <<HTTP/S>>
+haWebUI --> dockerHost : <<HTTPS>>
+mobileDevice --> dockerHost : <<HTTPS>>
 haContainer <--> mqttContainer : <<MQTT>>
 frigateContainer --> mqttContainer : <<MQTT>>
 haImage ..> varkoComponent : <<uporablja>>

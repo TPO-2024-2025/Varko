@@ -7,11 +7,11 @@ package "Varko integracija" {
     component "<<component>>\nZone manager" as zonesManager
     component "<<component>>\nVarko plošča" as varkoDashboard
     component "<<component>>\nRadioBrowserAPI" as radioBrowserAPI
-    deviceManager --|> baseManager
-    groupManager --|> baseManager
-    stateManager --|> baseManager
-    zonesManager --|> baseManager
-    radioBrowserAPI --|> baseManager
+    deviceManager --> baseManager
+    groupManager --> baseManager
+    stateManager --> baseManager
+    zonesManager --> baseManager
+    radioBrowserAPI --> baseManager
 }
 
 package "Shramba" {
@@ -39,14 +39,14 @@ interface "<<interface>>\nmqtt" as mqttInterface
 interface "<<interface>>\nfrigate" as frigateInterface
 interface "<<interface>>\nEntitete" as entitiesInterface
 
-varkoDashboard o-- uporabniskiVmesnik
-frigate o-- frigateInterface
+varkoDashboard -- uporabniskiVmesnik
+frigate -- frigateInterface
 mqtt --( frigateInterface
-mqtt o-- mqttInterface
+mqtt -- mqttInterface
 stateManager --( mqttInterface
-store o-- storeInterface
+store -- storeInterface
 baseManager --( storeInterface
-entities o-- entitiesInterface
+entities -- entitiesInterface
 deviceManager --( entitiesInterface
 stateManager --( entitiesInterface
 
