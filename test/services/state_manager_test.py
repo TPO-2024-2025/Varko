@@ -25,6 +25,7 @@ from custom_components.varko.services.state_manager import (
 class TestStateManager(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
         self.mock_hass = MagicMock()
+        self.mock_hass.config.time_zone = "UTC"
 
         self.store_patch = patch(
             "custom_components.varko.services.base_manager.Store",

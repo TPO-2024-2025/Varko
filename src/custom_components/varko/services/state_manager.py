@@ -1,10 +1,15 @@
 import asyncio
 import random
+from datetime import datetime, time
 
+import pytz
 from homeassistant.components import mqtt
 from homeassistant.core import HomeAssistant, ServiceCall
 
 from custom_components.varko.const import (
+    DEVICE_ID,
+    DEVICE_NAME,
+    DEVICE_TYPE,
     DOMAIN,
     FRIGATE_MQTT_PERSON_TOPIC,
     STATE_ACTIVE,
@@ -214,9 +219,23 @@ class StateManager(BaseManager):
         device_manager = await DeviceManager.get_instance(self._hass)
         devices = device_manager._data
 
+        time_now = datetime.now(pytz.timezone(self._hass.config.time_zone)).time()
+        time_morning = time(6, 0)
+        time_evening = time(22, 0)
+
         for device in devices:
-            device_id = device.get("device_id")
-            device_name = device.get("device_name", "Unknown device")
+            device_type = device.get(DEVICE_TYPE)
+            if device_type == "light" and time_morning <= time_now < time_evening:
+                self._logger.info("Skipping light device during daytime")
+                continue
+            elif device_type == "media_player" and (
+                time_now < time_morning or time_now >= time_evening
+            ):
+                self._logger.info("Skipping media_player device during nighttime")
+                continue
+
+            device_id = device.get(DEVICE_ID)
+            device_name = device.get(DEVICE_NAME, "Unknown device")
             if not device_id:
                 self._logger.warning(
                     f"Device {device_name} missing device_id, skipping"
