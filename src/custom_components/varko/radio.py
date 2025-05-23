@@ -32,8 +32,9 @@ class RadioBrowserAPI(BaseManager):
             cls.__instance = None
 
     async def _setup(self):
+        if not self.session:
+            self.session = aiohttp.ClientSession()
         self.base_urls = await self._get_radiobrowser_base_urls()
-        self.session = aiohttp.ClientSession()
 
     async def _cleanup(self):
         if self.session:
@@ -44,28 +45,25 @@ class RadioBrowserAPI(BaseManager):
         try:
             hosts = []
 
-            results = await asyncio.get_event_loop().getaddrinfo(
-                "all.api.radio-browser.info", 80, proto=socket.IPPROTO_TCP
-            )
-
-            for result in results:
-                addr = result[4][0]
-                host_addr = socket.gethostbyaddr(addr)
-                if host_addr[0] not in hosts:
-                    hosts.append(host_addr[0])
+            async with self.session.get(
+                "https://all.api.radio-browser.info/json/servers"
+            ) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    for item in data:
+                        host = item.get("name")
+                        if host and host not in hosts:
+                            hosts.append(host)
 
             hosts.sort()
             return list(map(lambda x: "https://" + x, hosts))
         except Exception as e:
             self._logger.error("DNS lookup failed: %s", e)
-            print("Error: ", e)
             return ["https://de1.api.radio-browser.info"]  # fallback
 
     async def _fetch_json(
         self, url: str, params: Optional[Dict] = None
     ) -> Union[Dict, List]:
-        if not self.session:
-            await self.initialize()
 
         for base_url in self.base_urls:
             full_url = f"{base_url}{url}"
@@ -109,6 +107,5 @@ class RadioBrowserAPI(BaseManager):
                 f"{DOMAIN}.radio_stations_list",
                 {"country_code": countrycode, "stations": station_names},
             )
-            print(f"Stations in {countrycode}: {station_names}")
             return station_names
         return []
