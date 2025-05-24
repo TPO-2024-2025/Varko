@@ -1,4 +1,5 @@
 const countries  = [
+    { name: "", code: ""},
     { name: "Austria", code: "AT" },
     { name: "Belgium", code: "BE" },
     { name: "Bulgaria", code: "BG" },
@@ -58,6 +59,7 @@ class VarkoPanel extends HTMLElement {
         this._loadZones();
         this._loadPersons();
         this._loadAddDeviceDialog()
+        this._loadAddMediaDeviceDialog()
         this._loadDeviceElementDialog();
         this._loadZoneElementDialog();
         this._loadUserElementDialog()
@@ -71,6 +73,7 @@ class VarkoPanel extends HTMLElement {
         const selectStationButton = this.shadowRoot.getElementById("select-station-button");
         const countrySelect = this.shadowRoot.getElementById("country-select");
         const stationSelect = this.shadowRoot.getElementById("station-select");
+        const stationSelectContainer = this.shadowRoot.getElementById("station-select-container");
 
         selectStationButton.addEventListener("click", async () => {
             const selectedStation = stationSelect.value;
@@ -79,6 +82,11 @@ class VarkoPanel extends HTMLElement {
             console.log("Selected station:", selectedStation);
             console.log("Selected country:", selectedCountry);
         });
+
+        countrySelect.addEventListener("change", async () => {
+            stationSelectContainer.classList.toggle("hidden", countrySelect.value === "");
+        })
+
     }
 
     _populateCountrySelect() {
@@ -92,6 +100,7 @@ class VarkoPanel extends HTMLElement {
 
         countrySelect.addEventListener("change", async () => {
             const selectedCountry = countrySelect.value;
+            if (selectedCountry === "") return;
             await this._callService("varko.get_list_of_stations_per_country", { radio_country_code: selectedCountry });
             console.log("Selected country:", selectedCountry);
         });
@@ -111,24 +120,31 @@ class VarkoPanel extends HTMLElement {
 
     _loadLights() {
         const holder = this.shadowRoot.getElementById("devices-holder");
-        const entities = Object.values(this.hass.entities).filter(e => e.entity_id.startsWith("light."));
+        const entities = Object.values(this.hass.entities).filter(e => e.entity_id.startsWith("light.") ||
+        e.entity_id.startsWith("media_player."));
 
         for (const entity of entities) {
             const element = document.createElement("div")
             element.id = entity.entity_id;
             element.className = "element";
-            element.textContent = entity.name;
+            element.textContent = this.hass.states[entity.entity_id].attributes.friendly_name;
             element.addEventListener("click", () => {
                 const deviceElementDialog = this.shadowRoot.getElementById("device-element-dialog");
                 deviceElementDialog.setAttribute("entityId", entity.entity_id);
                 this._openDeviceElementDialog();
             });
             holder.appendChild(element);
-
-            const option = document.createElement("option");
-            option.value = entity.entity_id;
-            option.textContent = entity.name;
-            this.shadowRoot.getElementById("shelly-entity").appendChild(option.cloneNode(true));
+            if (entity.entity_id.startsWith("light.")) {
+                const option = document.createElement("option");
+                option.value = entity.entity_id;
+                option.textContent = entity.name;
+                this.shadowRoot.getElementById("shelly-entity").appendChild(option.cloneNode(true));
+            } else {
+                const option = document.createElement("option");
+                option.value = entity.entity_id;
+                option.textContent = element.textContent;
+                this.shadowRoot.getElementById("media-entity").appendChild(option.cloneNode(true));
+            }
         }
     }
 
@@ -180,26 +196,37 @@ class VarkoPanel extends HTMLElement {
             addDeviceDialog.close();
         })
 
-        const shellyInput = this.shadowRoot.getElementById("shelly-entity");
-        const conditionalFields = this.shadowRoot.getElementById("conditional-fields");
-
-        shellyInput.addEventListener("input", () => {
-            const isShellyFilled = shellyInput.value.trim() !== "";
-            conditionalFields.classList.toggle("hidden", isShellyFilled);
-
-            conditionalFields.querySelectorAll("input").forEach(input => {
-                input.disabled = isShellyFilled;
-            });
-        });
-
         const addDeviceForm = this.shadowRoot.getElementById("addDeviceForm");
         addDeviceForm.addEventListener("submit", async (event) => {
             event.preventDefault()
             const formData = new FormData(addDeviceForm);
             const data = Object.fromEntries(formData.entries());
             data.is_enabled = addDeviceForm.elements.is_enabled.checked;
-            await this._callService("varko.add_device", data);
+            await this._callService("varko.add_light_device", data);
             addDeviceDialog.close();
+            await this.render()
+        })
+    }
+
+    _loadAddMediaDeviceDialog() {
+        const addMediaDeviceButton = this.shadowRoot.getElementById("add-media-device-button");
+        const addMediaDeviceDialog = this.shadowRoot.getElementById("add-media-device-dialog");
+        addMediaDeviceButton.addEventListener("click", () => {
+            addMediaDeviceDialog.showModal();
+        })
+
+        const closeButton = this.shadowRoot.getElementById("cancel-add-media-device");
+        closeButton.addEventListener("click", () => {
+            addMediaDeviceDialog.close();
+        })
+        const addMediaDeviceForm = this.shadowRoot.getElementById("addMediaDeviceForm");
+        addMediaDeviceForm.addEventListener("submit", async (event) => {
+            event.preventDefault()
+            const formData = new FormData(addMediaDeviceForm);
+            const data = Object.fromEntries(formData.entries());
+            data.is_enabled = addMediaDeviceForm.elements.is_enabled.checked;
+            await this._callService("varko.add_media_device", data);
+            addMediaDeviceDialog.close();
             await this.render()
         })
     }
@@ -328,7 +355,7 @@ class VarkoPanel extends HTMLElement {
         radioStations.forEach(station => {
             const option = document.createElement("option");
             option.value = station;
-            option.textContent = station;
+            option.textContent = station.length > 30 ? station.slice(0, 30) + '…' : station;
             stationSelect.appendChild(option);
         });
     }

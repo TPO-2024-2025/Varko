@@ -4,7 +4,10 @@
             <h2>Devices</h2>
             <div id="devices-holder" class="element-holder">
             </div>
-            <button class="button" id="add-device-button">Add device</button>
+            <div id="btn-holder">
+                <button class="button" id="add-device-button">Add light device</button>
+                <button class="button" id="add-media-device-button">Add media device</button>
+            </div>
         </div>
         <div id="zone-div" class="base-settings-div">
             <h2>Zones</h2>
@@ -17,62 +20,75 @@
             </div>
         </div>
     </span>
-    <div id="states">
-        <h2>States</h2>
-        <div id="varko-states-holder">
-            <button class="button" id="set-state-idle">Set idle</button>
-            <button class="button" id="set-state-ready">Set ready</button>
-            <button class="button" id="set-state-active">Set Active</button>
+    <span style="display: flex">
+        <div id="states">
+            <h2>States</h2>
+            <div id="varko-states-holder">
+                <button class="button" id="set-state-idle">Set idle</button>
+                <button class="button" id="set-state-ready">Set ready</button>
+                <button class="button" id="set-state-active">Set Active</button>
+            </div>
         </div>
-    </div>
-    <div id="radio-stations">
-        <h2 id="radio-selection-dialog-title">Choose Radio Station</h2>
-        <div class="form-group">
-            <label for="country-select">Country:</label>
-            <select id="country-select" class="form-control"></select>
-        </div>
+        <div id="radio-stations">
+            <h2 id="radio-selection-dialog-title">Choose Radio Station</h2>
+            <div class="form-group">
+                <label for="country-select">Country:</label>
+                <select id="country-select" class="form-control"></select>
+            </div>
 
-        <div class="form-group">
-            <label for="station-select">Station:</label>
-            <select id="station-select" class="form-control"></select>
-        </div>
+            <div class="form-group hidden" id="station-select-container">
+                <label for="station-select">Station:</label>
+                <select id="station-select" class="form-control"></select>
+            </div>
 
-        <div class="station-buttons">
-            <button type="button" class="button" id="select-station-button">Select</button>
+            <div class="station-buttons">
+                <button type="button" class="button" id="select-station-button">Select</button>
+            </div>
         </div>
-    </div>
+    </span>
 </div>
 <dialog id="add-device-dialog">
     <form id="addDeviceForm">
         <h2>Add device</h2>
         <label>
-            Shelly entity:
+            Existing entity:
             <select id="shelly-entity" name="entity" >
                 <option value=""></option>
             </select>
         </label>
-        <div id="conditional-fields" class="conditional">
-            <label>
-                Device type:
-                <select type="text" name="device_type" required>
-                    <option value="light">Light</option>
-                </select>
-            </label>
-            <label>
-                Device name:
-                <input type="text" name="device_name" required/>
-            </label>
-            <label>
-                Device ID:
-                <input type="text" name="device_id" required/>
-            </label>
-            <label>
-                Enabled:
-                <input type="checkbox" name="is_enabled" />
-            </label>
-        </div>
+        <label>
+            Device name:
+            <input type="text" name="device_name" required/>
+        </label>
+        <label>
+            Device ID:
+            <input type="text" name="device_id" required/>
+        </label>
+        <label>
+            Enabled:
+            <input type="checkbox" name="is_enabled" />
+        </label>
         <span>
             <button type="button" class="button" id="cancel-add-device">Cancel</button>
+            <button type="submit" class="button">Add</button>
+        </span>
+    </form>
+</dialog>
+<dialog id="add-media-device-dialog">
+    <form id="addMediaDeviceForm">
+        <h2>Add device</h2>
+        <label>
+            Existing entity:
+            <select id="media-entity" name="entity" >
+                <option value=""></option>
+            </select>
+        </label>
+        <label>
+            Enabled:
+            <input type="checkbox" name="is_enabled" />
+        </label>
+        <span>
+            <button type="button" class="button" id="cancel-add-media-device">Cancel</button>
             <button type="submit" class="button">Add</button>
         </span>
     </form>

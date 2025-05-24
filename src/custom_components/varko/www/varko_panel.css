@@ -86,15 +86,24 @@ dialog {
         flex: 1;
     }
 }
+#btn-holder {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    padding: 4px;
+    margin: 8px;
+    flex: 1;
+    justify-content: center;
+}
 
-#add-device-dialog {
+#add-device-dialog, #add-media-device-dialog {
     background-color: #404040;
     border: none;
     align-items: center;
     border-radius: 16px;
 }
 
-#addDeviceForm {
+#addDeviceForm, #addMediaDeviceForm {
     background-color: #404040;
     padding: 20px 40px;
     border-radius: 16px;
@@ -141,3 +150,50 @@ dialog {
     }
 }
 
+#radio-stations {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 8px;
+    padding: 8px;
+    background-color: #1e1e1e;
+    width: 40%;
+    h2 {
+        text-align: center;
+        margin: 0;
+    }
+    label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    input[type="text"],
+    select {
+        background-color: #aeaeae;
+        color: black;
+        border: none;
+        border-radius: 8px;
+        padding: 8px;
+        width: 100%;
+    }
+    option {
+        max-width: 100%;
+    }
+    input[type="checkbox"] {
+        transform: scale(1.5);
+        margin-left: 10px;
+    }
+}
+
+.hidden {
+    display: none;
+}
+.station-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+* {
+    color: white;
+}
