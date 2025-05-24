@@ -1,8 +1,8 @@
 import asyncio
 import random
 from datetime import datetime, time
+from zoneinfo import ZoneInfo
 
-import pytz
 from homeassistant.components import mqtt
 from homeassistant.core import HomeAssistant, ServiceCall
 
@@ -147,6 +147,14 @@ class StateManager(BaseManager):
     @service
     @admin
     async def set_state_ready(self, call: ServiceCall) -> None:
+        caller_id = call.context.user_id
+
+        if not caller_id and self._state == ActiveState(self):
+            self._logger.debug(
+                "Internal set_state_ready called while system is active, skipping"
+            )
+            return
+
         """Set system to ready state."""
         await self._state.set_state_ready()
         self._hass.states.async_set(STATE_ENTITY_ID, STATE_READY)
@@ -197,6 +205,9 @@ class StateManager(BaseManager):
             if not device_id:
                 continue
             try:
+                if device.get(DEVICE_TYPE) == "media_player":
+                    await device_manager.control_device(device_id, "STOP_MEDIA")
+
                 await device_manager.control_device(device_id, "OFF")
                 self._logger.debug(
                     f"Turned off device {device_id} during simulation stop"
@@ -219,7 +230,9 @@ class StateManager(BaseManager):
         device_manager = await DeviceManager.get_instance(self._hass)
         devices = device_manager._data
 
-        time_now = datetime.now(pytz.timezone(self._hass.config.time_zone)).time()
+        timezone = ZoneInfo(self._hass.config.time_zone)
+        time_now = datetime.now(timezone).time()
+
         time_morning = time(6, 0)
         time_evening = time(22, 0)
 
@@ -245,6 +258,9 @@ class StateManager(BaseManager):
             self._logger.info(f"Turning on device '{device_name}' ({device_id})")
             try:
                 await device_manager.control_device(device_id, "ON")
+
+                if device_type == "media_player":
+                    await device_manager.control_device(device_id, "PLAY_MEDIA")
             except Exception as e:
                 self._logger.error(f"Error turning on device {device_id}: {e}")
 
