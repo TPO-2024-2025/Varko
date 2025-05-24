@@ -140,6 +140,25 @@ class TestRadio(unittest.IsolatedAsyncioTestCase):
             "https://all.api.radio-browser.info/json/servers"
         )
 
+    async def test_get_radiobrowser_base_urls_response_not_200(self):
+        # arrange
+        mock_response = MagicMock()
+        mock_response.status = 404
+        mock_response.json = AsyncMock(return_value=[])
+
+        mock_context_manager = AsyncMock()
+        mock_context_manager.__aenter__.return_value = mock_response
+        mock_context_manager.__aexit__.return_value = False
+
+        self.mock_session.get = MagicMock(return_value=mock_context_manager)
+        self.radio_browser_api.session = self.mock_session
+
+        # act
+        result = await self.radio_browser_api._get_radiobrowser_base_urls()
+
+        # assert
+        self.assertEqual(result, ["https://de1.api.radio-browser.info"])
+
     async def test_get_radiobrowser_base_urls_dns_fail(self):
         # arrange
         self.mock_session.get.side_effect = socket.gaierror("DNS lookup failed")

@@ -55,6 +55,9 @@ class RadioBrowserAPI(BaseManager):
                         if host and host not in hosts:
                             hosts.append(host)
 
+            if not hosts:
+                return ["https://de1.api.radio-browser.info"]
+
             hosts.sort()
             return list(map(lambda x: "https://" + x, hosts))
         except Exception as e:
