@@ -80,6 +80,21 @@ Grafični vmesnik nudi uporabnikom enostavno nastavitev sistema in prilagajanje 
 
 Večjih sprememb predloga projekta med celotnim procesom razvoja ni bilo, kar kaže na visoko prilagodljivost članov ekipe ter dobro začetno načrtovanje postopkov izvedbe projekta, in nenazadnje vodenja.
 
+## Slovar terminov
+
+| Têrmin                          | Opis                                                                                                                                                                                             |
+| :------------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Home Assistant                  | Odprtokodna platforma za avtomatizacijo pametnega doma, ki omogoča povezovanje in upravljanje različnih pametnih naprav in storitev.                                                              |
+| Integracija (v Home Assistant)  | Programska komponenta, ki omogoča Home Assistantu komunikacijo in upravljanje z določeno napravo, storitvijo ali platformo (npr. integracija za pametne luči, vremensko napoved).                     |
+| Ekosistem (Home Assistant)      | Celota naprav, integracij, avtomatizacij in uporabniških vmesnikov, ki delujejo skupaj znotraj platforme Home Assistant.                                                                           |
+| Pametne naprave                 | Elektronske naprave, ki se lahko povežejo v omrežje (npr. internet) in jih je mogoče daljinsko upravljati ali avtomatizirati (npr. pametne luči, termostati, zvočniki).                             |
+| Grafični vmesnik (GUI)          | Vizualni način interakcije uporabnika z računalniškim sistemom preko grafičnih elementov, kot so ikone, gumbi in meniji, namesto zgolj besedilnih ukazov.                                           |
+| Frigate                         | Odprtokodna programska oprema za video nadzor z zaznavanjem objektov (npr. oseb, avtomobilov) v realnem času, ki se pogosto uporablja z IP kamerami in integrira s sistemi za pametne domove.        |
+| RTSP (Real-Time Streaming Protocol) | Mrežni protokol, ki se uporablja za prenos avdio in video podatkov v realnem času, pogosto za pretakanje videa iz IP kamer.                                                                      |
+| Kontinuirana integracija (CI)   | Praksa v razvoju programske opreme, kjer razvijalci pogosto združujejo svoje spremembe kode v osrednji repozitorij, po čemer se samodejno izvedejo procesi gradnje in testiranja kode.             |
+| Docker vsebnik (container)      | Standardizirana enota programske opreme, ki vsebuje kodo aplikacije in vse njene odvisnosti (knjižnice, orodja), kar omogoča hitro in zanesljivo izvajanje aplikacije v različnih okoljih.          |
+| MQTT                            | Lahek sporočilni protokol, zasnovan za povezovanje naprav z omejenimi viri in omrežij z nizko pasovno širino, pogosto uporabljen v IoT (Internet of Things) aplikacijah.                             |
+
 # 2 Potrebe naročnika
 
 ## 2.1 Opis naročnika, deležnikov in želene izkušnje
@@ -153,6 +168,24 @@ Spodaj so opisane zaznane uporabniške zahteve v obliki uporabniških zgodb. Vsa
     **Test 7.2** - Glede na to, da sistem ne zazna nobene nezaželjena osebe uporabniki obvestil ne prejemajo.
 
     **Test 7.3** - Glede na to, da se je sistem deaktiviral, potem uporabniki prejmejo obvestilo o deaktivaciji sistema.
+
+## Slovar terminov
+
+| Têrmin                          | Opis                                                                                                                                                                                                                            |
+| :------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Lokacijska cona                 | Vnaprej določeno geografsko območje (npr. okolica doma), ki ga sistem uporablja za zaznavanje prisotnosti ali odsotnosti uporabnikov.                                                                                             |
+| SUS (Skupina uporabnikov sistema) | Skupina oseb, ki jih administrator sistema določi kot pooblaščene uporabnike objekta. Njihova lokacija in interakcije s sistemom vplivajo na njegovo delovanje (npr. avtomatsko aktiviranje/deaktiviranje).                       |
+| HTTP/HTTPS                      | Protokola za prenos podatkov na spletu. HTTPS je varna različica HTTP, ki uporablja šifriranje za zaščito komunikacije.                                                                                                           |
+| WebSocket                       | Komunikacijski protokol, ki omogoča dvosmerno komunikacijo med odjemalcem (npr. spletnim brskalnikom) in strežnikom preko ene same dolgotrajne povezave.                                                                            |
+| RTSP naslov                     | Unikatni naslov (URL), ki specificira pot do video toka IP kamere preko protokola RTSP. Običajno vsebuje IP naslov kamere, vrata in specifično pot do video vira.                                                                  |
+| MQTT tema (topic)               | Hierarhično strukturiran niz znakov, ki deluje kot naslov za sporočila v protokolu MQTT. Naprave objavljajo sporočila na določene teme, druge naprave pa se na te teme naročijo, da sporočila prejmejo.                            |
+| JSON (JavaScript Object Notation) | Lahek format za izmenjavo podatkov, ki je berljiv za ljudi in enostaven za strojno razčlenjevanje. Pogosto se uporablja za konfiguracijske datoteke in komunikacijo med spletnimi storitvami.                                      |
+| Mosquitto                       | Odprtokodni MQTT posrednik (broker), ki omogoča prenos sporočil med napravami in aplikacijami, ki uporabljajo MQTT protokol.                                                                                                     |
+| Obratni posrednik (Reverse Proxy) | Strežnik, ki sedi pred enim ali več spletnimi strežniki in posreduje zahteve odjemalcev do teh strežnikov. Uporablja se za izboljšanje varnosti, zmogljivosti in zanesljivosti.                                                      |
+| TLS/SSL šifriranje              | Kriptografska protokola (Transport Layer Security/Secure Sockets Layer), ki zagotavljata varno komunikacijo preko računalniškega omrežja z uporabo šifriranja.                                                                     |
+| GitHub repozitorij              | Mesto na platformi GitHub, kjer je shranjena izvorna koda projekta skupaj z zgodovino sprememb in drugimi povezanimi datotekami. Omogoča sodelovanje in nadzor različic kode.                                                     |
+| Commit messages                 | Kratki opisi sprememb, ki jih razvijalec naredi v kodi in jih shrani v sistem za nadzor različic (npr. Git). Pomagajo slediti razvoju in razumevanju sprememb.                                                                    |
+| Pull requests (Zahteve za združitev) | Predlogi za spremembe kode v repozitoriju na platformah, kot je GitHub. Omogočajo pregled kode s strani drugih članov ekipe pred združitvijo sprememb v glavno vejo projekta.                                                    |
 
 # 3 Cilji projekta
 
@@ -1306,6 +1339,19 @@ Preverljivost: Testi enot, ki preverijo pravilnost delovanja funkcionalnosti ne 
 
 Integracija omogoča vse želene koristi, saj je bila preizkušena nasproti vsem danim uporabniškim zahtevam, po katerih smo snovali implementacijo končnega sistema. Ta je po naši oceni skladen s pričakovanji, kar lahko potrdimo tudi z naborom testov posameznih delov sistema, ki se skladajo v končno celoto.
 
+## Slovar terminov
+
+| Têrmin                             | Opis                                                                                                                                                                                                                            |
+| :--------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Potisno obvestilo (Push notification) | Kratko sporočilo, ki ga aplikacija pošlje uporabniku na njegovo napravo (npr. pametni telefon) tudi, ko aplikacija ni aktivno odprta. Uporablja se za obveščanje o pomembnih dogodkih.                                              |
+| Testi enot (Unit tests)            | Vrsta testiranja programske opreme, kjer se testirajo najmanjši posamezni deli (enote ali komponente) programske kode, da se preveri njihovo pravilno delovanje.                                                                  |
+| Integracijski test                 | Vrsta testiranja, kjer se preverja pravilno delovanje in medsebojna komunikacija med različnimi komponentami ali moduli sistema, ko so ti povezani skupaj.                                                                       |
+| MQTT                               | Lahek sporočilni protokol, zasnovan za povezovanje naprav z omejenimi viri in omrežij z nizko pasovno širino, pogosto uporabljen v IoT (Internet of Things) aplikacijah.                                                            |
+| MQTT tema (topic)                  | Hierarhično strukturiran niz znakov, ki deluje kot naslov za sporočila v protokolu MQTT. Naprave objavljajo sporočila na določene teme, druge naprave pa se na te teme naročijo, da sporočila prejmejo.                            |
+| Mosquitto                          | Odprtokodni MQTT posrednik (broker), ki omogoča prenos sporočil med napravami in aplikacijami, ki uporabljajo MQTT protokol.                                                                                                     |
+| Frigate                            | Odprtokodna programska oprema za video nadzor z zaznavanjem objektov (npr. oseb, avtomobilov) v realnem času, ki se pogosto uporablja z IP kamerami in integrira s sistemi za pametne domove.                                       |
+| RTSP (Real-Time Streaming Protocol) | Mrežni protokol, ki se uporablja za prenos avdio in video podatkov v realnem času, pogosto za pretakanje videa iz IP kamer.                                                                                                     |
+
 # 4 Opis sistema
 
 ## 4.1 Pregled sistema
@@ -1416,6 +1462,13 @@ Spodnji diagram prikazuje razredno strukturo implementiranega sistema.
   <img src="gradivo/img/Izvedljiv sistem/diagram_razredni.png" alt="Razredni diagram">
 </p>
 
+## 4.3 Slovar terminov
+
+| Têrmin                             | Opis                                                                                                                                                                                                                            |
+| :--------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Metapodatki                        | Podatki, ki opisujejo druge podatke. V kontekstu Home Assistant integracij lahko to vključuje informacije o verziji integracije, avtorju, odvisnostih itd.                                                                         |
+| Docker Host                        | Fizični ali virtualni strežnik, na katerem teče Docker demon in gosti Docker vsebnike.                                                                                                                                            |
+
 # 5 Končno stanje
 
 ## 5.1 Osnutek delovanja
@@ -1461,7 +1514,7 @@ Za uspešno namestitev sistema je potrebno vzpostaviti in skonfigurirati nasledn
 
 - **Home Assistant**: uporabi se uradna slika Docker za platformo Home Assistant. Potrebna konfiguracija vključuje definicijo poti do konfiguracijske mape, nastavitve ustreznih vrat za dostop do platforme ter druge sistemske nastavitve.
 - **Frigate**: uporabi se uradna slika Docker za sistem procesiranja video vsebin Frigate. Potrebna konfiguracija vključuje določanje poti za video tok (IP kamere, ki prenaša video preko RTSP protokola), nastavitev vrat za dostop do uporabniškega vmesnika, ter omogočenje dostopa do omrežja obdelovanje video vsebin v realnem času.
-- **MQTT Broker**: uporabi se ločen vsebnik Docker za posrednika MQTT, saj vsebniška različica sistema Home Assistant nima podpore posredništva MQTT sporočil. Potrebna konfiguracija vključuje nastavitev ustreznih vrat za povezovanje z drugimi napravami, določitev poti do konfiguracijskih datotek, ter omogočenje dostopa do omrežja za komunikacijo med sistemom Home Assistant, sistemom Frigate in drugimi napravami v objektu.
+- **MQTT posrednik**: uporabi se ločen vsebnik Docker za posrednika MQTT, saj vsebniška različica sistema Home Assistant nima podpore posredništva MQTT sporočil. Potrebna konfiguracija vključuje nastavitev ustreznih vrat za povezovanje z drugimi napravami, določitev poti do konfiguracijskih datotek, ter omogočenje dostopa do omrežja za komunikacijo med sistemom Home Assistant, sistemom Frigate in drugimi napravami v objektu.
 - **Mobilna aplikacija**: za pridobivanje uporabniške lokacije in uprabljanje z nastavitvami sistema se uporablja mobilno aplikacijo Home Assistant, ki je dostopna za mobilna operacijska sistema iOS in Android.
 
 Za enostavno upravljanje glavnih komponent sistema (Home Assistant, Frigate, posrednik MQTT) se uporabi Docker Compose, ki omogoča enostaven zagon in povezovanje večih vsebnikov. Vse ustrezne nastavitve, vključno z vrati, potmi do konfiguracijskih datotek in parametri za posamezne komponente, so tako definirane v .yaml datoteki, kar bo omogočilo enostavnejšo konfiguracijo, tako med razvojem kot za končne uporabnike.
@@ -1509,6 +1562,24 @@ Ustreznost testne strategije bomo med drugim ovrednostili s pokritostjo kode. Ko
 ### Statistika končne implementacije prototipa sistema
 
 Do končne implementacije prototipa sistema smo napisali 5306 vrstic kode, od tega 2432 vrstic izvorne kode (64% v Pythonu, ostalo pa so HTML, CSS in JS) ter 2775 vrstic testov (vse v Pythonu), ostalo pa so konfiguracijske datoteke, potrebne za delovanje sistemov.
+
+## Slovar terminov
+
+| Têrmin                          | Opis                                                                                                                                                                                                                            |
+| :------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Knjižnice (programske)          | Zbirka vnaprej napisane kode (funkcij, razredov), ki jo lahko programerji uporabijo za izvajanje pogostih nalog.                                                                                |
+| black formatter                 | Orodje za samodejno formatiranje Python kode, ki zagotavlja konsistenten slog kode v celotnem projektu.                                                                                                                            |
+| unittest                        | Vgrajen Pythonov modul (knjižnica) za pisanje in izvajanje testov enot, ki preverjajo pravilnost delovanja posameznih delov kode.                                                                                                 |
+| Visual Studio Code (VS Code)    | Priljubljen, lahek, a zmogljiv urejevalnik izvorne kode, ki podpira številne programske jezike in ponuja bogat nabor razširitev.                                                                                                   |
+| Pycharm                         | Integrirano razvojno okolje (IDE), specializirano za programski jezik Python, ki ponuja napredna orodja za pisanje, odpravljanje napak in testiranje kode.                                                                        |
+| Notion                          | Vsestranska aplikacija za produktivnost in sodelovanje, ki omogoča ustvarjanje zapiskov, upravljanje projektov, vodenje baz podatkov in drugo.                                                                                     |
+| GitHub                          | Spletna platforma za gostovanje Git repozitorijev, ki omogoča nadzor različic, sodelovanje pri razvoju programske opreme in upravljanje projektov.                                                                                 |
+| Companion App (Home Assistant)  | Mobilna aplikacija za Home Assistant, ki uporabnikom omogoča upravljanje njihovega pametnega doma na daljavo, prejemanje obvestil in posredovanje podatkov o lokaciji napravi Home Assistant.                                       |
+| MQTT posrednik (broker)                     | Strežnik v MQTT arhitekturi, ki sprejema sporočila od pošiljateljev (publisherjev) in jih posreduje prejemnikom (subscriberjem), ki so naročeni na ustrezne teme. Deluje kot posrednik sporočil.                                   |
+| .yaml datoteka                  | Besedilna datoteka, napisana v formatu YAML (YAML Ain't Markup Language), ki je človeku berljiv format za serializacijo podatkov. Pogosto se uporablja za konfiguracijske datoteke.                                                  |
+| SSL certifikat                  | Digitalno potrdilo, ki omogoča šifrirano komunikacijo (HTTPS) med spletnim strežnikom in brskalnikom ter potrjuje identiteto spletnega mesta.                                                                                      |
+| Github Actions                  | Platforma za avtomatizacijo delovnih tokov znotraj GitHub-a, ki omogoča samodejno gradnjo, testiranje in nameščanje kode ob različnih dogodkih (npr. ob oddaji kode).                                                               |
+| Pokritost kode (Code coverage)  | Metrika pri testiranju programske opreme, ki meri, kateri delež izvorne kode aplikacije je bil izvršen med izvajanjem testov. Višja pokritost običajno pomeni bolj temeljito testiranje.                                           |
 
 # 6 Vodenje projekta
 
@@ -1742,6 +1813,15 @@ Ocena posrednih stroškov:
 
 - kavica za asistenta: 0.6€ za vsak sestanek
 
+## Slovar terminov
+
+| Têrmin                          | Opis                                                                                                                                                                                                                            |
+| :------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| GitHub Issues                   | Funkcionalnost na platformi GitHub, ki omogoča sledenje nalogam, hroščem, predlogom za izboljšave in drugim vprašanjem, povezanim s projektom.                                                                                     |
+| Kontinuirana integracija (CI)   | Praksa v razvoju programske opreme, kjer razvijalci pogosto združujejo svoje spremembe kode v osrednji repozitorij, po čemer se samodejno izvedejo procesi gradnje in testiranja kode.                                              |
+| Pull Request (PR)               | Predlog za spremembe kode v repozitoriju na platformah, kot je GitHub. Omogoča pregled kode s strani drugih članov ekipe pred združitvijo sprememb v glavno vejo projekta.                                                          |
+| SLOC (Source Lines of Code)     | Število vrstic izvorne kode. Metrika, ki se včasih uporablja za oceno velikosti programske opreme, čeprav ima svoje omejitve.                                                                                                      |
+
 # 7 Ekipa
 
 ## **7.1 Predznanje**
@@ -1919,6 +1999,14 @@ Pri načrtovanju varnostnega sistema je pomembno upoštevati različne omejitve,
 
 Kar zadeva dostop do podatkov, storitev in virov, ne pričakujemo večjih težav. Uporabniška lokacija in video prenos bodo dostopni preko ustreznih integracij. Vse uporabljene storitve in orodja so odprtokodna, kar omogoča enostaven dostop brez večjih omejitev in zagotavlja fleksibilnost pri implementaciji sistema.
 
+## Slovar terminov
+
+| Têrmin                                  | Opis                                                                                                                                                                                                                            |
+| :-------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| OWASP (Open Web Application Security Project) | Neprofitna fundacija, ki si prizadeva za izboljšanje varnosti programske opreme. Znana je po projektih, kot je OWASP Top 10, ki našteva najpogostejše varnostne ranljivosti spletnih aplikacij.                                  |
+| TLS (Transport Layer Security)          | Kriptografski protokol, ki zagotavlja varno komunikacijo preko računalniškega omrežja. Je naslednik SSL (Secure Sockets Layer) in se uporablja za šifriranje podatkov med odjemalcem in strežnikom (npr. pri HTTPS).                 |
+| GDPR (General Data Protection Regulation) | Uredba Evropske unije o varstvu posameznikov pri obdelavi osebnih podatkov in o prostem pretoku takih podatkov. Določa stroga pravila za zbiranje, hrambo in uporabo osebnih podatkov.                                            |
+
 # 9 Refleksija
 
 Projekt nam je ponudil dragoceno priložnost za poglobljeno spoznavanje ekosistema pametnih domov, zlasti platforme Home Assistant, in razvijanje praktičnih veščin na področju načrtovanja, implementacije in testiranja programskih rešitev v agilnem okolju. Skozi iterativni proces razvoja sistema smo se spoznali s pristopi k definiciji uporabniških zahtev, časovnih in finančnih načrtov za agilne pristope k razvoju, učinkovito smo implementirali razvojne vzorce in skalabilno arhitekturo sistema, ter se nenazadnje pobližje spoznali z agilnimi pristopi k vodenju in sodelovanju pri projektu.
@@ -1930,7 +2018,7 @@ Spodaj delimo ključne izkušnje, spoznanja in priporočila, ki smo jih pridobil
 Med projektom smo zabeležili več uspehov, ki so potrdili učinkovitost našega pristopa in izboljšali kakovost končnega izdelka:
 
 - Agilni razvojni pristop: Uporaba širših načel metodologije Scrum in rednih retrospektivnih sestankov se je izkazala za zelo učinkovito. Omogočilo nam je hitro prilagajanje novim spoznanjem in izzivom ter sprotno izboljševanje delovnih procesov.
-- Uspešna integracija komponent: Kljub začetnemu pomanjkanju izkušenj z nekaterimi orodji (Home Assistant, Frigate, MQTT) smo uspeli uspešno integrirati vse ključne komponente sistema (Home Assistant, Frigate, MQTT Broker, mobilna aplikacija) v enovit, delujoč varnostni sistem.
+- Uspešna integracija komponent: Kljub začetnemu pomanjkanju izkušenj z nekaterimi orodji (Home Assistant, Frigate, MQTT) smo uspeli uspešno integrirati vse ključne komponente sistema (Home Assistant, Frigate, MQTT posrednik, mobilna aplikacija) v enovit, delujoč varnostni sistem.
 - Razvoj robustne poslovne logike: Implementirana poslovna logika je zasnovana za zanesljivo delovanje, kar potrjujejo tudi zasnovani in izvedeni testi.
 - Avtomatizacija testiranja in CI: Vzpostavitev avtomatskega izvajanja testov enot preko GitHub Actions je pomembno prispevala k ohranjanju kakovosti kode in hitrejšemu iterativnemu razvojemu pristopu.
 - Učinkovito reševanje težav z vzpostavitvijo razvojnega okolja: Kljub nekaterim začetnim težavam pri vzpostavitvi razvojnega in testnega okolja (omejitve Frigate, povezava kamere preko RTSP), smo te izzive uspešno rešili in si tako zagotovili stabilno delovno okolje.
