@@ -68,7 +68,7 @@ Zahteve:
 Najprej klonirajte repozitorij iz GitHub-a:
 
 ```bash
-git clone https://github.com/TPO-2024-2025/Projekt-20.git
+git clone https://github.com/TPO-2024-2025/Varko.git
 ```
 
 ### 2. Nastavitev IP naslova varnostne kamere
