@@ -284,8 +284,6 @@ Spodnji sliki prikazujeta primer pojavnega okna z menijem, ki se pojavi ob kliku
   <img src="gradivo/img/Izvedljiv sistem/ui_radio_station.png" alt="UI meni radia - postaje">
 </p>
 
-Do določenih nastavitev lahko dostopa le administrator sitema Home Assistant, do ostalih pa tudi drugi avtenticirani uporabniki. Ob poskusu nedovoljenega dostopa do funkcionalnosti se uporabniku prikaže obvestilo o premajhnih pooblastilih.
-
 #### Vmesniki do zunanjih sistemov
 
 Spodaj so opisani načini dostopov do osrednjega sistema - način komunikacije uporabniškega vmesnika, kamere in pametnih naprav.
@@ -1241,7 +1239,7 @@ Celovitost: Uporabnik (administrator) se zaveda, da sistem podpira le upravljanj
 
 Realističnost: Zahteve so glede na dani čas in omejitve izvedljive.
 
-Preverljivost: Integracijski test in testi enot, ki preverjajo pravilnost stanj naprav po dodajanju ali odstranjevanju naprave.
+Preverljivost: Testi enot, ki preverjajo pravilnost stanj naprav po dodajanju ali odstranjevanju naprave.
 
 ### Upravljanje con aktivacij sistema
 
@@ -1304,7 +1302,7 @@ Celovitost: Uporabnik se zaveda, da sistem deluje v danih dveh stanjih. Za stanj
 
 Realističnost: Zahteve so glede na dani čas in omejitve izvedljive.
 
-Preverljivost: Integracijski testi, ki preverjajo komunikacijo z napravami in zunanjimi sistemi, in testi enot, ki preverjajo interno logiko prehajanja sistema med stanji.
+Preverljivost: Testi enot, ki preverjajo interno logiko prehajanja sistema med stanji.
 
 ### Obvestila
 
@@ -1345,7 +1343,6 @@ Integracija omogoča vse želene koristi, saj je bila preizkušena nasproti vsem
 | :--------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Potisno obvestilo (Push notification) | Kratko sporočilo, ki ga aplikacija pošlje uporabniku na njegovo napravo (npr. pametni telefon) tudi, ko aplikacija ni aktivno odprta. Uporablja se za obveščanje o pomembnih dogodkih.                                              |
 | Testi enot (Unit tests)            | Vrsta testiranja programske opreme, kjer se testirajo najmanjši posamezni deli (enote ali komponente) programske kode, da se preveri njihovo pravilno delovanje.                                                                  |
-| Integracijski test                 | Vrsta testiranja, kjer se preverja pravilno delovanje in medsebojna komunikacija med različnimi komponentami ali moduli sistema, ko so ti povezani skupaj.                                                                       |
 | MQTT                               | Lahek sporočilni protokol, zasnovan za povezovanje naprav z omejenimi viri in omrežij z nizko pasovno širino, pogosto uporabljen v IoT (Internet of Things) aplikacijah.                                                            |
 | MQTT tema (topic)                  | Hierarhično strukturiran niz znakov, ki deluje kot naslov za sporočila v protokolu MQTT. Naprave objavljajo sporočila na določene teme, druge naprave pa se na te teme naročijo, da sporočila prejmejo.                            |
 | Mosquitto                          | Odprtokodni MQTT posrednik (broker), ki omogoča prenos sporočil med napravami in aplikacijami, ki uporabljajo MQTT protokol.                                                                                                     |
