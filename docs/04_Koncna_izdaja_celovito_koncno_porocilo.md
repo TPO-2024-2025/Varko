@@ -1505,9 +1505,7 @@ Ustreznost testne strategije bomo med drugim ovrednostili s pokritostjo kode. Ko
 
 ### Statistika končne implementacije prototipa sistema
 
-Do končne implementacije prototipa sistema smo napisali 4025 vrstic kode, od tega 82% v Pythonu, 6% v JavaScriptu, 2% v HTML, 4% v CSS, ostalo pa so konfiguracijske datoteke, potrebne za delovanje sistemov. Razlika med številoma vrstic kode prototipa in razvite implementacije tako znaša 3245 vrstic kode.
-
-[//]: # (TODO: POSODOBI ŠTEVILKE)
+Do končne implementacije prototipa sistema smo napisali 5306 vrstic kode, od tega 2432 vrstic izvorne kode (64% v Pythonu, ostalo pa so HTML, CSS in JS) ter 2775 vrstic testov (vse v Pythonu), ostalo pa so konfiguracijske datoteke, potrebne za delovanje sistemov.
 
 # 6 Vodenje projekta
 
