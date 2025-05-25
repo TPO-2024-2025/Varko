@@ -202,24 +202,53 @@ Spodaj so naštete funkcionalne zahteve, razdeljene po prioriteti implementacije
 
 #### Zaslonske maske
 
-[//]: # (TODO: POSODOBI ZASLOVNSKE MASKE)
-
 Uporabniški vmesnik je izdelan kot ločena plošča v sistemu Home Assistant, kjer uporabnik dostopa do nastavitev integracije. Do nje lahko dostopa uporabnik sistema Home Assistant preko glavnega menija na levi strani kontrolne plošče.
 
 Na spodnjih slikah je prikazana kontrolna plošča integracije, ki omogoča:
-- upravljanje z integriranimi napravami - dodajanje in odvzemanje naprav iz uporabe
+- upravljanje z integriranimi napravami - dodajanje in odvzemanje naprav (tako svetlobnih kot zvočnih) iz uporabe
 - upravljanje z lokacijskimi conami - določitev lokacijske cone za uporabo pri delovanju sistema
 - upravljanje s skupino uporabnikov - dodajanje in odvzemanje uporabnikov sistema Home Assistant iz uporabe pri delovanju sistema
 - upravljanje s stanji sistema - ročna nastavitev stanja sistema
+- upravljanje z izbiro radijske postaje - nastavitev za zvočno simulacijo prisotnosti
 
 <p align="center">
   <img src="gradivo/img/Izvedljiv sistem/ui_general.png" alt="Splošen izgled UI">
 </p>
 
-Spodnja slika predstavlja pojavno okno z menijem, ki se pojavi ob kliku na opcijo "Add device". Vsebuje vnosna polja, ki jih je potrebno pred potrditvijo izpolniti.
+Spodaj se nahajajo opisi vsake izmed zgoraj vidnih/naštetih opcij.
+
+Spodnja slika predstavlja primer pojavnega okna z menijem, ki se pojavi ob kliku na opcijo "Devices". Vsebuje vnosna polja, ki jih je potrebno pred potrditvijo izpolniti.
 
 <p align="center">
-  <img src="gradivo/img/Izvedljiv sistem/ui_detail.png" alt="Izgled UI menija">
+  <img src="gradivo/img/Izvedljiv sistem/ui_devices.png" alt="UI meni naprav">
+</p>
+
+Spodnja slika prikazuje primer pojavnega okna z menijem, ki se pojavi ob kliku na opcijo "Zones". V njem uporabnik izbira lokacijsko cono, ki jo je nastavil v Home Assistant, za uporabo pri določanju odsotnosti uporabnikov objekta.
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/ui_zones.png" alt="UI meni con">
+</p>
+
+Spodnja slika prikazuje primer pojavnega okna z menijem, ki se pojavi ob kliku na opcijo "Groups". V njem uporabnik ureja skupino uporabnikov objekta.
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/ui_groups.png" alt="UI meni skupin">
+</p>
+
+Spodnja slika prikazuje primer pojavnega okna z menijem, ki se pojavi ob kliku na opcijo "States". V njem administrator ročno nastavlja stanje sistema.
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/ui_states.png" alt="UI meni stanj">
+</p>
+
+Spodnji sliki prikazujeta primer pojavnega okna z menijem, ki se pojavi ob kliku na opcijo "Choose Radio Station". V njem uporabnik nastavlja radijsko postajo, ki se naj ob simulaciji prisotnosti prižge in začne predvajati. Najprej izbereš državo izvora želene radijske postaje, nato pa še radijsko postajo samo.
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/ui_radio_country.png" alt="UI meni radia - države">
+</p>
+
+<p align="center">
+  <img src="gradivo/img/Izvedljiv sistem/ui_radio_station.png" alt="UI meni radia - postaje">
 </p>
 
 Do določenih nastavitev lahko dostopa le administrator sitema Home Assistant, do ostalih pa tudi drugi avtenticirani uporabniki. Ob poskusu nedovoljenega dostopa do funkcionalnosti se uporabniku prikaže obvestilo o premajhnih pooblastilih.
@@ -1298,7 +1327,6 @@ Poslovna logika razvite integracije se ob prejetju sporočila o zaznavi ljudi od
 Stanje sistema lahko administrator sistema kadarkoli nastavi tudi ročno iz uporabniškega vmesnika.
 
 ### Načrtovalski vzorci
-[//]: # (TODO: DODAJ ŠE VSAJ 2 NAČRTOVALSKA VZORCA)
 
 Pri trenutni implementaciji smo se poslužili nekaterih načrtovalski vzorcev, saj so omogočili ne le ponovno uporabo določenih delov kode, temveč tudi večjo preglednost implementacije. Izbrani vzorci so:
 
@@ -1440,27 +1468,7 @@ Za uspešno namestitev sistema je potrebno vzpostaviti in skonfigurirati nasledn
 Za enostavno upravljanje glavnih komponent sistema (Home Assistant, Frigate, posrednik MQTT) se uporabi Docker Compose, ki omogoča enostaven zagon in povezovanje večih vsebnikov. Vse ustrezne nastavitve, vključno z vrati, potmi do konfiguracijskih datotek in parametri za posamezne komponente, so tako definirane v .yaml datoteki, kar bo omogočilo enostavnejšo konfiguracijo, tako med razvojem kot za končne uporabnike.
 
 ## 5.4 Delovanje sistema
-[//]: # (TODO: POPRAVI OPIS IN SLIKE ZA UI)
-
-Uporabniški vmesnik je izdelan kot ločena plošča v sistemu Home Assistant, kjer uporabnik dostopa do nastavitev integracije. Do nje lahko dostopa uporabnik sistema Home Assistant preko glavnega menija na levi strani kontrolne plošče.
-
-Na spodnjih slikah je prikazana kontrolna plošča integracije, ki omogoča:
-- upravljanje z integriranimi napravami - dodajanje in odvzemanje naprav iz uporabe
-- upravljanje z lokacijskimi conami - določitev lokacijske cone za uporabo pri delovanju sistema
-- upravljanje s skupino uporabnikov - dodajanje in odvzemanje uporabnikov sistema Home Assistant iz uporabe pri delovanju sistema
-- upravljanje s stanji sistema - ročna nastavitev stanja sistema
-
-<p align="center">
-  <img src="gradivo/img/Izvedljiv sistem/ui_general.png" alt="Kontrolna plošča">
-</p>
-
-Spodnja slika predstavlja pojavno okno z menijem, ki se pojavi ob kliku na opcijo "Add device". Vsebuje vnosna polja, ki jih je potrebno pred potrditvijo izpolniti.
-
-<p align="center">
-  <img src="gradivo/img/Izvedljiv sistem/ui_detail.png" alt="Odprt meni kontrolne plošče">
-</p>
-
-Do določenih nastavitev lahko dostopa le administrator sitema Home Assistant, do ostalih pa tudi drugi avtenticirani uporabniki. Ob poskusu nedovoljenega dostopa do funkcionalnosti se uporabniku prikaže obvestilo o premajhnih pooblastilih.
+Zaslonske slike in opisi nastavitev sistema v uporabniškem vmesniku so navedeni v tem poročilu, v poglavju 3.1.2, natančneje v podpoglavju zaslonskih mask.
 
 Na dani [povezavi](https://drive.google.com/file/d/1jkdYJKgqECaB8Iw7G31vEh_gptoYXKOg/view) je dostopen video, na katerem je ravidno delovanje ročne aktivacije/deaktivacije sistema (stanja ACTIVE/READY), in s tem posledično tudi vklopa/izklopa simulacije prisotnosti (ta v danem primeru prižge luč).
 Iz videa je razvidno, da se v primeru ročne aktivacije sistema (nastavitev v stanje ACTIVE) luč v sklopu simulacije prisotnosti prižge, in ob ročni deaktivaciji sistema (nastavitev v stanje IDLE) ugasne.
@@ -1484,13 +1492,16 @@ Sistem mora biti testiran v čimbolj realnih pogojih, da se zagotovi zanesljivo 
 
 Testiranje s testi enot se izvaja avtomatično preko Github Actions, ki se poženejo na vsakem Pull Requestu. Tako se še pred združitvijo kode na glavno vejo preverja novo-napisano kodo.
 
-Skupno je bilo napisanih 78 testov enot, ki testirajo funkcionalnosti sistema.
+Skupno je bilo napisanih 106 testov enot, ki testirajo funkcionalnosti sistema:
+- [radio_test.py](test/decorators_test.py): 18 testov enot
+- [decorators_test.py](test/decorators_test.py): 5 testov enot
+- [base_manager_test.py](test/services/base_manager_test.py): 4 testov enot
+- [device_manager_test.py](test/services/device_manager_test.py): 25 testov enot
+- [group_manager_test.py](test/services/group_manager_test.py): 6 testov enot
+- [state_manager_test.py](test/services/state_manager_test.py): 23 testov enot
+- [zone_manager_test.py](test/services/zone_manager_test.py): 25 testov enot
 
-[//]: # (TODO: POSODOBI ŠTEVILKE)
-
-Ustreznost testne strategije bomo ovrednostili s pokritostjo kode:
-
-[//]: # (TODO: POKRITOST KODE S TESTI)
+Ustreznost testne strategije bomo med drugim ovrednostili s pokritostjo kode. Končna pokritost vse kode sistema znaša 83%. Vsa nadaljnja statistika pokritosti kode s testnimi primeri se nahaja v mapi `/coverage` v korenu repozitorija.
 
 ### Statistika končne implementacije prototipa sistema
 
@@ -1510,7 +1521,6 @@ Najprej smo razvili prototip, ki je predstavljal minimalno delujoč sistem in je
 
 Po konsolidaciji pomislekov in predlogov, ki so se pojavili med in po razvitju prototipa, smo začeli z implementacijo končnega produkta.
 
-[//]: # (TODO: DOPOLNI KONEC IMPLEMENTACIJE)
 Ključni dogodki, ki so se zgodili med implementacijo:
 - Vzpostavitev razvojnega okolja - 24.3.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/32))
 - Začetek dela na prototipu - 27.3.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/34))
@@ -1518,7 +1528,7 @@ Ključni dogodki, ki so se zgodili med implementacijo:
 - Izboljšave kontinuirane integracije (CI) - 6.4.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/45))
 - Začetek implementacije končnega produkta - 21.4.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/53))
 - Dodan CI na GitHub Actions - 4.5.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/74))
-- Konec implementacije končnega produkta -
+- Konec implementacije končnega produkta - 25.5.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/97))
 
 ## 6.1 Usklajevanje ekipe
 
