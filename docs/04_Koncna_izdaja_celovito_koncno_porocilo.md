@@ -1456,7 +1456,6 @@ Nenazadnje smo za zagotovitev delovanja sistema potrebovali naslednje naprave in
 - pametne naprave, ki so podprte v sklopu našega sistema (pametne luči in televizija).
 
 ## 5.3 Namestitev
-[//]: # (TODO: STANJE KJE JE APLIKACIJA KONČNO NAMEŠČENA)
 
 Za uspešno namestitev sistema je potrebno vzpostaviti in skonfigurirati naslednje komponente:
 
@@ -1466,6 +1465,10 @@ Za uspešno namestitev sistema je potrebno vzpostaviti in skonfigurirati nasledn
 - **Mobilna aplikacija**: za pridobivanje uporabniške lokacije in uprabljanje z nastavitvami sistema se uporablja mobilno aplikacijo Home Assistant, ki je dostopna za mobilna operacijska sistema iOS in Android.
 
 Za enostavno upravljanje glavnih komponent sistema (Home Assistant, Frigate, posrednik MQTT) se uporabi Docker Compose, ki omogoča enostaven zagon in povezovanje večih vsebnikov. Vse ustrezne nastavitve, vključno z vrati, potmi do konfiguracijskih datotek in parametri za posamezne komponente, so tako definirane v .yaml datoteki, kar bo omogočilo enostavnejšo konfiguracijo, tako med razvojem kot za končne uporabnike.
+
+Podrobnejša (aktualna) navodila namestitve (in upravljanja) sistema so opredeljena v [README](../README.md#️-navodila-za-namestitev-sistema) datoteki repozitorija.
+
+Namestitev smo tudi izvedli v namen javno dostopne instance sistema Home Assistant s prednameščeno integracijo Varko (dostopni podatki so dani v [README](../README.md#predstavitev) datoteki). Na strežniku smo namestili potrebno programsko opremo, kot sta Docker in Docker Compose za zaganjanje vsebnikov, nato smo klonirali repozitorij in zagnali sistem po danih navodilih. Prav tako smo za podporo HTTPS protokola morali z orodjem certbot generirati SSL certifikat, ki služi za kriptacijo povezave do instance.
 
 ## 5.4 Delovanje sistema
 Zaslonske slike in opisi nastavitev sistema v uporabniškem vmesniku so navedeni v tem poročilu, v poglavju 3.1.2, natančneje v podpoglavju zaslonskih mask.
