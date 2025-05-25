@@ -1375,19 +1375,19 @@ Pri trenutni implementaciji smo se poslužili nekaterih načrtovalski vzorcev, s
 
 **Decorator**
 
-Vzorec `decorator` smo uporabili za lažje [upravljanje z dodajanjem in odstranjevanjem Home Assistant storitev](https://github.com/TPO-2024-2025/Projekt-20/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/decorators.py#L9-L11) ter za [preverjanje avtorizacije](https://github.com/TPO-2024-2025/Projekt-20/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/decorators.py#L14-L34). Implementacije Home Assistant storitev smo ovili z dekoratorjem, ki je poskrbel, da se servis avtomatsko doda in odstrani z Home Assistant instance. Prav tako smo določene storitve ovili z dekoratorjem, ki je poskrbel, da to storitev lahko kličejo samo administratorji.
+Vzorec `decorator` smo uporabili za lažje [upravljanje z dodajanjem in odstranjevanjem Home Assistant storitev](https://github.com/TPO-2024-2025/Varko/blob/bf9e6309c2d884903f157b25c1dc2a12e79b4750/src/custom_components/varko/decorators.py#L9-L11) ter za [preverjanje avtorizacije](https://github.com/TPO-2024-2025/Varko/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/decorators.py#L14-L34). Implementacije Home Assistant storitev smo ovili z dekoratorjem, ki je poskrbel, da se servis avtomatsko doda in odstrani z Home Assistant instance. Prav tako smo določene storitve ovili z dekoratorjem, ki je poskrbel, da to storitev lahko kličejo samo administratorji.
 
 **Singleton**
 
-Vzorec `singleton` smo uporabili pri [implementaciji posameznih managerjev](https://github.com/TPO-2024-2025/Projekt-20/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/services/device_manager.py#L19-L30). Te so odgovorni za svoje področje (recimo za upravljanje z skupinami, napravami, …). Z vzorcem singleton smo poskrbeli, da je vedno ustvarjena največ ena instanca posameznega managerja. S tem smo omogočili avtomatsko dodajanje in odstranjevanje storitev s pomočjo zgoraj omenjenega `decorator` vzorca.
+Vzorec `singleton` smo uporabili pri [implementaciji posameznih managerjev](https://github.com/TPO-2024-2025/Varko/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/services/device_manager.py#L19-L30). Te so odgovorni za svoje področje (recimo za upravljanje z skupinami, napravami, …). Z vzorcem singleton smo poskrbeli, da je vedno ustvarjena največ ena instanca posameznega managerja. S tem smo omogočili avtomatsko dodajanje in odstranjevanje storitev s pomočjo zgoraj omenjenega `decorator` vzorca.
 
 **State**
 
-Vzorec `state` smo uporabili za [prehajanje med stanji](https://github.com/TPO-2024-2025/Projekt-20/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/services/state_manager.py#L20-L93) znotraj naše integracije. Z njim smo zagotovili pravilno prehajanje med stanji sistema in ob enem ohranili kodo pregledno in enostavno.
+Vzorec `state` smo uporabili za [prehajanje med stanji](https://github.com/TPO-2024-2025/Varko/blob/b093a67c51fdb78dc1214e81a0a3696de97a1773/src/custom_components/varko/services/state_manager.py#L20-L93) znotraj naše integracije. Z njim smo zagotovili pravilno prehajanje med stanji sistema in ob enem ohranili kodo pregledno in enostavno.
 
 **Entity**
 
-Vzorec `entity` smo uporabili za [upravljanje luči](https://github.com/TPO-2024-2025/Projekt-20/blob/2aafe714672bde674a891a6cbfaddf502ba297c7/src/custom_components/varko/light.py#L46-L99). Z vzorcem smo poskrbeli za enostavnejše upravljanje z entitetami pametnih naprav.
+Vzorec `entity` smo uporabili za [upravljanje luči](https://github.com/TPO-2024-2025/Varko/blob/2aafe714672bde674a891a6cbfaddf502ba297c7/src/custom_components/varko/light.py#L46-L99). Z vzorcem smo poskrbeli za enostavnejše upravljanje z entitetami pametnih naprav.
 
 ### Izzivi implementacije
 
@@ -1546,13 +1546,13 @@ Sistem mora biti testiran v čimbolj realnih pogojih, da se zagotovi zanesljivo 
 Testiranje s testi enot se izvaja avtomatično preko Github Actions, ki se poženejo na vsakem Pull Requestu. Tako se še pred združitvijo kode na glavno vejo preverja novo-napisano kodo.
 
 Skupno je bilo napisanih 106 testov enot, ki testirajo funkcionalnosti sistema:
-- [radio_test.py](test/decorators_test.py): 18 testov enot
-- [decorators_test.py](test/decorators_test.py): 5 testov enot
-- [base_manager_test.py](test/services/base_manager_test.py): 4 testov enot
-- [device_manager_test.py](test/services/device_manager_test.py): 25 testov enot
-- [group_manager_test.py](test/services/group_manager_test.py): 6 testov enot
-- [state_manager_test.py](test/services/state_manager_test.py): 23 testov enot
-- [zone_manager_test.py](test/services/zone_manager_test.py): 25 testov enot
+- [radio_test.py](/test/decorators_test.py): 18 testov enot
+- [decorators_test.py](/test/decorators_test.py): 5 testov enot
+- [base_manager_test.py](/test/services/base_manager_test.py): 4 testov enot
+- [device_manager_test.py](/test/services/device_manager_test.py): 25 testov enot
+- [group_manager_test.py](/test/services/group_manager_test.py): 6 testov enot
+- [state_manager_test.py](/test/services/state_manager_test.py): 23 testov enot
+- [zone_manager_test.py](/test/services/zone_manager_test.py): 25 testov enot
 
 Ustreznost testne strategije bomo med drugim ovrednostili s pokritostjo kode. Končna pokritost vse kode sistema znaša 83%. Vsa nadaljnja statistika pokritosti kode s testnimi primeri se nahaja v mapi `/coverage` v korenu repozitorija.
 
@@ -1581,7 +1581,7 @@ Do končne implementacije prototipa sistema smo napisali 5306 vrstic kode, od te
 # 6 Vodenje projekta
 
 Projektno vodenje bo potekalo z inspiracijo [Scrum-ov](https://www.scrum.org/resources/what-scrum-module). Sprinti se bodo v veliki meri ujemali z roki oddaje posamezne iteracije. Na ta način bomo poskrbeli, da bo delo ekipe znotraj sprinta čim bolj usklajeno sprotnimi zahtevami projekta.
-Za organizacijo bomo uporabljali [GitHub Issues](https://github.com/TPO-2024-2025/Projekt-20/issues?q=is%3Aissue), ki bodo služili tudi kot **backlog**.
+Za organizacijo bomo uporabljali [GitHub Issues](https://github.com/TPO-2024-2025/Varko/issues?q=is%3Aissue), ki bodo služili tudi kot **backlog**.
 
 Najprej smo razvili prototip, ki je predstavljal minimalno delujoč sistem in je zajemal naslednje funkcionalnosti:
 
@@ -1591,13 +1591,13 @@ Najprej smo razvili prototip, ki je predstavljal minimalno delujoč sistem in je
 Po konsolidaciji pomislekov in predlogov, ki so se pojavili med in po razvitju prototipa, smo začeli z implementacijo končnega produkta.
 
 Ključni dogodki, ki so se zgodili med implementacijo:
-- Vzpostavitev razvojnega okolja - 24.3.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/32))
-- Začetek dela na prototipu - 27.3.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/34))
-- Implementiran prototip - 6.4.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/44))
-- Izboljšave kontinuirane integracije (CI) - 6.4.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/45))
-- Začetek implementacije končnega produkta - 21.4.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/53))
-- Dodan CI na GitHub Actions - 4.5.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/74))
-- Konec implementacije končnega produkta - 25.5.2025 ([PR](https://github.com/TPO-2024-2025/Projekt-20/pull/97))
+- Vzpostavitev razvojnega okolja - 24.3.2025 ([Commit](https://github.com/TPO-2024-2025/Varko/commit/266840410726a5a7028047cdda7c1faf2a8fc4e0))
+- Začetek dela na prototipu - 27.3.2025 ([Commit](https://github.com/TPO-2024-2025/Varko/commit/966562920e3e0af6c74eb0601536e0b5e4f597cc))
+- Implementiran prototip - 6.4.2025 ([Commit](https://github.com/TPO-2024-2025/Varko/commit/55baffd2792ae1e4d095a0d08ed464f1c6fa158d))
+- Izboljšave kontinuirane integracije (CI) - 6.4.2025 ([Commit](https://github.com/TPO-2024-2025/Varko/commit/55baffd2792ae1e4d095a0d08ed464f1c6fa158d))
+- Začetek implementacije končnega produkta - 21.4.2025 ([Commit](https://github.com/TPO-2024-2025/Varko/commit/c0a95f2b1bdb7fc258c7490f91f02763b354d45f))
+- Dodan CI na GitHub Actions - 4.5.2025 ([Commit](https://github.com/TPO-2024-2025/Varko/commit/0794a042bbe701bf58ee161be2c963c785e3c705))
+- Konec implementacije končnega produkta - 25.5.2025
 
 ## 6.1 Usklajevanje ekipe
 

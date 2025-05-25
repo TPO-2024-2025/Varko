@@ -3,8 +3,8 @@
   "name": "Varko",
   "version": "0.1.0",
   "integration_type": "hub",
-  "documentation": "https://github.com/TPO-2024-2025/Projekt-20",
-  "issue_tracker": "https://github.com/TPO-2024-2025/Projekt-20/issues",
+  "documentation": "https://github.com/TPO-2024-2025/Varko",
+  "issue_tracker": "https://github.com/TPO-2024-2025/Varko/issues",
   "dependencies": [
     "mqtt"
   ],
